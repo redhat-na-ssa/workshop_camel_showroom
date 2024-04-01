@@ -1,43 +1,32 @@
 = {lab_name}
 
-The `lab_name` var, known as an asciidoc attribute, above was set in `./content/antora.yml` and can be used to set the lab_name or title of your content.
-You are both free to change its value and if you prefer to use a different var name, you can change the value of `lab_name`, for example to `title` in `./content/antora.yml` and then reference it in your content as `\{title}`. +
+Welcome to our workshop!
 
-image::rhel-logo-black.jpg[rhel-logo-black,55%,55%]
+Please, follow the instructions below to execute the workshop, and in case you have questions, always remember that the instructors are here to help. If you have problems with your lab or just have technical questions, feel free to reach out.
 
-== Variables
 
-Other vars can also be set there, such as `ssh_user` and `ssh_password`, and referenced inline in the lab content by using the `\{foo}` syntax.
+== Requirements
 
-This is another var, or asciidoc attribute, from `./content/antora.yml` {my_var}
+For this workshop you will be provided access to an OpenShift cluster and development tools to build and deploy integration using Red Hat build of Apache Camel. To utilize these resources you only need a browser and internet connection.
 
-== Writing your lab
+For browsers, we recommend the use of Google Chrome or Mozzilla Firefox.
 
-Whatever type of content you are writing we'll refer to your *content* as "your lab" in this document.
+== Lab Modules
 
-=== Lab structure
+This workshop contains 4 modules. For the complete experience, these modules were made to be executed from 1 to 4, but since we recognize that we have attendees interested in different aspects of an integration lifecycle, you can skip modules and use provided scripts to execute the previous steps for you. Independetly of how you decide to execute this workshop, we recommend that you, at least, go throught the first module to get familirized with the tools used in this workshop. 
 
-Wether you are writing a lab
+=== Getting Started with the Workshop
 
-* First, we will build a monolithic application already compiled as RPM packages and put it into a container. This will allow us to deploy the application, copy it between machines, and update it separately from the operating system. This process affords us a portable and easily maintained component instead of tightly coupling the application with your operating system maintenance.
+In this module you will get introduced to the environment and tools used in this workshop. You will also create and deploy a *hello-world* integration.
 
-* In closing we will build a second container on a different operating system version that makes an application not packaged into RPMs. This will be similar to a web application deployment, positioning the correct files at the right locations. To do this, we will pull a project from GitHub and position the component files within our container image. The purpose of this is to achieve a portable application container that can deploy on several different versions of Red Hat Enterprise Linux. This also provides the benefit of decoupling your application maintenance, which would all happen by building new containers versus operating system maintenance. The container is no longer reliant on the operating system installed on the machine where the application is deployed.
+=== Developing Integrations with Camel
 
-. Now let's examine this cluster a bit more by describing the cluster (the `$GUID` environment variable is already set for you so you can immediately describe your individual cluster):
-+
-[source,sh,role=execute]
-----
-podman ps
-----
-+
-.Sample Output
-[source,texinfo,subs="attributes"]
-----
-CONTAINER ID  IMAGE                        COMMAND           CREATED      STATUS      PORTS                 NAMES
-2dcfee9e50c4  docker.io/library/httpd:2.4  httpd-foreground  3 hours ago  Up 3 hours  0.0.0.0:8080->80/tcp  showroom-httpd
-----
+For this module you'll actually implement and deploy integrations. You will have access to a mock system called Globex, an e-commerce solution for Red Hat's swags. This system has a CDC(Change Data Capture) implementation to capture order and calculate cashback. The module requires you to implement the missing pieces to make the cashback implementation to work and build a REST API interface to interact with the cashback system database.
 
-=== Lab Access
+=== Monitoring Integrations in OpenShift
 
-The terminal window to your right is *already* logged into the lab environment as the `{ssh_user}` user via `ssh`. 
-All steps of this lab are to be completed as the `{ssh_user}` user.
+This module is focused on how you can monitor your integrations using Hawtio and Prometheus. Instead of creating new Routes, you will redeploy the ones created on module 2, but this time you will add *traits* to enable Hawtio and Prometheus.
+
+=== Automate your deploying with Tekton
+
+In the previous module you used developer tools to deploy Integrations. Although it was really easy and fast to deploy that way, that approach only works for development. In a real life scenario we need to integrate the development with source code management and automate the deployment process. In this module you will learn how to use Tekton pipelines to deploy different styles of Camel projects.
