@@ -67,3 +67,26 @@ Click on `Allow selected permissions`. That will take you to the Dev Spaces dash
 
 image::module01/devspaces-dashboard.png[Dashboard]
 
+To start using the workspace, click on the open button.
+
+image::module01/workspace-first-login.png[Workspace]
+
+Since this is your first time opening the IDE, you will be required to perform some basic configuration, like trusting the workspace authors. You may also set the theme for the IDE.
+
+Some popups will show up about permissions to share data. You may deny all of them. 
+
+image::module01/workspace-warning.png[Pop Ups]
+
+Before we continue with the IDE, let's look at our git repository. 
+
+== Accessing Gitea
+
+You noticed that when you opened the workspace you already had a project loaded in there.
+Each user is this workshop has its own git repo. You will use this repository to have access to configuration and the final solution for each module, but you also are going to use it to push code you will deploy.
+
+[IMPORTANT]
+====
+* Repository URL: {gitea_console_url}/{user}/workshop_camel_workspace
+* User: `{gitea_user}`
+* Password: `{gitea_password}`
+====
