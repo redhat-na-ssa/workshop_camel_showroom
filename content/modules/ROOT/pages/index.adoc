@@ -64,10 +64,10 @@ OpenShift Container Platform includes multiple advanced capabilities that are te
 
 The following diagram shows the OpenShift capabilities that is provided with the platform:
 
-image::imgs/index/openshift-diagram.png[OpenShift diagram]
+image::index/openshift-diagram.png[OpenShift diagram]
 
 === Red Hat OpenShift Dev Spaces
 
 OpenShift Dev Spaces is a container-based service for creating consistent and secured developer environments on Red Hat OpenShift to increase developer productivity and optimize costs. We are going to use it to provide you a complete development envinronment using VS Code as IDE and an OpenShift project as a sandbox. 
 
-image::imgs/index/cloud-development-environments.gif[VS Code on Dev Spaces]
+image::index/cloud-development-environments.gif[VS Code on Dev Spaces]

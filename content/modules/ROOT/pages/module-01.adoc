@@ -19,15 +19,15 @@ Here are the access details:
 
 First you need to select how you want to authenticate. For this workshop we will use *cognito* as our authentication option: 
 
-image::imgs/module01/log-in-form.png[Log in form]
+image::module01/log-in-form.png[Log in form]
 
 After your selection you'll be able to enter your username and password:
 
-image::imgs/module01/log-in-form02.png[Insert credentials]
+image::module01/log-in-form02.png[Insert credentials]
 
 This is take you to the initial page. This page will show you what projects(namespaces) are available to you: 
 
-image::imgs/module01/projects.png[Projects]
+image::module01/projects.png[Projects]
 
 == Projects available to you
 
@@ -37,33 +37,33 @@ In this workshop you will interact with 3 different projects. Let's learn about 
 
 This is our mock e-commerce system. We will wire integrations to you to add functionality to the system. You are able to visualize what is in the project, but you are not able to change things.
 
-image::imgs/module01/globex-namespace.png[Globex Namespace]
+image::module01/globex-namespace.png[Globex Namespace]
 
 === {user}-devspaces
 
 Your IDE workspace is running here. You are able to visualize it but are not able to change it.
 
-image::imgs/module01/devspaces-namespace.png[Globex Namespace]
+image::module01/devspaces-namespace.png[Globex Namespace]
 
 === {user}-camel
 
 This is the project you'll use to deploy integrations. We already have some operators set up for you. You'll use them in the upcoming modules.
 
-image::imgs/module01/camel-namespace.png[Globex Namespace]
+image::module01/camel-namespace.png[Globex Namespace]
 
 == Using Dev Spaces
 
 Let's get used to our IDE. Go back to the OpenShift {console_url}[console]. In the top right corner, click on the grid, then select `Red Hat OpenShift Dev Spaces`.
 
-image::imgs/module01/grid-top-corner.png[Globex Namespace]
+image::module01/grid-top-corner.png[Globex Namespace]
 
-image::imgs/module01/link-devspaces.png[Link Dev Spaces]
+image::module01/link-devspaces.png[Link Dev Spaces]
 
 Once you click, you will be asked to authenticate again and authorize the service to access your user account.
 
-image::imgs/module01/authorize-devspaces.png[Authorize]
+image::module01/authorize-devspaces.png[Authorize]
 
 Click on `Allow selected permissions`. That will take you to the Dev Spaces dashboard.
 
-image::imgs/module01/devspaces-dashboard.png[Dashboard]
+image::module01/devspaces-dashboard.png[Dashboard]
 

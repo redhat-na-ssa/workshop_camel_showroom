@@ -1,6 +1,6 @@
 ---
 name: modules
-title: Sample Module Title
+title: Welcome Page
 version: master
 nav:
   - modules/ROOT/nav.adoc
