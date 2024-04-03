@@ -30,3 +30,44 @@ This module is focused on how you can monitor your integrations using Hawtio and
 === Automate your deploying with Tekton
 
 In the previous module you used developer tools to deploy Integrations. Although it was really easy and fast to deploy that way, that approach only works for development. In a real life scenario we need to integrate the development with source code management and automate the deployment process. In this module you will learn how to use Tekton pipelines to deploy different styles of Camel projects.
+
+== Environment access and credentials
+
+Throughout the workshop we will provide you links to the resources you need to access but you can also use this section as reference: 
+
+OpenShift Access:
+
+* Console URL: {console_url}
+* User: `{user}`
+* Password: `{password}`
+
+Gitea Access:
+
+* Console URL: {gitea_console_url}
+* User: `{gitea_user}`
+* Password: `{gitea_password}`
+
+== Products used in the workshop
+
+Before starting to interact with the environment, let's get to know the products we will work with. 
+
+=== Red Hat build of Apache Camel
+
+Red Hat build of Apache Camel is based on the open-source project Apache Camel. Apache Camel is a Java integration framework that it's been around since 2004.
+It provides an easy way to integrate different applications through process of structured steps called https://camel.apache.org/manual/routes.html[Routes]. The framework also provides building blocks that facilitate the integration of well known systems and protocols called https://camel.apache.org/components/4.4.x/index.html[Components]. Camel provides more than 300 of those.
+
+=== Red Hat OpenShift
+
+Red Hat OpenShift, the industry’s leading hybrid-cloud application platform powered by Kubernetes, brings together tested and trusted services to reduce the friction of developing, modernizing, deploying, running, and managing applications. OpenShift delivers a consistent experience across public cloud, on-premise, hybrid cloud, or edge architecture.
+
+OpenShift Container Platform includes multiple advanced capabilities that are tested and integrated with the underlying certified Kubernetes environment. We are going to use many of those features today
+
+The following diagram shows the OpenShift capabilities that is provided with the platform:
+
+image::imgs/index/openshift-diagram.png[OpenShift diagram]
+
+=== Red Hat OpenShift Dev Spaces
+
+OpenShift Dev Spaces is a container-based service for creating consistent and secured developer environments on Red Hat OpenShift to increase developer productivity and optimize costs. We are going to use it to provide you a complete development envinronment using VS Code as IDE and an OpenShift project as a sandbox. 
+
+image::imgs/index/cloud-development-environments.gif[VS Code on Dev Spaces]

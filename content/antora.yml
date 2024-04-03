@@ -10,13 +10,14 @@ asciidoc:
     lab_name: "Cloud-native Integration with Red Hat build of Apache Camel"
     release-version: master
     page-pagination: true
-    my_var: "foo"
-    guid: my-guid
-    ssh_user: devops
-    ssh_password: devops
-    ssh_command: ssh devops@bastion.{guid}.example.opentlc.com
     page-links:
     - url: https://redhat.com
       text: Red Hat
     - url: https://www.redhat.com/en/summit
       text: Summit
+    console_url: https://test.dev
+    user: tester
+    password: test123
+    gitea_console_url: https://gitea.dev
+    gitea_user: tester
+    gitea_password: test123    
