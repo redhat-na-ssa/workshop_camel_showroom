@@ -77,12 +77,79 @@ Some popups will show up about permissions to share data. You may deny all of th
 
 image::module01/workspace-warning.png[Pop Ups]
 
-Before we continue with the IDE, let's look at our git repository. 
+
+== Starting with a HelloWorld Route
+
+=== Creating the Route
+
+Before we start to develop real integrations, let's get a feel for the tooling available by starting with a stock HelloWorld application. We can now use VS Code extensions to initialize a Camel Route for us. 
+
+* Use `CTRL + SHIFT + P` to open the command pallete 
+* Type in `camel yaml dsl`
+* Select `camel:Create a Camel Route using YAML DSL`.
+* name the Route `sample-route`
+* A terminal will open. Type `3` and hit enter to enable JBang to download content.
+
+Once the downloading is done, you should have a file named `sample-route.camel.yaml` in the project root.
+
+image::module01/sample-route.png[Sample Route]
+
+A Route is a set of processing steps that are applied to a message as it travels from a source to a destination. A route typically consists of a series of processing steps that are connected in a linear sequence.A Camel route is where the integration flow is defined. For example, you can write a Camel route to specify how two systems can be integrated. You can also specify how the data can be manipulated, routed, or mediated between the systems. 
+
+In this example we have a simple route that start with a Timer event. So every second a new event will be generated and a message will be logged. Let's run this example locally first.
+
+=== Running Routes Locally
+
+To run this Route we are goin to use a tool called JBang. Jbang is a CLI that makes easy to run Java applications. You are have the VS Code extansion configured for you and the JBang CLI available in your workspace. Let's run the route.
+
+* If you have the editor open, you can run it by click on the `Run Camel Application with JBang` button on the top right corner:
+
+image::module01/run-jbang-01.png[JBang button]
+
+* You can also right click on the file name and select `Run Camel Application with JBang`.
+
+Once the route start to run, you will see logs in your terminal:
+
+image::module01/route-running.gif[Route Running]
+
+Once you're done with the demonstrate. Click `CTRL + C` on the terminal to stop the process.
+
+=== Deploying the route using Camel K
+
+We also have a tool to make this deployment as easy as it was to run it locally. The tool is Camel K.
+Camel K is built from Apache Camel, allowing it to run natively on Kubernetes and is specifically designed for serverless and microservice architectures.
+
+The VS Code extension and the CLI are already configured in the environment, but before we deploy, let's make sure you are connected to the OpenShift cluster and using the right project.
+
+* Open a new terminal window
+* To make sure you're logged with the right user, run `oc whoami`. Expected to see `{user}`.
+* Now let's configure the right project. In the terminal run `oc project {user}-camel`
+
+image::module01/setting-project.gif[Setting Project]
+
+To deploy the Route you can use the icon in the top right corner(next to the JBang one we used previously).
+
+* Click in the rocket to launch the deployment
+* Select `Basic` deployment
+* Note the `APACHE CAMEL K INTEGRATIONS` tab on your left. Once the deployment starts, you will see a route name with a red dot in front of it. This means the build is happening but the Route is not running
+* When the Route dot turns green it means it is running. Now you can check the logs by right clicking on the route name and selecting `follow logs for Apache Camel K Integration`.
+
+You can check the execution in the following gif:
+
+image::module01/deploy-route.gif[Deploy royte]
+
+Since our work will be persisted using git, let's create a folder for this first module. Name it `module-01`. You can follow the steps in the gif below.
+
+image::module01/create-folder.gif[Create folder]
+
+With the folder created, move the `sample-route.camel.yaml` file to the folder.
 
 == Accessing Gitea
 
 You noticed that when you opened the workspace you already had a project loaded in there.
-Each user is this workshop has its own git repo. You will use this repository to have access to configuration and the final solution for each module, but you also are going to use it to push code you will deploy.
+Each user in this workshop has its own git repository. You will use this repository to have access to configuration and the final solution for each module, but you also are going to use it to push code you will deploy.
+
+Use the link and credentials below to access Gitea.
 
 [IMPORTANT]
 ====
@@ -90,3 +157,19 @@ Each user is this workshop has its own git repo. You will use this repository to
 * User: `{gitea_user}`
 * Password: `{gitea_password}`
 ====
+
+image::module01/gitea.png[Gitea]
+
+Once you were able to check your access to Gitea, let's go back to your workspace and configure git there.
+
+=== Configuring Git on the Workspace 
+
+Before we finish this module we need to push our changes to the git repo assigned to the user.
+
+* Open a terminal in VS Code (`CTRL + ``)
+* Run `git config --global user.name "{user}"`
+* Also add an email: `git config --global user.email "{user}@email.com"`
+
+With that configuration done you will be able to push your code using the ui, like in the following gif: 
+
+image::module01/push-code.gif[Pushing code]
