@@ -31,6 +31,10 @@ This module is focused on how you can monitor your integrations using Hawtio and
 
 In the previous module you used developer tools to deploy Integrations. Although it was really easy and fast to deploy that way, that approach only works for development. In a real life scenario we need to integrate the development with source code management and automate the deployment process. In this module you will learn how to use Tekton pipelines to deploy different styles of Camel projects.
 
+=== Troubleshooting Guide
+
+This is not a module. This guide is here to help you execute the workshop. So in case you have problems trying to execute the instructions, you can visit this page for additional instructions.
+
 == Environment access and credentials
 
 Throughout the workshop we will provide you links to the resources you need to access but you can also use this section as reference: 

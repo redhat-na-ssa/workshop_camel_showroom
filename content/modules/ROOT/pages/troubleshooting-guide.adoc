@@ -1,0 +1,5 @@
+= Troubleshooting Guide
+
+== Cannot visualize VS Code extensions
+
+You environment is set to auto-install the extensions needed for this workshop, but this happens in the browser side. If for some reason you are not able to visualize what you need try to refresh the browser(F5 or CTRL+ R).

@@ -79,7 +79,7 @@ asciidoc:
       text: Summit
 ----
 
-image::ui-links.png[]
+
 
 == Dev Mode
 
@@ -98,4 +98,4 @@ extensions:
 
 . Produces
 +
-image::dev-mode.png[]
+

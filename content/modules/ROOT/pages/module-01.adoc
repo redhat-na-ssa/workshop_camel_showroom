@@ -17,13 +17,9 @@ Here are the access details:
 * Password: `{password}`
 ====
 
-First you need to select how you want to authenticate. For this workshop we will use *cognito* as our authentication option: 
+Open the console URL link in another tab. Now you just need to enter your User and Password and click on "Log in" button. 
 
 image::module01/log-in-form.png[Log in form]
-
-After your selection you'll be able to enter your username and password:
-
-image::module01/log-in-form02.png[Insert credentials]
 
 This is take you to the initial page. This page will show you what projects(namespaces) are available to you: 
 

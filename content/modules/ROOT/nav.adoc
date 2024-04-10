@@ -5,3 +5,5 @@
 * xref:module-03.adoc[3. Monitoring Integrations in OpenShift]
 
 * xref:module-04.adoc[4. Automate your deploying with Tekton]
+
+* xref:troubleshooting-guide.adoc[Troubleshooting Guide]
