@@ -3,3 +3,15 @@
 == Cannot visualize VS Code extensions
 
 You environment is set to auto-install the extensions needed for this workshop, but this happens in the browser side. If for some reason you are not able to visualize what you need try to refresh the browser(F5 or CTRL+ R).
+
+== How to configure git on VS Code
+
+If for any reason you lost you git configuration, you can reaply it yourself by following theses steps:
+
+* Open a terminal in VS Code (`CTRL + ``)
+* Run `git config --global user.name "{user}"`
+* Also add an email: `git config --global user.email "{user}@email.com"`
+
+With that configuration done you will be able to push your code using the ui, like in the following gif: 
+
+image::module01/push-code.gif[Pushing code]

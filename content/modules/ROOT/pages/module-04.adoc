@@ -1,1 +1,1 @@
-= Automate your deploying with Tekton
+= Automate your deployment with Tekton

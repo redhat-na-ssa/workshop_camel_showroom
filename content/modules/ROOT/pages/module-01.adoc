@@ -156,16 +156,11 @@ Use the link and credentials below to access Gitea.
 
 image::module01/gitea.png[Gitea]
 
-Once you were able to check your access to Gitea, let's go back to your workspace and configure git there.
+Once you were able to check your access to Gitea, let's go back to your workspace and use git there.
 
-=== Configuring Git on the Workspace 
+=== Pushing code 
 
-Before we finish this module we need to push our changes to the git repo assigned to the user.
+Before finishing this module you need to push your changes to the git repo assigned to your user. The configuration is already done for you, so you just need to add your `username` and `password` when asked. You can follow the steps on the gift: 
 
-* Open a terminal in VS Code (`CTRL + ``)
-* Run `git config --global user.name "{user}"`
-* Also add an email: `git config --global user.email "{user}@email.com"`
+image::module01/pushing-code.gif[Pushing Code]
 
-With that configuration done you will be able to push your code using the ui, like in the following gif: 
-
-image::module01/push-code.gif[Pushing code]

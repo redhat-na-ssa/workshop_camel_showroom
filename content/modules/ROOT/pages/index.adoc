@@ -27,7 +27,7 @@ For this module you'll actually implement and deploy integrations. You will have
 
 This module is focused on how you can monitor your integrations using Hawtio and Prometheus. Instead of creating new Routes, you will redeploy the ones created on module 2, but this time you will add *traits* to enable Hawtio and Prometheus.
 
-=== Automate your deploying with Tekton
+=== Automate your deployment with Tekton
 
 In the previous module you used developer tools to deploy Integrations. Although it was really easy and fast to deploy that way, that approach only works for development. In a real life scenario we need to integrate the development with source code management and automate the deployment process. In this module you will learn how to use Tekton pipelines to deploy different styles of Camel projects.
 
