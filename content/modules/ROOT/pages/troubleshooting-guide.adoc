@@ -2,7 +2,7 @@
 
 == Cannot visualize VS Code extensions
 
-You environment is set to auto-install the extensions needed for this workshop, but this happens in the browser side. If for some reason you are not able to visualize what you need try to refresh the browser(F5 or CTRL+ R).
+You environment is set to auto-install the extensions needed for this workshop, but this happens in the browser side. If for some reason you are not able to visualize what you need try to refresh the browser(`F5` or `CTRL+ R`).
 
 == How to configure git on VS Code
 
@@ -14,4 +14,16 @@ If for any reason you lost you git configuration, you can reaply it yourself by 
 
 With that configuration done you will be able to push your code using the ui, like in the following gif: 
 
-image::module01/push-code.gif[Pushing code]
+image::troubleshooting/push-code.gif[Pushing code]
+
+== OpenShift Forbidden Error
+
+When executing any command or Task in the DevWorkspace's Terminal...
+If you see any error similar to the following:
+
+
+`Error from server (Forbidden): ... is forbidden: User "system:serviceaccount:{user}-devspaces:workspace53028c69c2b54fa5-sa" cannot get resource ... in API group ... in the namespace "system:serviceaccount:{user}-...`
+
+
+It may happen your DevWorkspace was not able to inject your user information properly during its initialization.
+To solve that issue, from the IDE *Task Manager*, execute the *Task* named `02: OC Login`.
