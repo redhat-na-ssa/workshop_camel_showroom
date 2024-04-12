@@ -1,1 +1,201 @@
 = Developing Integrations with Camel
+:table-caption!:
+
+Create the `module02` folder.
+
+image::module02/create-folder-module-02.gif[]
+
+== Order Connector
+
+Create the `order-connector` folder under the `module02` directory.
+
+image::module02/order-connector/create-folder.gif[]
+
+Create a new file in the `order-connector` directory. Name the file `application.properties`. Insert the following contents:
+
+.application.properties
+[subs=normal]
+....
+kafka.brokers=kafka-kafka-bootstrap.{user}-globex.svc.cluster.local:9092
+kafka.securityProtocol=SASL_PLAINTEXT
+kafka.saslMechanism=SCRAM-SHA-512
+kafka.saslJaasConfig=org.apache.kafka.common.security.scram.ScramLoginModule required username='globex' password='globex';
+
+cashback-service.url=cashback-service.{user}-globex.svc.cluster.local:8080
+....
+
+image::module02/order-connector/create-file-properties.gif[]
+
+Create a new file in the `order-connector` directory. Name the file `order-connector.camel.yaml`. Open the file in the Kaoto editor.
+
+image::module02/order-connector/create-file-camel.gif[]
+
+Create a new Camel route.
+
+image::module02/order-connector/new-route.gif[]
+
+Edit the name of the route and set it to `kafka-to-expense-api`.
+
+image::module02/order-connector/edit-route-name.gif[]
+
+Edit the route start node. Change it from the default Timer Component type to a Kafka Component type.
+
+image::module02/order-connector/edit-route-kafka.gif[]
+
+Set the following endpoint properties on the Kafka Component node:
+
+.Endpoint properties
+[%autowidth]
+|===
+|Name|Value
+
+|Topic
+|`globex.order-aggregated`
+
+|Brokers
+|`{{kafka.brokers:localhost:9092}}`
+
+|Auto Offset Reset
+|`earliest`
+
+|Group Id
+|`order-cashback-connector`
+|===
+
+image::module02/order-connector/edit-route-kafka-properties.gif[]
+
+Set the following security properties on the Kafka Component node:
+
+.Security properties
+[%autowidth]
+|===
+|Name|Value
+
+|Sasl Jaas Config
+|`{{?kafka.saslJaasConfig}}`
+
+|Sasl Mechanism
+|`{{?kafka.saslMechanism}}`
+
+|Security Protocol
+|`{{?kafka.securityProtocol}}`
+|===
+
+image::module02/order-connector/edit-route-kafka-security.gif[]
+
+Set the following properties on the Log Processor node:
+
+[%autowidth]
+|===
+|Name|Value
+
+|Message
+|`Picked up customer aggregated order message: '$\{body}'`
+|===
+
+image::module02/order-connector/edit-route-log.gif[]
+
+Append a Choice Processor node after the Log Processor node.
+
+image::module02/order-connector/edit-route-choice.gif[]
+
+Set the following properties on the "when" condition:
+
+[%autowidth]
+[separator=;]
+|===
+;Name;Value
+
+;Type
+;`Simple`
+
+;Expression
+;`$\{body} == $\{null} || $\{body} regex "\s*"`
+|===
+
+image::module02/order-connector/edit-route-choice-when.gif[]
+
+Insert a Stop Processor step under the "when" branch.
+
+image::module02/order-connector/edit-route-choice-when-stop.gif[]
+
+Insert a Rest Component step under the "otherwise" branch.
+
+image::module02/order-connector/edit-route-choice-otherwise-rest.gif[]
+
+Set the following endpoint properties on the Rest Component node:
+
+.Endpoint properties
+[%autowidth]
+|===
+|Name|Value
+
+|Method
+|`post`
+
+|Path
+|`/expense`
+
+|Binding Mode
+|`off`
+
+|Host
+|`{{cashback-service.url:localhost:8080}}`
+|===
+
+image::module02/order-connector/edit-route-choice-otherwise-rest-properties.gif[]
+
+Create the OpenShift ConfigMap, then run the Camel K Integration. To do so, open a terminal and run the following commands:
+
+[,shell]
+----
+cd module02/order-connector
+oc create configmap order-connector-config --from-file=application.properties
+kamel run -d camel:http -p configmap:order-connector-config -t prometheus.enabled=true -t prometheus.pod-monitor-labels='workshop=camel' -t jolokia.enabled=true order-connector.camel.yaml
+----
+
+image::module02/order-connector/run-route.gif[]
+
+== Customer Service
+
+image::module02/customer-service/create-folder.gif[]
+
+image::module02/customer-service/create-openapi-spec.gif[]
+image::module02/customer-service/create-openapi-spec-name.gif[]
+image::module02/customer-service/create-openapi-spec-datatype.gif[]
+image::module02/customer-service/create-openapi-spec-edit.gif[]
+image::module02/customer-service/create-openapi-spec-save.gif[]
+image::module02/customer-service/create-file-openapi-spec.gif[]
+
+image::module02/customer-service/create-file-properties.gif[]
+
+image::module02/customer-service/create-file-camel.gif[]
+image::module02/customer-service/create-bean.gif[]
+image::module02/customer-service/new-route-create-customer.gif[]
+image::module02/customer-service/edit-route-create-customer-direct.gif[]
+image::module02/customer-service/edit-route-create-customer-unmarshal.gif[]
+image::module02/customer-service/edit-route-create-customer-log.gif[]
+image::module02/customer-service/edit-route-create-customer-sql.gif[]
+image::module02/customer-service/edit-route-create-customer-setBody.gif[]
+
+image::module02/customer-service/route-get-customer.png[]
+image::module02/customer-service/route-get-customers.png[]
+image::module02/customer-service/route-update-customer.png[]
+image::module02/customer-service/route-delete-customer.png[]
+
+image::module02/customer-service/run-camel.gif[]
+
+== Customer Connector
+
+image::module02/customer-connector/create-folder.gif[]
+
+image::module02/customer-connector/create-file-properties.gif[]
+
+image::module02/customer-connector/create-file-camel.gif[]
+image::module02/customer-connector/route-kafka-to-customer-api.png[]
+image::module02/customer-connector/route-initial-create-customer.png[]
+image::module02/customer-connector/route-create-customer.png[]
+image::module02/customer-connector/route-update-customer.png[]
+image::module02/customer-connector/route-delete-customer.png[]
+
+image::module02/customer-connector/run-camel.png[]
