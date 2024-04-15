@@ -21,7 +21,7 @@ Open the console URL link in another tab. Now you just need to enter your User a
 
 image::module01/log-in-form.png[Log in form]
 
-This is take you to the initial page. This page will show you what projects(namespaces) are available to you: 
+This will take you to the initial page. This page will show you what projects(namespaces) are available to you: 
 
 image::module01/projects.png[Projects]
 
@@ -31,7 +31,7 @@ In this workshop you will interact with 3 different projects. Let's learn about 
 
 === {user}-globex
 
-This is our mock e-commerce system. We will wire integrations to you to add functionality to the system. You are able to visualize what is in the project, but you are not able to change things.
+This is our mock e-commerce system. We will wire integrations to it to add functionality to the system. You are able to visualize what is in the project, but you are not able to change things.
 
 image::module01/globex-namespace.png[Globex Namespace]
 
@@ -92,25 +92,28 @@ The file will be open using one of the VS Code extensions pre-configured for you
 
 image::module01/sample-route.png[Sample Route]
 
+[IMPORTANT]
+====
 A Route is a set of processing steps that are applied to a message as it travels from a source to a destination. A route typically consists of a series of processing steps that are connected in a linear sequence.A Camel route is where the integration flow is defined. For example, you can write a Camel route to specify how two systems can be integrated. You can also specify how the data can be manipulated, routed, or mediated between the systems. 
+====
 
-In this example we have a simple route that start with a Timer event. So every second a new event will be generated and a message will be logged. Let's run this example locally first.
+In this example we have a simple route that start with a https://camel.apache.org/components/4.4.x/timer-component.html[Timer] event. So every second a new event will be generated and a message will be logged. Let's run this example locally first.
 
 === Running Routes Locally
 
-To run this Route we are goin to use a tool called JBang. Jbang is a CLI that makes easy to run Java applications. You are have the VS Code extansion configured for you and the JBang CLI available in your workspace. Let's run the route.
+To run this Route we are goin to use a tool called JBang. https://camel.apache.org/manual/camel-jbang.html[JBang] is a CLI that makes easy to run Java applications. You already have the VS Code extension configured for you and the JBang CLI available in your workspace. Let's run the route.
 
-* If you have the editor open, you can run it by click on the `Run Camel Application with JBang` button on the top right corner:
+* If you have the editor open, you can run it by clicking on the `Run Camel Application with JBang` button on the top right corner:
 
 image::module01/run-jbang-01.png[JBang button]
 
 * You can also right click on the file name and select `Run Camel Application with JBang`.
 
-Once the route start to run, you will see logs in your terminal:
+It takes a couple of seconds to run routes for the first time, as dependencies need to be downloaded and stored locally. Once the route starts to run, you will see logs in your terminal:
 
 image::module01/route-running.gif[Route Running]
 
-Once you're done with the demonstrate. Click `CTRL + C` on the terminal to stop the process.
+This route will run indefinetely, generating messages every second, so once you're done with the demonstration, `CTRL + C` on the terminal to stop the process.
 
 === Deploying the route using Camel K
 
@@ -120,23 +123,23 @@ Camel K is built from Apache Camel, allowing it to run natively on Kubernetes an
 The VS Code extension and the CLI are already configured in the environment, but before we deploy, let's make sure you are connected to the OpenShift cluster and using the right project.
 
 * Open a new terminal window
-* To make sure you're logged with the right user, run `oc whoami`. Expected to see `{user}`.
+* To make sure you're logged with the right user, run `oc whoami`. Expected to see `{user}`. If you are not logged, you can follow the steps in the xref:module-03.adoc[troubleshooting guide].
 * Now let's configure the right project. In the terminal run `oc project {user}-camel`
 
 image::module01/setting-project.gif[Setting Project]
 
-To deploy the Route you can use the icon in the top right corner(next to the JBang one we used previously).
+To deploy the Route you can use the icon in the top right corner(next to the JBang icon we used previously).
 
-* Click in the rocket to launch the deployment
+* Click on the rocket icon to launch the deployment
 * Select `Basic` deployment
 * Note the `APACHE CAMEL K INTEGRATIONS` tab on your left. Once the deployment starts, you will see a route name with a red dot in front of it. This means the build is happening but the Route is not running
-* When the Route dot turns green it means it is running. Now you can check the logs by right clicking on the route name and selecting `follow logs for Apache Camel K Integration`.
+* When the Route dot turns green, it means it's running. Now you can check the logs by right clicking on the route name and selecting `follow logs for Apache Camel K Integration`.
 
-You can check the execution in the following gif:
+You can check the execution with the following gif:
 
 image::module01/deploy-route.gif[Deploy royte]
 
-Since our work will be persisted using git, let's create a folder for this first module. Name it `module-01`. You can follow the steps in the gif below.
+Since our work will be persisted using git, let's create a folder for this first module. Name it `module-01`. You can follow the steps with the gif below:
 
 image::module01/create-folder.gif[Create folder]
 
@@ -145,9 +148,9 @@ With the folder created, move the `sample-route.camel.yaml` file to the folder.
 == Accessing Gitea
 
 You noticed that when you opened the workspace you already had a project loaded in there.
-Each user in this workshop has its own git repository. You will use this repository to have access to configuration and the final solution for each module, but you also are going to use it to push code you will deploy.
+Each user in this workshop has its own git repository and workspace. You will use this repository to have access to configuration and the final solution for each module, but you also are going to use it to push code you generate.
 
-Use the link and credentials below to access Gitea.
+Use the link and credentials below to access Gitea:
 
 [IMPORTANT]
 ====
