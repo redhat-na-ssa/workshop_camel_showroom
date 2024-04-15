@@ -27,3 +27,7 @@ If you see any error similar to the following:
 
 It may happen your DevWorkspace was not able to inject your user information properly during its initialization.
 To solve that issue, from the IDE *Task Manager*, execute the *Task* named `02: OC Login`.
+
+== Unable to Access Workspace
+
+If you workspace is not starting or you are seeing errors while trying it, call your instructors. We can recreate the workspace for you.

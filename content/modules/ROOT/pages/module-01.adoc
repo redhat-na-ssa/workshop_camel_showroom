@@ -88,6 +88,8 @@ Before we start to develop real integrations, let's get a feel for the tooling a
 
 Once the downloading is done, you should have a file named `sample-route.camel.yaml` in the project root.
 
+The file will be open using one of the VS Code extensions pre-configured for you, Kaoto. https://kaoto.io/[Kaoto] is a graphical editor for Camel Routes. We will use it to build integrations using no-code/low-code.
+
 image::module01/sample-route.png[Sample Route]
 
 A Route is a set of processing steps that are applied to a message as it travels from a source to a destination. A route typically consists of a series of processing steps that are connected in a linear sequence.A Camel route is where the integration flow is defined. For example, you can write a Camel route to specify how two systems can be integrated. You can also specify how the data can be manipulated, routed, or mediated between the systems. 
