@@ -123,7 +123,7 @@ Camel K is built from Apache Camel, allowing it to run natively on Kubernetes an
 The VS Code extension and the CLI are already configured in the environment, but before we deploy, let's make sure you are connected to the OpenShift cluster and using the right project.
 
 * Open a new terminal window
-* To make sure you're logged with the right user, run `oc whoami`. Expected to see `{user}`. If you are not logged, you can follow the steps in the xref:module-03.adoc[troubleshooting guide].
+* To make sure you're logged with the right user, run `oc whoami`. Expected to see `{user}`. If you are not logged, you can follow the steps in the xref:troubleshooting-guide.adoc[troubleshooting guide].
 * Now let's configure the right project. In the terminal run `oc project {user}-camel`
 
 image::module01/setting-project.gif[Setting Project]
