@@ -1,0 +1,175 @@
+= Order Connector
+:table-caption!:
+
+The Order Connector application will pull JSON order messages from a Kafka topic, and post them to the existing Expense REST API.
+
+Let's start by creating an `order-connector` directory under the `module02` directory.
+
+image::module02/order-connector/create-folder.gif[]
+
+== Application Properties
+
+The application.properties file can be used to variable values in our application. Things like credentials, URLs, ... etc. You can have as many files as you need, and they can be applied as files, ConfigMaps, or Secrets as appropriate. For simplicity, we're just going to define one properties file that we'll later install as a ConfigMap.
+
+Create a new file in the `order-connector` directory. Name the file `application.properties`. Insert the following contents:
+
+.application.properties
+[source,properties]
+[subs=normal]
+....
+kafka.brokers=kafka-kafka-bootstrap.{user}-globex.svc.cluster.local:9092
+kafka.securityProtocol=SASL_PLAINTEXT
+kafka.saslMechanism=SCRAM-SHA-512
+kafka.saslJaasConfig=org.apache.kafka.common.security.scram.ScramLoginModule required username='globex' password='globex';
+
+cashback-service.url=cashback-service.{user}-globex.svc.cluster.local:8080
+....
+
+image::module02/order-connector/create-file-properties.gif[]
+
+== Camel Configurations
+
+The Camel configuration file will hold our Camel route definitions. If you're familiar with Camel, you know that there are many ways to define your Camel routes (ie, Java, XML, YAML, ... etc). These are known as DSLs. In general, you can use whichever one you're most familiar with. However, since we plan to develop these apps using Kaoto graphical editor, we'll be using the YAML DSL.
+
+Create a new file in the `order-connector` directory. Name the file `order-connector.camel.yaml`. Open the file in the Kaoto editor.
+
+[NOTE]
+====
+If the Kaoto extention is installed, it will by default detect and open any files matching the `*.camel.yaml` naming pattern. If you want to open the file in any other editor (ie, the plain text editor), you can right-click on the file, select `"Open With..."`, and then choose your desired editor.
+====
+
+image::module02/order-connector/create-file-camel.gif[]
+
+Create a new Camel route. This will create a new skeleton Camel route configuration with a Timer Component start node, and a Log Processor.
+
+image::module02/order-connector/new-route.gif[]
+
+Edit the name of the route and set it to `kafka-to-expense-api`.
+
+[TIP]
+====
+It's always a good idea to give your Camel routes useful names. This helps you to identify them later when viewing them in the hawtio web console.
+====
+
+image::module02/order-connector/edit-route-name.gif[]
+
+Edit the route start node. Change it from the default Timer Component type to a Kafka Component type.
+
+image::module02/order-connector/edit-route-kafka.gif[]
+
+Set the following endpoint properties on the Kafka Component node:
+
+.Endpoint properties
+[%autowidth]
+|===
+|Name|Value
+
+|Topic|`globex.order-aggregated`
+|Brokers|`{{kafka.brokers:localhost:9092}}`
+|Auto Offset Reset|`earliest`
+|Group Id|`order-cashback-connector`
+|===
+
+image::module02/order-connector/edit-route-kafka-properties.gif[]
+
+Set the following security properties on the Kafka Component node:
+
+.Security properties
+[%autowidth]
+|===
+|Name|Value
+
+|Sasl Jaas Config|`{{?kafka.saslJaasConfig}}`
+|Sasl Mechanism|`{{?kafka.saslMechanism}}`
+|Security Protocol|`{{?kafka.securityProtocol}}`
+|===
+
+[NOTE]
+====
+You may have noticed the `{{property.name}}` syntax for some of the values. This allows us to reference the properties we defined in our `application.properties` file earlier. This syntax allows you to reference properties, define defaults should the properties not exist, and even selectively set an option based on whether or not a property is set. For more information on the syntax and capabilites, take a look at the https://camel.apache.org/manual/using-propertyplaceholder.html[docs].
+====
+
+image::module02/order-connector/edit-route-kafka-security.gif[]
+
+Set the following properties on the Log Processor node:
+
+[IMPORTANT]
+====
+As with many things in Camel, there is usually more than one way to accomplish the same task. For instance, there is both a Log Component, and a Log Processor. Both serve the purpose of logging a message, just with slightly different configurations. In all of these labs, we will use the Log Processor for consistency.
+====
+
+[%autowidth]
+|===
+|Name|Value
+
+|Message|`Picked up customer aggregated order message: '$\{body}'`
+|===
+
+[NOTE]
+====
+Notice that you can insert Camel Simple expressions into the log message. For more information about Camel Simple expression language, take a look at the https://camel.apache.org/components/latest/languages/simple-language.html[docs].
+====
+
+image::module02/order-connector/edit-route-log.gif[]
+
+Append a Choice Processor node after the Log Processor node.
+
+image::module02/order-connector/edit-route-choice.gif[]
+
+Set the following properties on the "when" condition:
+
+[%autowidth]
+[separator=:]
+|===
+:Name:Value
+
+:Type:`Simple`
+:Expression:`$\{body} == $\{null} || $\{body} regex "\s*"`
+|===
+
+image::module02/order-connector/edit-route-choice-when.gif[]
+
+Insert a Stop Processor step under the "when" branch.
+
+image::module02/order-connector/edit-route-choice-when-stop.gif[]
+
+Insert a Rest Component step under the "otherwise" branch.
+
+image::module02/order-connector/edit-route-choice-otherwise-rest.gif[]
+
+Set the following endpoint properties on the Rest Component node:
+
+.Endpoint properties
+[%autowidth]
+|===
+|Name|Value
+
+|Method|`post`
+|Path|`/expense`
+|Binding Mode|`off`
+|Host|`{{cashback-service.url:localhost:8080}}`
+|===
+
+image::module02/order-connector/edit-route-choice-otherwise-rest-properties.gif[]
+
+== Running Application
+
+There are several ways to run and deploy a Camel application. You can test things locally with JBang, build/deploy a Camel on Spring Boot or Camel on Quarkus app, or use Camel K. For this lab, we'll be using Camel K.
+
+First, we'll create the OpenShift ConfigMap, then we'll run the Camel K Integration. To do so, open a terminal and run the following commands:
+
+[IMPORTANT]
+====
+Make sure that you're logged-in to OpenShift as `{user}` and in the correct `{user}-camel` project/namespace.
+====
+
+[source,shell]
+----
+cd module02/order-connector
+oc create configmap order-connector-config --from-file=application.properties
+kamel run -d camel:http -p configmap:order-connector-config -t prometheus.enabled=true -t prometheus.pod-monitor-labels='workshop=camel' -t jolokia.enabled=true order-connector.camel.yaml
+----
+
+image::module02/order-connector/run-route.gif[]
+
+And that's it! If all well, you should see your `order-connector-*` pod start within a few minutes. It'll take some time for it to build. So be patient.

@@ -1,0 +1,415 @@
+= Customer Service
+:table-caption!:
+
+The Customer Service application will implement the Customer API. It'll give us a REST based interface to the `customer` table in the Customer DB.
+
+Let's start by creating the `customer-service` folder under the `module02` directory.
+
+image::module02/customer-service/create-folder.gif[]
+
+== OpenAPI Spec
+
+Next, we'll create the OpenAPI spec defining our REST interface. For this, we'll be using the https://www.apicur.io/apicurito/[Apicurito] editor.
+
+[TIP]
+====
+If you'd like to skip this step, or if the site is down, you can grab the completed OpenAPIv3 spec from the solutions branch in your Git repo.
+====
+
+Open up a browser, go to https://www.apicur.io/apicurito/pwa/, and create a new OpenAPIv3 spec.
+
+image::module02/customer-service/create-openapi-spec.gif[]
+
+Name the API `Customer API`.
+
+image::module02/customer-service/create-openapi-spec-name.gif[]
+
+Create a new Data Type named `Customer`, and add the following JSON Example:
+
+.JSON Example
+[source,json]
+....
+{
+    "customerId": "avandelay",
+    "customerName": "Art Vandelay"
+}
+....
+
+Make sure to select the box to create a new REST Resource for the Data Type. This will generate the paths and operations based on the JSON Example you entered in the box above. When you're ready, click `"Save"`.
+
+image::module02/customer-service/create-openapi-spec-datatype.gif[]
+
+You can view and edit the generated REST Resource. Select the `"Get"` operation under the `/customers` path. Change the Operation ID to `getCustomers` (_Note the CamelCase spelling_).
+
+[IMPORTANT]
+====
+The Operation ID names are important. It is what will link the operation in the OpenAPI spec to the implementation route in Camel.
+====
+
+image::module02/customer-service/create-openapi-spec-edit.gif[]
+
+Feel free to inspect the rest of the generated API spec. You can view it graphically, or look at the source code any given section. When you are satisfied, click the `"Save As..."` button, choose the `"Save as JSON"` option, and save the file somewhere on your machine.
+
+image::module02/customer-service/create-openapi-spec-save.gif[]
+
+Now switch back over to your Dev Spaces window. Create a new file in the `customer-service` directory named `customer-openapi-spec.json`. Paste in the contents of the OpenAPI spec file that you just saved locally.
+
+image::module02/customer-service/create-file-openapi-spec.gif[]
+
+== Application Properties
+
+Now let's create our properties file like we did in the previous lab.
+
+Create a new file in the `customer-service` directory. Name the file `application.properties`. Insert the following contents:
+
+.application.properties
+[source,properties]
+[subs=normal]
+....
+db.serverName=cashback-db.{user}-globex.svc.cluster.local
+db.port=5432
+db.databaseName=cashback
+db.user=cashbackmgr
+db.password=cashbackmgr
+....
+
+image::module02/customer-service/create-file-properties.gif[]
+
+== Camel Configuration
+
+Next, we'll create the Camel configuration file. Unlike our previous app, this file will contain multiple Camel route definitions.
+
+Create a new file in the `customer-service` directory. Name the file `customer-service.camel.yaml`. Open the file in the Kaoto editor.
+
+image::module02/customer-service/create-file-camel.gif[]
+
+Since this application will be interacting with a database, we'll need to create and configure a `javax.sql.DataSource` instance. We will then pass this bean reference to our Camel components in later steps.
+
+Select the `Beans` tab in the Kaoto editor. Create a new bean with the following fields.
+
+.Details
+[%autowidth]
+|===
+|Name|Value
+
+|Name|`customerDb`
+|Type|`org.postgresql.ds.PGSimpleDataSource`
+|===
+
+Expand the `Properties` section, and add the following:
+
+.Properties
+[%autowidth]
+|===
+|Name|Value
+
+|databaseName|`{{db.databaseName:public}}`
+|password|`{{db.password:Abcd1234}}`
+|portNumber|`{{db.port:5432}}`
+|serverName|`{{db.serverName:localhost}}`
+|user|`{{db.user:user1}}`
+|===
+
+image::module02/customer-service/create-bean.gif[]
+
+=== Camel Route - `create-customer`
+
+Now we can start on our first Camel route. The `create-customer` route will create a new customer in the database if one did not already exist.
+
+Create a new Camel route and name it `create-customer`.
+
+image::module02/customer-service/new-route-create-customer.gif[]
+
+Edit the route start node. Change it from the default Timer Component type to a Direct Component type. Set the following Endpoint properties:
+
+.Endpoint properties
+[%autowidth]
+|===
+|Name|Value
+
+|Name|`createCustomer`
+|===
+
+[NOTE]
+====
+As previously mentioned, the `Name` property of this Direct Component correlates to the Operation ID of the specific operation in the OpenAPI spec that we created in a prior step.
+====
+
+image::module02/customer-service/edit-route-create-customer-direct.gif[]
+
+Next, we'll need to unmarshal the JSON data into a Java Object so that we can interact with it more easily. We can unmarshal the data into any structure, most commonly a POJO, but for simplicity we'll just use a hashmap.
+
+Append an Unmarshal Processor step after the Direct Component step. Set the following properties:
+
+.Properties
+[%autowidth]
+|===
+|Name|Value
+
+|Data Format|`JSon`
+|Unmarshal Type|`java.util.Map`
+|===
+
+image::module02/customer-service/edit-route-create-customer-unmarshal.gif[]
+
+Edit the Log Processor step. Set the following properties:
+
+.Properties
+[%autowidth]
+|===
+|Name|Value
+
+|Message|`Inserting customer: customer_id='$\{body["customerId"]}', name='$\{body["customerName"]}'`
+|===
+
+image::module02/customer-service/edit-route-create-customer-log.gif[]
+
+Now we'll insert the record into the database using the bean reference we created before. There are several ways to interact with a database (ie, JPA, JDBC, SQL, ... etc). Each of which have different syntax, but can accomplish the same task. We'll be using the SQL Component in the lab.
+
+Append a new SQL Component step after the Log Processor step. Set the following Endpoint properties:
+
+.Endpoint properties
+[%autowidth]
+|===
+|Name|Value
+
+|Query|`sql:INSERT INTO customer (customer_id, name) VALUES (:#customerId, :#customerName);`
+|Data Source|`#customerDb`
+|===
+
+image::module02/customer-service/edit-route-create-customer-sql.gif[]
+
+Finally, we'll want to return nothing since that is the desired result of a successful `post` operation according to our OpenAPI spec.
+
+Append a Set Body Processor step after the SQL Component step. Set the following Expression properties:
+
+.Expression properties
+[%autowidth]
+|===
+|Name|Value
+
+|Type|`Simple`
+|Expression|`$\{null}`
+|===
+
+image::module02/customer-service/edit-route-create-customer-setBody.gif[]
+
+That's all for the `create-customer` route! Now let's see if you can create the remaining routes with a little less instruction and hand-holding. :)
+
+=== Camel Route - `get-customer`
+
+This route will get a single customer given a `customerId`, or return an HTTP `404` if the customer is not found.
+
+image::module02/customer-service/route-get-customer.png[]
+
+.1 - Direct Component
+[%autowidth]
+|===
+|Name|Value
+
+|Name|`getCustomer`
+|===
+
+.2 - Log Processor
+[%autowidth]
+|===
+|Name|Value
+
+|Message|`Fetching customer details: customer_id=$\{header.customerId}`
+|===
+
+.3 - SQL Component
+[%autowidth]
+|===
+|Name|Value
+
+|Query|`SELECT customer_id AS "customerId", name AS "customerName" FROM customer WHERE customer_id=:#$\{header.customerId};`
+|Data Source|`#customerDb`
+|Output Type|`SelectOne`
+|===
+
+.4 - Choice Processor -> When Expression
+[%autowidth]
+|===
+|Name|Value
+
+|Type|`Simple`
+|Expression|`$\{body} == $\{null}`
+|===
+
+.5 - Log Processor
+[%autowidth]
+|===
+|Name|Value
+
+|Message|`Customer not found: customer_id='$\{header.customerId}'`
+|===
+
+.6 - Set Header Processor
+[%autowidth]
+|===
+|Name|Value
+
+|Name|`CamelHttpResponseCode`
+|Type|`Constant`
+|Expression|`404`
+|===
+
+.7 - Marshal Processor
+[%autowidth]
+|===
+|Name|Value
+
+|Data Format|`JSon`
+|===
+
+=== Camel Route - `get-customers`
+
+This route will get a list of all customers in the database.
+
+image::module02/customer-service/route-get-customers.png[]
+
+.1 - Direct Component
+[%autowidth]
+|===
+|Name|Value
+
+|Name|`getCustomers`
+|===
+
+.2 - Log Processor
+[%autowidth]
+|===
+|Name|Value
+
+|Message|`Getting customers`
+|===
+
+.3 - SQL Component
+[%autowidth]
+|===
+|Name|Value
+
+|Query|`SELECT customer_id AS "customerId", name AS "customerName" FROM customer;`
+|Data Source|`#customerDb`
+|===
+
+.4 - Marshal Processor
+[%autowidth]
+|===
+|Name|Value
+
+|Data Format|`JSon`
+|===
+
+=== Camel Route - `update-customer`
+
+This route will update a customer record for a given `customerId`.
+
+image::module02/customer-service/route-update-customer.png[]
+
+.1 - Direct Component
+[%autowidth]
+|===
+|Name|Value
+
+|Name|`updateCustomer`
+|===
+
+.2 - Unmarshal Processor
+[%autowidth]
+|===
+|Name|Value
+
+|Data Format|`JSon`
+|Unmarshal Type|`java.util.Map`
+|===
+
+.3 - Log Processor
+[%autowidth]
+|===
+|Name|Value
+
+|Message|`Updating customer: customer_id='$\{header.customerId}', name='$\{body["customerName"]}'`
+|===
+
+.4 - SQL Component
+[%autowidth]
+|===
+|Name|Value
+
+|Query|`UPDATE customer SET name=:#customerName WHERE customer_id=:#$\{header.customerId};`
+|Data Source|`#customerDb`
+|===
+
+.5 - Set Body Processor
+[%autowidth]
+|===
+|Name|Value
+
+|Type|`Simple`
+|Expression|`$\{null}`
+|===
+
+=== Camel Route - `delete-customer`
+
+This route will delete a customer record for a given `customerId`.
+
+image::module02/customer-service/route-delete-customer.png[]
+
+.1 - Direct Component
+[%autowidth]
+|===
+|Name|Value
+
+|Name|`deleteCustomer`
+|===
+
+.2 - Log Processor
+[%autowidth]
+|===
+|Name|Value
+
+|Message|`Deleting customer: customer_id='$\{header.customerId}'`
+|===
+
+.3 - SQL Component
+[%autowidth]
+|===
+|Name|Value
+
+|Query|`DELETE FROM customer WHERE customer_id=:#$\{header.customerId};`
+|Data Source|`#customerDb`
+|===
+
+.4 - Set Body Processor
+[%autowidth]
+|===
+|Name|Value
+
+|Type|`Simple`
+|Expression|`$\{null}`
+|===
+
+== Running Application
+
+As before, let's deploy/run this application as a Camel K integration. Notice that, in this case, we're actually going to create two ConfigMaps. One will hold our OpenAPI spec, and the other will hold our application properties.
+
+Create the OpenShift ConfigMap, then run the Camel K Integration. To do so, open a terminal and run the following commands:
+
+[IMPORTANT]
+====
+Make sure that you're logged-in to OpenShift as `{user}` and in the correct `{user}-camel` project/namespace.
+====
+
+[source,shell]
+----
+cd module02/customer-service
+oc create configmap customer-service-config --from-file=application.properties
+oc create configmap customer-openapi-spec --from-file=customer-openapi-spec.json
+kamel run -d camel:platform-http -d mvn:org.postgresql:postgresql:42.7.3 -p configmap:customer-service-config -t prometheus.enabled=true -t prometheus.pod-monitor-labels='workshop=camel' -t jolokia.enabled=true --open-api configmap:customer-openapi-spec customer-service.camel.yaml
+----
+
+image::module02/customer-service/run-camel.gif[]
+
+That's all for the Customer REST API implementation. As before, you should see your `customer-service-*` pod start within a few minutes. And also as before, be patient while the Camel K operator runs a build and deploy.

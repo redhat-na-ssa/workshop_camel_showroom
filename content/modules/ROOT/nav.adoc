@@ -2,6 +2,12 @@
 
 * xref:module-02.adoc[2. Developing Integrations with Camel]
 
+** xref:module-02.order-connector.adoc[2.1. Order Connector]
+
+** xref:module-02.customer-service.adoc[2.2. Customer Service]
+
+** xref:module-02.customer-connector.adoc[2.3. Customer Connector]
+
 * xref:module-03.adoc[3. Monitoring Integrations in OpenShift]
 
 * xref:module-04.adoc[4. Automate your deployment with Tekton]
