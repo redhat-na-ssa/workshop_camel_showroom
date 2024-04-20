@@ -7,7 +7,7 @@ Please, follow the instructions below to execute the workshop, and in case you h
 
 == Requirements
 
-For this workshop you will be provided access to an OpenShift cluster and development tools to build and deploy integration using Red Hat build of Apache Camel. To utilize these resources you only need a browser and internet connection.
+For this workshop you will be provided access to an OpenShift cluster and development tools to build and deploy integrations using Red Hat build of Apache Camel. To utilize these resources you only need a browser and internet connection.
 
 For browsers, we recommend the use of Google Chrome or Mozzilla Firefox.
 
@@ -60,6 +60,18 @@ Before starting to interact with the environment, let's get to know the products
 Red Hat build of Apache Camel is based on the open-source project Apache Camel. Apache Camel is a Java integration framework that it's been around since 2004.
 It provides an easy way to integrate different applications through process of structured steps called https://camel.apache.org/manual/routes.html[Routes]. The framework also provides building blocks that facilitate the integration of well known systems and protocols called https://camel.apache.org/components/4.4.x/index.html[Components]. Camel provides more than 300 of those.
 
+=== Red Hat build of Quarkus
+
+The https://access.redhat.com/products/quarkus[Red Hat build of Quarkus] is based on the popular https://quarkus.io/[Quarkus] community project. It's Kubernetes-native Java with low memory footprint and fast boot times for microservices and serverless applications. We used Quarkus to build all the microservices in the *Globex* application. Also, we are going to use `Quarkus + Camel` to build integrations.
+
+=== Red Hat AMQ Streams
+
+https://access.redhat.com/products/red-hat-amq-streams[Red Hat AMQ streams] is a massively scalable, distributed, and high-performance data streaming platform based on the https://kafka.apache.org/[Apache Kafka project]. It offers a distributed backbone that allows microservices and other applications to share data with high throughput and low latency. For *Globex*, it provides a messaging channel to connect microservices and https://en.wikipedia.org/wiki/Change_data_capture[Change Data Capture] capabilities with https://debezium.io/[Debezium] support.
+
+=== Red Hat build of Keycloak
+
+https://access.redhat.com/products/red-hat-build-of-keycloak[Red Hat build of Keycloak] is a cloud-native Identity Access Management solution based on the popular open source https://www.keycloak.org/[Keycloak] project. In this workshop it's used to provide authentication and authorization for, the e-commerce store, *Globex*.
+
 === Red Hat OpenShift
 
 Red Hat OpenShift, the industry’s leading hybrid-cloud application platform powered by Kubernetes, brings together tested and trusted services to reduce the friction of developing, modernizing, deploying, running, and managing applications. OpenShift delivers a consistent experience across public cloud, on-premise, hybrid cloud, or edge architecture.
@@ -72,6 +84,10 @@ image::index/openshift-diagram.png[OpenShift diagram]
 
 === Red Hat OpenShift Dev Spaces
 
-OpenShift Dev Spaces is a container-based service for creating consistent and secured developer environments on Red Hat OpenShift to increase developer productivity and optimize costs. We are going to use it to provide you a complete development envinronment using VS Code as IDE and an OpenShift project as a sandbox. 
+https://access.redhat.com/products/red-hat-openshift-dev-spaces[OpenShift Dev Spaces] is a container-based service for creating consistent and secured developer environments on Red Hat OpenShift to increase developer productivity and optimize costs. We are going to use it to provide you a complete development envinronment using VS Code as IDE and an OpenShift project as a sandbox. 
 
 image::index/cloud-development-environments.gif[VS Code on Dev Spaces]
+
+=== Red Hat OpenShift Pipelines
+
+https://docs.openshift.com/pipelines/1.14/about/understanding-openshift-pipelines.html[Red Hat OpenShift Pipelines] is a cloud-native, continuous integration and continuous delivery (CI/CD) solution based on Kubernetes resources. It uses https://tekton.dev/[Tekton] building blocks to automate deployments across multiple platforms by abstracting away the underlying implementation details. Tekton introduces a number of standard custom resource definitions (CRDs) for defining CI/CD pipelines that are portable across Kubernetes distributions.
