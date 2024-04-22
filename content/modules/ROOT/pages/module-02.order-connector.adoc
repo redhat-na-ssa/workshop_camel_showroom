@@ -9,7 +9,7 @@ image::module02/order-connector/create-folder.gif[]
 
 == Application Properties
 
-The application.properties file can be used to variable values in our application. Things like credentials, URLs, ... etc. You can have as many files as you need, and they can be applied as files, ConfigMaps, or Secrets as appropriate. For simplicity, we're just going to define one properties file that we'll later install as a ConfigMap.
+The application.properties file can be used to variable values in our application. Things like credentials, URLs, ... etc. You can have as many files as you need, and they can be applied as files, ConfigMaps, or Secrets, as appropriate. For simplicity, we're just going to define one properties file that we'll later install as a ConfigMap.
 
 Create a new file in the `order-connector` directory. Name the file `application.properties`. Insert the following contents:
 
@@ -29,7 +29,7 @@ image::module02/order-connector/create-file-properties.gif[]
 
 == Camel Configurations
 
-The Camel configuration file will hold our Camel route definitions. If you're familiar with Camel, you know that there are many ways to define your Camel routes (ie, Java, XML, YAML, ... etc). These are known as DSLs. In general, you can use whichever one you're most familiar with. However, since we plan to develop these apps using Kaoto graphical editor, we'll be using the YAML DSL.
+The Camel configuration file will hold our Camel route definitions. If you're familiar with Camel, you know that there are many ways to define your Camel routes (ie, Java, XML, YAML, ... etc). These are known as DSLs(Domain Specific Languages). In general, you can use whichever one you're most familiar with. However, since we plan to develop these apps using Kaoto graphical editor, we'll be using the YAML DSL.
 
 Create a new file in the `order-connector` directory. Name the file `order-connector.camel.yaml`. Open the file in the Kaoto editor.
 
