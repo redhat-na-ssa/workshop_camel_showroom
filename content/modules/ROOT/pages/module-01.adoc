@@ -132,7 +132,12 @@ To deploy the Route you can use the icon in the top right corner(next to the JBa
 
 * Click on the rocket icon to launch the deployment
 * Select `Basic` deployment
-* Note the `APACHE CAMEL K INTEGRATIONS` tab on your left. Once the deployment starts, you will see a route name with a red dot in front of it. This means the build is happening but the Route is not running
+* Note the `APACHE CAMEL K INTEGRATIONS` tab on your left. 
+
+image::module01/vscode-camel-k-panel.png[Camel-k panel]
+
+Once the deployment starts, you will see a route name with a red dot in front of it. This means the build is happening but the Route is not running
+
 * When the Route dot turns green, it means it's running. Now you can check the logs by right clicking on the route name and selecting `follow logs for Apache Camel K Integration`.
 
 You can check the execution with the following gif:
