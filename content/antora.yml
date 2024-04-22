@@ -20,4 +20,5 @@ asciidoc:
     password: test123
     gitea_console_url: https://gitea.dev
     gitea_user: tester
-    gitea_password: test123    
+    gitea_password: test123   
+    openshift_cluster_ingress_domain: test.dev

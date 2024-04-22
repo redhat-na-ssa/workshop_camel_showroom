@@ -159,7 +159,7 @@ Edit the Log Processor step. Set the following properties:
 |===
 |Name|Value
 
-|Message|`Inserting customer: customer_id='$\{body["customerId"]}', name='$\{body["customerName"]}'`
+|Message|`Inserting customer: customer_id='${body["customerId"]}', name='${body["customerName"]}'`
 |===
 
 image::module02/customer-service/edit-route-create-customer-log.gif[]
@@ -173,7 +173,7 @@ Append a new SQL Component step after the Log Processor step. Set the following 
 |===
 |Name|Value
 
-|Query|`sql:INSERT INTO customer (customer_id, name) VALUES (:#customerId, :#customerName);`
+|Query|`INSERT INTO customer (customer_id, name) VALUES (:#customerId, :#customerName);`
 |Data Source|`#customerDb`
 |===
 
@@ -215,7 +215,7 @@ image::module02/customer-service/route-get-customer.png[]
 |===
 |Name|Value
 
-|Message|`Fetching customer details: customer_id=$\{header.customerId}`
+|Message|`Fetching customer details: customer_id=${header.customerId}`
 |===
 
 .3 - SQL Component
@@ -223,7 +223,7 @@ image::module02/customer-service/route-get-customer.png[]
 |===
 |Name|Value
 
-|Query|`SELECT customer_id AS "customerId", name AS "customerName" FROM customer WHERE customer_id=:#$\{header.customerId};`
+|Query|`SELECT customer_id AS "customerId", name AS "customerName" FROM customer WHERE customer_id=:#${header.customerId};`
 |Data Source|`#customerDb`
 |Output Type|`SelectOne`
 |===
@@ -242,7 +242,7 @@ image::module02/customer-service/route-get-customer.png[]
 |===
 |Name|Value
 
-|Message|`Customer not found: customer_id='$\{header.customerId}'`
+|Message|`Customer not found: customer_id='${header.customerId}'`
 |===
 
 .6 - Set Header Processor
@@ -330,7 +330,7 @@ image::module02/customer-service/route-update-customer.png[]
 |===
 |Name|Value
 
-|Message|`Updating customer: customer_id='$\{header.customerId}', name='$\{body["customerName"]}'`
+|Message|`Updating customer: customer_id='${header.customerId}', name='${body["customerName"]}'`
 |===
 
 .4 - SQL Component
@@ -338,7 +338,7 @@ image::module02/customer-service/route-update-customer.png[]
 |===
 |Name|Value
 
-|Query|`UPDATE customer SET name=:#customerName WHERE customer_id=:#$\{header.customerId};`
+|Query|`UPDATE customer SET name=:#customerName WHERE customer_id=:#${header.customerId};`
 |Data Source|`#customerDb`
 |===
 
@@ -370,7 +370,7 @@ image::module02/customer-service/route-delete-customer.png[]
 |===
 |Name|Value
 
-|Message|`Deleting customer: customer_id='$\{header.customerId}'`
+|Message|`Deleting customer: customer_id='${header.customerId}'`
 |===
 
 .3 - SQL Component
@@ -378,7 +378,7 @@ image::module02/customer-service/route-delete-customer.png[]
 |===
 |Name|Value
 
-|Query|`DELETE FROM customer WHERE customer_id=:#$\{header.customerId};`
+|Query|`DELETE FROM customer WHERE customer_id=:#${header.customerId};`
 |Data Source|`#customerDb`
 |===
 

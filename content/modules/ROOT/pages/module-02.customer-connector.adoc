@@ -93,7 +93,7 @@ image::module02/customer-connector/route-kafka-to-customer-api.png[]
 |Name|Value
 
 |Type|`Simple`
-|Expression|`$\{body["op"]} regex "[^crud]"`
+|Expression|`${body["op"]} regex "[^crud]"`
 |===
 
 .7 - Stop Processor
@@ -108,7 +108,7 @@ image::module02/customer-connector/route-kafka-to-customer-api.png[]
 |Name|Value
 
 |Type|`Simple`
-|Expression|`direct:$\{body["op"]}`
+|Expression|`direct:${body["op"]}`
 |===
 
 === Camel Route - `initial-create-customer`
@@ -153,7 +153,7 @@ image::module02/customer-connector/route-create-customer.png[]
 |Name|Value
 
 |Type|`Simple`
-|Expression|`$\{body["after"]}`
+|Expression|`${body["after"]}`
 |===
 
 .3 - Set Body Processor
@@ -212,7 +212,7 @@ image::module02/customer-connector/route-update-customer.png[]
 |Name|Value
 
 |Type|`Simple`
-|Expression|`$\{body["after"]}`
+|Expression|`${body["after"]}`
 |===
 
 .3 - Set Header Processor
@@ -222,7 +222,7 @@ image::module02/customer-connector/route-update-customer.png[]
 
 |Name|`customerId`
 |Type|`Simple`
-|Expression|`$\{body["user_id"]}`
+|Expression|`${body["user_id"]}`
 |===
 
 .4 - Set Body Processor
@@ -247,7 +247,7 @@ image::module02/customer-connector/route-update-customer.png[]
 |===
 |Name|Value
 
-|Message|`Updating customer: customerId='$\{header.customerId}', json='$\{body}'`
+|Message|`Updating customer: customerId='${header.customerId}', json='$\{body}'`
 |===
 
 .7 - REST Component
@@ -282,7 +282,7 @@ image::module02/customer-connector/route-delete-customer.png[]
 |Name|Value
 
 |Type|`Simple`
-|Expression|`$\{body["before"]}`
+|Expression|`${body["before"]}`
 |===
 
 .3 - Set Header Processor
@@ -292,7 +292,7 @@ image::module02/customer-connector/route-delete-customer.png[]
 
 |Name|`customerId`
 |Type|`Simple`
-|Expression|`$\{body["user_id"]}`
+|Expression|`${body["user_id"]}`
 |===
 
 .4 - Set Body Processor
@@ -309,7 +309,7 @@ image::module02/customer-connector/route-delete-customer.png[]
 |===
 |Name|Value
 
-|Message|`Deleting customer: customerId='$\{header.customerId}'`
+|Message|`Deleting customer: customerId='${header.customerId}'`
 |===
 
 .6 - REST Component
