@@ -20,7 +20,7 @@ Open up https://apicurito-ui-shared-tools.{openshift_cluster_ingress_domain} in 
 
 image::module02/customer-service/create-openapi-spec.gif[]
 
-Name the API `Customer API`.
+Name the API `Customers API`.
 
 image::module02/customer-service/create-openapi-spec-name.gif[]
 
