@@ -352,4 +352,4 @@ Congratulations! You've finished the last Camel application and are now a pro-Ca
 
 == Testing Application
 
-This application will automatically pick up the existing CDC messages from the Kafka topic. So as soon as you start it, you should see the log messages showing as such. If everything went well, you should be able to see information populated in the http://cashback.{user}-globex.{openshift_cluster_ingress_domain}[Cashback page].
+This application will automatically pick up the existing CDC messages from the Kafka topic. So as soon as you start it, you should see the log messages showing as such. If everything went well, you should be able to see information populated in the http://cashback-service-{user}-globex.{openshift_cluster_ingress_domain}[Cashback page].

@@ -183,7 +183,7 @@ And that's it! If all well, you should see your `order-connector-*` pod start wi
 
 Open the logs for the `order-connector-*` pod. You should see that the application and all Camel routes have started.
 
-In a new browser tab, open the Order Simulator app at http://replaceme.{user}-globex.{openshift_cluster_ingress_domain}/replacemetoo. Simulate a few orders using the default JSON request. If everything is working properly, you should see the log messages from your Camel route showing that messages are being picked up and processed without error.
+In a new browser tab, open the Order Simulator app at http://order-simulator-{user}-globex.{openshift_cluster_ingress_domain}/. Simulate a few orders using the default JSON request. If everything is working properly, you should see the log messages from your Camel route showing that messages are being picked up and processed without error.
 
 [NOTE]
 ====

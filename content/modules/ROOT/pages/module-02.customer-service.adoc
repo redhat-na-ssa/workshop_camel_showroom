@@ -424,14 +424,14 @@ Open a terminal and issue the following commands:
 [source,shell]
 [subs=normal]
 ----
-curl -X POST -H 'Content-Type: application/json' -d '{ "customerId": "avandelay", "customerName": "Art Vandelay" }' http://customer-service.{user}-camel.{openshift_cluster_ingress_domain}/customers
+curl -X POST -H 'Content-Type: application/json' -d '{ "customerId": "avandelay", "customerName": "Art Vandelay" }' http://customer-service-{user}-camel.{openshift_cluster_ingress_domain}/customers
 ----
 
 .get-customer
 [source,shell]
 [subs=normal]
 ----
-curl -X GET -H 'Accept: application/json' http://customer-service.{user}-camel.{openshift_cluster_ingress_domain}/customers/avandelay
+curl -X GET -H 'Accept: application/json' http://customer-service-{user}-camel.{openshift_cluster_ingress_domain}/customers/avandelay
 
 # You can also pass the '-v' flag to see the HTTP headers and verifiy that it returns a 404 in the case of a non-existent customerId.
 ----
@@ -440,19 +440,19 @@ curl -X GET -H 'Accept: application/json' http://customer-service.{user}-camel.{
 [source,shell]
 [subs=normal]
 ----
-curl -X GET -H 'Accept: application/json' http://customer-service.{user}-camel.{openshift_cluster_ingress_domain}/customers
+curl -X GET -H 'Accept: application/json' http://customer-service-{user}-camel.{openshift_cluster_ingress_domain}/customers
 ----
 
 .update-customer
 [source,shell]
 [subs=normal]
 ----
-curl -X PUT -H 'Content-Type: application/json' -d '{ "customerName": "Arthur Vandelay" }' http://customer-service.{user}-camel.{openshift_cluster_ingress_domain}/customers/avandelay
+curl -X PUT -H 'Content-Type: application/json' -d '{ "customerName": "Arthur Vandelay" }' http://customer-service-{user}-camel.{openshift_cluster_ingress_domain}/customers/avandelay
 ----
 
 .delete-customer
 [source,shell]
 [subs=normal]
 ----
-curl -X DELETE http://customer-service.{user}-camel.{openshift_cluster_ingress_domain}/customers/avandelay
+curl -X DELETE http://customer-service-{user}-camel.{openshift_cluster_ingress_domain}/customers/avandelay
 ----
