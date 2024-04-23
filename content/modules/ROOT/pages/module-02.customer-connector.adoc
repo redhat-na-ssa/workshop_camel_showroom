@@ -37,6 +37,11 @@ Create the Camel configuration file under the `customer-connector` directory. Na
 
 This route will pick up the customer CDC messages and call the appropriate operation based on the CDC message "op" code.
 
+[IMPORTANT]
+====
+You may notice that the Kafka `Seek To` parameter in this application is set to `BEGINNING`. This will cause the application to reprocess all messages every time it is restarted. This is so that, if you make a mistake, you can retry processing by simply redeploying/restarting the app. However, if the CDC messages have already been processed successfully and inserted into the database, you will see errors in the logs. These can safely be ignored.
+====
+
 image::module02/customer-connector/route-kafka-to-customer-api.png[]
 
 .1 - Kafka Component
@@ -338,9 +343,13 @@ Make sure that you're logged-in to OpenShift as `{user}` and in the correct `{us
 ----
 cd module02/customer-connector
 oc create configmap customer-connector-config --from-file=application.properties
-kamel run -d camel:http -p configmap:customer-connector-config -t prometheus.enabled=true -t prometheus.pod-monitor-labels='workshop=camel' -t jolokia.enabled=true customer-connector.camel.yaml
+kamel run -d camel:http -p configmap:customer-connector-config customer-connector.camel.yaml
 ----
 
 image::module02/customer-connector/run-camel.png[]
 
 Congratulations! You've finished the last Camel application and are now a pro-Camel developer!
+
+== Testing Application
+
+This application will automatically pick up the existing CDC messages from the Kafka topic. So as soon as you start it, you should see the log messages showing as such. If everything went well, you should be able to see information populated in the http://cashback.{user}-globex.{openshift_cluster_ingress_domain}[Cashback page].

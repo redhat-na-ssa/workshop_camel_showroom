@@ -13,6 +13,11 @@ The application.properties file can be used to variable values in our applicatio
 
 Create a new file in the `order-connector` directory. Name the file `application.properties`. Insert the following contents:
 
+[IMPORTANT]
+====
+Make sure when copy/pasting, you only grab the actual text and not any erroneous tabs, spaces, or new lines.
+====
+
 .application.properties
 [source,properties]
 [subs=normal]
@@ -167,9 +172,20 @@ Make sure that you're logged-in to OpenShift as `{user}` and in the correct `{us
 ----
 cd module02/order-connector
 oc create configmap order-connector-config --from-file=application.properties
-kamel run -d camel:http -p configmap:order-connector-config -t prometheus.enabled=true -t prometheus.pod-monitor-labels='workshop=camel' -t jolokia.enabled=true order-connector.camel.yaml
+kamel run -d camel:http -p configmap:order-connector-config order-connector.camel.yaml
 ----
 
 image::module02/order-connector/run-route.gif[]
 
 And that's it! If all well, you should see your `order-connector-*` pod start within a few minutes. It'll take some time for it to build. So be patient.
+
+== Testing Application
+
+Open the logs for the `order-connector-*` pod. You should see that the application and all Camel routes have started.
+
+In a new browser tab, open the Order Simulator app at http://replaceme.{user}-globex.{openshift_cluster_ingress_domain}/replacemetoo. Simulate a few orders using the default JSON request. If everything is working properly, you should see the log messages from your Camel route showing that messages are being picked up and processed without error.
+
+[NOTE]
+====
+The input messages are "windowed" by a Kafka Streams pre-processor application. So it might take about 10-15 seconds for them to come through.
+====

@@ -407,9 +407,52 @@ Make sure that you're logged-in to OpenShift as `{user}` and in the correct `{us
 cd module02/customer-service
 oc create configmap customer-service-config --from-file=application.properties
 oc create configmap customer-openapi-spec --from-file=customer-openapi-spec.json
-kamel run -d camel:platform-http -d mvn:org.postgresql:postgresql:42.7.3 -p configmap:customer-service-config -t prometheus.enabled=true -t prometheus.pod-monitor-labels='workshop=camel' -t jolokia.enabled=true --open-api configmap:customer-openapi-spec customer-service.camel.yaml
+kamel run -d camel:platform-http -d mvn:org.postgresql:postgresql:42.7.3 -p configmap:customer-service-config --open-api configmap:customer-openapi-spec customer-service.camel.yaml
 ----
 
 image::module02/customer-service/run-camel.gif[]
 
 That's all for the Customer REST API implementation. As before, you should see your `customer-service-*` pod start within a few minutes. And also as before, be patient while the Camel K operator runs a build and deploy.
+
+== Testing Application
+
+Since this is a REST service, you can use `curl` (or whatever your HTTP REST testing tool of choice) to test this application. I'll give instructions for `curl` since it's already available in our environment.
+
+Open a terminal and issue the following commands:
+
+.create-customer
+[source,shell]
+[subs=normal]
+----
+curl -X POST -H 'Content-Type: application/json' -d '{ "customerId": "avandelay", "customerName": "Art Vandelay" }' http://customer-service.{user}-camel.{openshift_cluster_ingress_domain}/customers
+----
+
+.get-customer
+[source,shell]
+[subs=normal]
+----
+curl -X GET -H 'Accept: application/json' http://customer-service.{user}-camel.{openshift_cluster_ingress_domain}/customers/avandelay
+
+# You can also pass the '-v' flag to see the HTTP headers and verifiy that it returns a 404 in the case of a non-existent customerId.
+----
+
+.get-customers
+[source,shell]
+[subs=normal]
+----
+curl -X GET -H 'Accept: application/json' http://customer-service.{user}-camel.{openshift_cluster_ingress_domain}/customers
+----
+
+.update-customer
+[source,shell]
+[subs=normal]
+----
+curl -X PUT -H 'Content-Type: application/json' -d '{ "customerName": "Arthur Vandelay" }' http://customer-service.{user}-camel.{openshift_cluster_ingress_domain}/customers/avandelay
+----
+
+.delete-customer
+[source,shell]
+[subs=normal]
+----
+curl -X DELETE http://customer-service.{user}-camel.{openshift_cluster_ingress_domain}/customers/avandelay
+----
