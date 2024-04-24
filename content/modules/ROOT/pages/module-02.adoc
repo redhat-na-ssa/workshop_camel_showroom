@@ -1,6 +1,8 @@
 = Developing Integrations with Camel
 
-In this module, you will be creating and deploying several Camel K applications using the Kaoto graphical designer. If at any point you want to check your work, you can look at the solutions branch in your Git repository.
+In this module, you will be creating and deploying several Camel K applications (highlighted below in red) using the Kaoto graphical designer. If at any point you want to check your work, you can look at the solutions branch in your Git repository.
+
+image::module02/architecture.png[]
 
 First, let's start by creating the `module02` folder where we'll be working for this module.
 

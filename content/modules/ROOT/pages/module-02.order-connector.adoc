@@ -3,6 +3,8 @@
 
 The Order Connector application will pull JSON order messages from a Kafka topic, and post them to the existing Expense REST API.
 
+image::module02/order-connector/architecture.png[]
+
 Let's start by creating an `order-connector` directory under the `module02` directory.
 
 image::module02/order-connector/create-folder.gif[]

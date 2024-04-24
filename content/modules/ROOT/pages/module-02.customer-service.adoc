@@ -3,6 +3,8 @@
 
 The Customer Service application will implement the Customer API. It'll give us a REST based interface to the `customer` table in the Customer DB.
 
+image::module02/customer-service/architecture.png[]
+
 Let's start by creating the `customer-service` folder under the `module02` directory.
 
 image::module02/customer-service/create-folder.gif[]
