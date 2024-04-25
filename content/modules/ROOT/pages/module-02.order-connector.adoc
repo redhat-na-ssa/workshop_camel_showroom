@@ -191,3 +191,8 @@ In a new browser tab, open the Order Simulator app at http://order-simulator-{us
 ====
 The input messages are "windowed" by a Kafka Streams pre-processor application. So it might take about 10-15 seconds for them to come through.
 ====
+
+[IMPORTANT]
+====
+Don't forget to commit and push your code. You will need it later.
+====

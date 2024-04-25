@@ -458,3 +458,9 @@ curl -X PUT -H 'Content-Type: application/json' -d '{ "customerName": "Arthur Va
 ----
 curl -X DELETE http://customer-service-{user}-camel.{openshift_cluster_ingress_domain}/customers/avandelay
 ----
+
+
+[IMPORTANT]
+====
+Don't forget to commit and push your code. You will need it later.
+====
