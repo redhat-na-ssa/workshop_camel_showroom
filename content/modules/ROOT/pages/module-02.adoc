@@ -1,6 +1,17 @@
 = Developing Integrations with Camel
 
+[IMPORTANT]
+====
 In this module, you will be creating and deploying several Camel K applications (highlighted below in red) using the Kaoto graphical designer. If at any point you want to check your work, you can look at the solutions branch in your Git repository.
+====
+
+== The Use Case
+
+Now is time to actually implement integrations. For this module you will have access to a mock system called *Globex*, an e-commerce solution for Red Hat's swags. This system has a CDC(Change Data Capture) implementation to capture order and calculate cashback, but there are missing pieces that need to be implemented to make the solution work. That is what you are going to develop. 
+
+image::module02/globex.png[]
+
+Take a look at the system architecture. You are going to implement the components in orage.
 
 image::module02/architecture.png[]
 

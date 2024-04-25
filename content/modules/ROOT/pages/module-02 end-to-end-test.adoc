@@ -1,3 +1,79 @@
 = Ent-To-End Test
 
-TODO
+In the previous sections you saw how to deploy and test each component in isolation, but how does it look like to use Globex and how can you check the system?
+You already know about the `{user}-globex` namespace, now you will see how the system works.
+
+== Create an Order in the Globex Retail Application
+
+* Open Globex retail web application in a new tab using this https://globex-web-{user}-globex.{openshift_cluster_ingress_domain}[link].
+
+* In order to place an order, you need to login into the Globex application. Click on the *Login* link on the right of the top menu.
++
+image::module02/end-to-end-test/globex-login.png[]
+
+* The Globex web application uses OpenId Connect powered by Red Hat Single Sign-On (SSO) to authenticate users. After clicking the *Login* link you are redirected to the login page of the SSO server, where you need to enter your credentials. +
+The SSO server is set up with a number of users corresponding to customers in the Globex application. Login with one of the following users: *asilva*,*mmiller*,*asanders*,*cjones* or *pwong*. The password for all the users is *{globex_user_password}*.
++
+image::module02/end-to-end-test/globex-login-sso.png[]
+
+* Once logged in, you can browse through the catalog and add items to the shopping cart. +
++
+**__Note:__** When adding an item to the shopping cart, there is no "close" button for that item. You can use the browser "back" button to return to the catalog. The Globex UX team has been notified and is already working on adding a "close" button ;-)
+
+* To check out the cart and place an order, click on the *Cart* link in the top menu.
++
+image::module02/end-to-end-test/globex-goto-cart.png[]
+
+* This brings you to the cart view. From there you can proceed to checkout by clicking *Proceed to Checkout*.
++
+image::module02/end-to-end-test/globex-cart-checkout.png[]
+
+* In the checkout page, click the *Autofill form* to populate the form with the details of the logged in user.
++
+image::module02/end-to-end-test/globex-checkout-1.png[]
+
+* Finally, click *Submit order* to submit your order.
++
+image::module02/end-to-end-test/globex-checkout-3.png[]
+
+* If the order is submitted successfully, you will be redirected to a success page:
++
+image::module02/end-to-end-test/globex-order-placed.png[]
+
+* At this point, an order has been added in the Globex application database. The records added to the *orders* and *line_item* tables have been detected by Debezium and produced as change events to Kafka topics. 
+We can easily check this with AMQ Streams Console.
+
+* Open https://console-ui-route-{user}-globex.{openshift_cluster_ingress_domain}/home[AMQ Console] in a new tab.
+
+image::module02/end-to-end-test/amq-streams-console.png[]
+
+* Click on the Topics menu, then use the filter to find *globex.updates.public.orders* 
+
+image::module02/end-to-end-test/amq-console-filter.gif[]
+
+* Verify that the topic contains 1 message.
+
+You should see a change event structure very similar to the ones for customers. Notice however that the operation is '*c*', for _create_. This is expected as the change event corresponds to a new record in the *order* table.
+
+Go back to the AMQ Streams Console Topics page, and this time open the *globex.updates.public.line_item* topic. You should see one message per item in the order you created previously.
+
+image::module02/end-to-end-test/amq-console-topic-orders.png[]
+
+* If you want to simulate a larger number of orders, you can use the _Order Simulator_ application deployed in the `{user}-globex` namespace on OpenShift, using this https://order-simulator-{user}-globex.{openshift_cluster_ingress_domain}[link].
+
+** This opens a Swagger UI page showing the REST API of the simulator. +
+Click on the *POST* link, and then on the *Try it out* link on the right. From the *Examples* drop down, select *random customers* to create orders for random customers. Feel free to change the numbers of orders you want to simulate (the default is 50).
++
+image::module02/end-to-end-test/order-simulator-random-customer.png[]
+
+** Click *Execute* to execute the REST call to the simulator.
+** Check in Kafdrop that new messages are produced to the *globex.updates.public.orders* and *globex.updates.public.line_item* topics.
+
+
+[NOTE]
+====
+Some products used in this workshop are still in Tech-Preview, like the AMQ Streams Console. We would greatly appriciate if you could spend some minutes to provide us feedback using this QR Code: 
+
+image::module02/end-to-end-test/amq-survey-qr.png[]
+
+====
