@@ -15,6 +15,8 @@ Take a look at the system architecture. You are going to implement the component
 
 image::module02/architecture.png[]
 
+== Before Starting
+
 First, let's start by creating the `module02` folder where we'll be working for this module.
 
 image::module02/create-folder-module-02.gif[]

@@ -12,13 +12,16 @@ You already know about the `{user}-globex` namespace, now you will see how the s
 image::module02/end-to-end-test/globex-login.png[]
 
 * The Globex web application uses OpenId Connect powered by Red Hat Single Sign-On (SSO) to authenticate users. After clicking the *Login* link you are redirected to the login page of the SSO server, where you need to enter your credentials. +
-The SSO server is set up with a number of users corresponding to customers in the Globex application. Login with one of the following users: *asilva*,*mmiller*,*asanders*,*cjones* or *pwong*. The password for all the users is *{globex_user_password}*.
+The SSO server is set up with a number of users corresponding to customers in the Globex application. Login with one of the following users: *asilva*,*mmiller*,*asanders*,*cjones* or *pwong*. The password for all the users is *openshift*.
 +
 image::module02/end-to-end-test/globex-login-sso.png[]
 
 * Once logged in, you can browse through the catalog and add items to the shopping cart. +
 +
-**__Note:__** When adding an item to the shopping cart, there is no "close" button for that item. You can use the browser "back" button to return to the catalog. The Globex UX team has been notified and is already working on adding a "close" button ;-)
+[NOTE] 
+====
+When adding an item to the shopping cart, there is no "close" button for that item. You can use the browser "back" button to return to the catalog. The Globex UX team has been notified and is already working on adding a "close" button ;-)
+====
 
 * To check out the cart and place an order, click on the *Cart* link in the top menu.
 +
@@ -55,7 +58,7 @@ image::module02/end-to-end-test/amq-console-filter.gif[]
 
 You should see a change event structure very similar to the ones for customers. Notice however that the operation is '*c*', for _create_. This is expected as the change event corresponds to a new record in the *order* table.
 
-Go back to the AMQ Streams Console Topics page, and this time open the *globex.updates.public.line_item* topic. You should see one message per item in the order you created previously.
+Go back to the `AMQ Streams Console - Topics` page, and this time open the *globex.updates.public.line_item* topic. You should see one message per item in the order you created previously.
 
 image::module02/end-to-end-test/amq-console-topic-orders.png[]
 
