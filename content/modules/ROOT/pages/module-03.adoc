@@ -1,7 +1,7 @@
 = Monitoring Integrations in OpenShift
 
 In the previous module you learned how to build Camel Routes using Kaoto and deployed them on OpenShift using Camel K.
-In this module you will learn how to levarage Camel K configurations to monitor your Routes. 
+In this module you will learn how to leverage Camel K configurations to monitor your Routes. 
 
 [IMPORTANT]
 ====
