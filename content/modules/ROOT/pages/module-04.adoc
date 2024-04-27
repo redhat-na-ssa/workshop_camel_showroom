@@ -12,10 +12,18 @@ Lets deploy the `Order Connector` integration service we developed in `module-02
 ====
 If you have not created a `ConfigMap` for the `Order Connector` integration during module-02, please do it before triggering the Pipeline run.
 
-Run the follwoing command in the Workspace Terminal
+Run the following command in your DevWorkspace Terminal
 [source,bash]
 =====
 oc create configmap order-connector-config --from-file=$PROJECT_SOURCE/module-02/order-connector/application.properties -n {user}-camel
+
+# in case you choose one of the other services
+# customer-connector
+oc create configmap customer-connector-config --from-file=$PROJECT_SOURCE/module-02/customer-connector/application.properties -n {user}-camel
+
+# customer-service
+oc create configmap customer-service-config --from-file=$PROJECT_SOURCE/module-02/customer-service/application.properties -n {user}-camel
+oc create configmap customer-openapi-spec --from-file=$PROJECT_SOURCE/module-02/customer-service/customer-openapi-spec.json -n {user}-camel
 =====
 ====
 
@@ -41,9 +49,102 @@ image::module04/camel-k-pod-topology.gif[]
 In this exercise we triggered the Pipeline manually, but in practice you would have a **Webhook** in place so the Pipeline can run **continuously** every time a new change gets pushed to the integration code Git repository. In case you are interested in the Pipeline Triggering capability check https://www.redhat.com/en/blog/guide-to-openshift-pipelines-part-6-triggering-pipeline-execution-from-github[this tutorial] out for reference.
 ====
 
+[NOTE]
+====
 You can use this same Pipeline to build and deploy all other integrations we created previously by just passing the correct `filename` and `dependencies` parameters.
 
-== Automating the Camel K deployment 
-We learned that Camel K does a great job containerizing our Integrations and deploying on Openshift. Now we are going to learn how to integrate it with Openshift Pipelines so you can leverage CI/CD tools to delivery integrations following corporate standards.
+ * for the `customer-service` the parameters are:
+   * `filename`: `module-02/customer-service/customer-service.camel.yaml`
+   * `dependencies`: ` -d camel:platform-http -d mvn:org.postgresql:postgresql:42.7.3 -p configmap:customer-service-config --open-api configmap:customer-openapi-spec`
 
-Lets deploy the `Order Connector` integration service we developed in `module-02`. 
+ * for the `customer-connector` the parameters are:
+   * `filename`: `module-02/customer-connector/customer-connector.camel.yaml`
+   * `dependencies`: `-d camel:http -p configmap:customer-connector-config`
+====
+
+== Exporting Camel-K integration to Java Maven Project
+Another option available in the Apache Camel *toolset* is the ability to **export** your Camel-K integration (defined as yaml file) to a traditional **Java Maven Project**. This can be achieved by using the https://camel.apache.org/manual/camel-jbang.html[Camel JBang app] which is already available in your DevWorkspace. 
+
+[NOTE]
+====
+Having your Camel-K integration exported as a Maven project opens up room for all sorts of customization and integration with CI/CD tools available to the large Java ecosystem.
+====
+
+To export the `customer-connector` integration developed in module-02 as a Java Maven Project to run on Quarkus Runtime, execute the following command in your DevWorkspace terminal.
+
+[source,bash]
+=====
+jbang run '-Dcamel.jbang.version=4.6.0-SNAPSHOT' camel@apache/camel export \
+--gav=com.redhat.lab:customer-connector:1.0.0-SNAPSHOT \
+--runtime=quarkus \
+--directory=customer-connector \
+../module-02/customer-connector/*.camel.yaml
+=====
+
+[NOTE]
+====
+More details on the capabilities available in the Camel JBang please see the https://camel.apache.org/manual/camel-jbang.html[project docs].
+====
+
+The command may take a couple of minutes when you first run it as `jbang` needs to download dependencies from the Maven repository. Please, wait until the commands completes as follows.
+
+image::module04/camel-jbang-export-to-quarkus.gif[]
+
+As you can see, you get a standard Java Maven Project with this JBang command. Now you can navigate into the generated project directory and execute a standard `mvn package` as follows:
+
+[source,bash]
+=====
+mvn package
+=====
+
+or even better, as we exported this integration as a Quarkus app you can run it in `dev mode` with
+
+[source,bash]
+=====
+mvn quarkus:dev \
+-Dquarkus.devservices.enabled=false \
+-Dkafka.brokers=kafka-kafka-bootstrap.{user}-globex.svc.cluster.local:9092 \
+-Dkafka.securityProtocol=SASL_PLAINTEXT \
+-Dkafka.saslMechanism=SCRAM-SHA-512 \
+-Dkafka.saslJaasConfig="org.apache.kafka.common.security.scram.ScramLoginModule required username='globex' password='globex';" \
+-Dcustomer-service.url=customer-service.{user}-camel.svc.cluster.local
+=====
+
+Before we push this project to our git repo, lets add an extension to our Quarkus project so it is ready to be used in our Pipeline. Execute the following command in your DevWorkspace Terminal:
+
+[source,bash]
+=====
+cd $PROJECT_SOURCE/modeule-04/customer-connector
+mvn quarkus:add-extension -Dextensions='quarkus-openshift'
+=====
+
+expect an output like this:
+
+[source,bash]
+=====
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -----------------< com.redhat.lab:customer-connector >------------------
+[INFO] Building customer-connector 1.0.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- quarkus:3.9.4:add-extension (default-cli) @ customer-connector ---
+[INFO] Looking for the newly published extensions in registry.quarkus.io
+[INFO] [SUCCESS] ✅  Extension io.quarkus:quarkus-openshift has been installed
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  8.233 s
+[INFO] Finished at: 2024-04-26T22:39:11Z
+[INFO] ------------------------------------------------------------------------
+=====
+
+[NOTE]
+====
+This `quarkus-openshift` extension is needed so the pipeline can generate all the deployment resources (`Deployment`, `Service`, `Route`, `etc`) required to deploy to Openshift. All these resources will be automatically generated by the Quarkus Maven plugin through this extension.
+====
+
+Now commit and push these changes to your Git repo!
+
+
