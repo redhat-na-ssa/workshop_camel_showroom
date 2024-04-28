@@ -29,7 +29,7 @@ oc create configmap customer-openapi-spec --from-file=$PROJECT_SOURCE/module-02/
 ....
 ====
 
-A Camel K Pipeline has been already created for you, to trigger it go to the Pipelines view on Openshift Console (Developer Perspective), click on `camel-k-pipeline`, then select `Actions` -> `start`. Then enter the parameters as follow.
+A Camel K Pipeline has been already created for you, to trigger it go to the **Pipelines** view on Openshift Console (Developer Perspective), click on `camel-k-pipeline`, then select `Actions` -> `Start`. Then enter the parameters as follow.
 
 .Pipeline parameters
 [%autowidth]
@@ -159,7 +159,7 @@ Okay, now lets prepare our Quarkus app to be ready for CI/CD. Execute the follow
 
 [source,bash]
 ....
-cd $PROJECT_SOURCE/modeule-04/customer-connector
+cd $PROJECT_SOURCE/module-04/customer-connector
 mvn quarkus:add-extension -Dextensions='quarkus-openshift'
 ....
 
@@ -194,4 +194,8 @@ Now commit and push these changes to your Git repo!
 
 image::module04/quarkus-app-commit-push.gif[]
 
-Now lets execute another Pipeline to build and deploy our Camel Quarkus app using Openshift Pipelines. Go to the Openshift Console, navigate to Pipelines and click on 
+Now lets build and deploy our Camel Quarkus app using Openshift Pipelines. Go to the **Pipelines** view on Openshift Console (Developer Perspective), click on `camel-java-pipeline`, then select `Actions` -> `Start`. All the parameters has default values properly set to build and deploy the `customer-connector` integration just exported by JBang earlier in this module. You just need to select the `shared-data` workspace and set it to `PVC source-code`. Click `Start` button to trigger the Pipeline and follow its execution like shown bellow.
+
+image::module04/java-pipeline-run.gif[]
+
+With that we conclude this module-04! Congratulations!
