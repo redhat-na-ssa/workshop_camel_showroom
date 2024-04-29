@@ -22,9 +22,11 @@ To enable Prometheus we need `-t prometheus.enabled=true` and `-t prometheus.pod
 
 If we take `customer-connector` as an example, the deployment command would look like this:
 
-====
+[source,shell,role="copypaste"]
+[subs=normal]
+----
 kamel run -d camel:http -p configmap:customer-connector-config -t prometheus.enabled=true -t prometheus.pod-monitor-labels='workshop=camel' -t jolokia.enabled=true customer-connector.camel.yaml
-====
+----
 
 Run this command in your terminal.
 

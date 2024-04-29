@@ -13,8 +13,7 @@ Lets deploy the `Order Connector` integration service we developed in `module-02
 If you have not created a `ConfigMap` for the `Order Connector` integration during module-02, please do it before triggering the Pipeline run.
 
 Run the following command in your DevWorkspace Terminal
-[source,bash]
-[subs=normal]
+[source,sh,role="copypaste",subs=attributes+]
 ....
 oc create configmap order-connector-config --from-file=$PROJECT_SOURCE/module-02/order-connector/application.properties -n {user}-camel
 
@@ -30,6 +29,25 @@ oc create configmap customer-openapi-spec --from-file=$PROJECT_SOURCE/module-02/
 ====
 
 A Camel K Pipeline has been already created for you, to trigger it go to the **Pipelines** view on Openshift Console (Developer Perspective), click on `camel-k-pipeline`, then select `Actions` -> `Start`. Then enter the parameters as follow.
+
+[IMPORTANT]
+====
+You may have the integration services already deployed/running inside the `{user}-camel` project/namespace. They were deployed as part of module-02 using `kamel run` CLI tool. Please check if they are deployed and remove them before you proceed. 
+
+To check there is any integration already deployed ad running inside `{user}-camel` project execute this command inside your DevWorkspace Terminal
+[source,sh,role="copypaste",subs=attributes+]
+....
+kamel get -n {user}-camel
+....
+
+To remove deployed integrations
+
+[source,sh,role="copypaste",subs=attributes+]
+....
+#to remove specific integration
+kamel delete order-connector -n {user}-camel
+....
+====
 
 .Pipeline parameters
 [%autowidth]
@@ -94,7 +112,7 @@ Having your Camel-K integration exported as a Maven project opens up room for al
 
 To export the `customer-connector` integration developed in module-02 as a Java Maven Project to run on Quarkus Runtime, execute the following command in your DevWorkspace terminal.
 
-[source,bash]
+[source,bash,role="copypaste",subs=attributes+]
 ....
 jbang run '-Dcamel.jbang.version=4.6.0-SNAPSHOT' camel@apache/camel export \
 --gav=com.redhat.lab:customer-connector:1.0.0-SNAPSHOT \
@@ -115,7 +133,7 @@ image::module04/camel-jbang-export-to-quarkus.gif[]
 As you can see, you get a standard Java Maven Project with this JBang command. 
 Let's do one change to the generated code so it can connect to our Kafka service. Using your DevWorkspace, open the `application.properties` file located under `module-04/customer-connector/src/main/resources/` and replace its content with: 
 
-[source,properties]
+[source,properties,role="copypaste",subs=attributes+]
 ....
 quarkus.native.resources.includes=
 camel.main.routes-include-pattern=camel/customer-connector.camel.yaml
@@ -135,14 +153,14 @@ camel.main.routes-include-pattern=camel/customer-connector.camel.yaml
 
 Now you can build the app locally by executing the following command in a Terminal:
 
-[source,bash]
+[source,bash,role="copypaste",subs=attributes+]
 ....
 mvn package
 ....
 
 After building the app locally, you can run it locally by executing:
 
-[source, bash]
+[source,bash,role="copypaste",subs=attributes+]
 [subs=normal]
 ....
 java -jar target/quarkus-app/quarkus-run.jar
@@ -157,7 +175,7 @@ You should see a lot of log entries as the Camel route start processing the Kafk
 
 Okay, now lets prepare our Quarkus app to be ready for CI/CD. Execute the following command in your DevWorkspace Terminal:
 
-[source,bash]
+[source,bash,role="copypaste",subs=attributes+]
 ....
 cd $PROJECT_SOURCE/module-04/customer-connector
 mvn quarkus:add-extension -Dextensions='quarkus-openshift'

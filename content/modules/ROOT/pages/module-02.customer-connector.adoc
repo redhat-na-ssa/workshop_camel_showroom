@@ -16,7 +16,7 @@ Now let's create our properties file like we did in both of the previous labs.
 Create a new file in the `customer-connector` directory. Name the file `application.properties`. Insert the following contents:
 
 .application.properties
-[source,properties]
+[source,properties,role="copypaste"]
 [subs=normal]
 ....
 kafka.brokers=kafka-kafka-bootstrap.{user}-globex.svc.cluster.local:9092
@@ -341,7 +341,7 @@ Create the OpenShift ConfigMap, then run the Camel K Integration. To do so, open
 Make sure that you're logged-in to OpenShift as `{user}` and in the correct `{user}-camel` project/namespace.
 ====
 
-[source,shell]
+[source,shell,role="copypaste"]
 ----
 cd module02/customer-connector
 oc create configmap customer-connector-config --from-file=application.properties

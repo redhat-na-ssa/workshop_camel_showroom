@@ -29,7 +29,7 @@ image::module02/customer-service/create-openapi-spec-name.gif[]
 Create a new Data Type named `Customer`, and add the following JSON Example:
 
 .JSON Example
-[source,json]
+[source,json,role="copypaste"]
 ....
 {
     "customerId": "avandelay",
@@ -65,7 +65,7 @@ Now let's create our properties file like we did in the previous lab.
 Create a new file in the `customer-service` directory. Name the file `application.properties`. Insert the following contents:
 
 .application.properties
-[source,properties]
+[source,properties,role="copypaste"]
 [subs=normal]
 ....
 db.serverName=cashback-db.{user}-globex.svc.cluster.local
@@ -404,7 +404,7 @@ Create the OpenShift ConfigMap, then run the Camel K Integration. To do so, open
 Make sure that you're logged-in to OpenShift as `{user}` and in the correct `{user}-camel` project/namespace.
 ====
 
-[source,shell]
+[source,shell,role="copypaste",subs=attributes+]
 ----
 cd module02/customer-service
 oc create configmap customer-service-config --from-file=application.properties
@@ -423,15 +423,13 @@ Since this is a REST service, you can use `curl` (or whatever your HTTP REST tes
 Open a terminal and issue the following commands:
 
 .create-customer
-[source,shell]
-[subs=normal]
+[source,shell,role="copypaste",subs=attributes+]
 ----
 curl -X POST -H 'Content-Type: application/json' -d '{ "customerId": "avandelay", "customerName": "Art Vandelay" }' http://customer-service-{user}-camel.{openshift_cluster_ingress_domain}/customers
 ----
 
 .get-customer
-[source,shell]
-[subs=normal]
+[source,shell,role="copypaste",subs=attributes+]
 ----
 curl -X GET -H 'Accept: application/json' http://customer-service-{user}-camel.{openshift_cluster_ingress_domain}/customers/avandelay
 
@@ -439,21 +437,21 @@ curl -X GET -H 'Accept: application/json' http://customer-service-{user}-camel.{
 ----
 
 .get-customers
-[source,shell]
+[source,shell,role="copypaste"]
 [subs=normal]
 ----
 curl -X GET -H 'Accept: application/json' http://customer-service-{user}-camel.{openshift_cluster_ingress_domain}/customers
 ----
 
 .update-customer
-[source,shell]
+[source,shell,role="copypaste"]
 [subs=normal]
 ----
 curl -X PUT -H 'Content-Type: application/json' -d '{ "customerName": "Arthur Vandelay" }' http://customer-service-{user}-camel.{openshift_cluster_ingress_domain}/customers/avandelay
 ----
 
 .delete-customer
-[source,shell]
+[source,shell,role="copypaste"]
 [subs=normal]
 ----
 curl -X DELETE http://customer-service-{user}-camel.{openshift_cluster_ingress_domain}/customers/avandelay

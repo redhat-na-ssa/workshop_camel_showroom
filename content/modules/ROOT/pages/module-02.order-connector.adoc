@@ -21,8 +21,7 @@ Make sure when copy/pasting, you only grab the actual text and not any erroneous
 ====
 
 .application.properties
-[source,properties]
-[subs=normal]
+[source,properties,role="copypaste",subs=attributes+]
 ....
 kafka.brokers=kafka-kafka-bootstrap.{user}-globex.svc.cluster.local:9092
 kafka.securityProtocol=SASL_PLAINTEXT
@@ -170,7 +169,7 @@ First, we'll create the OpenShift ConfigMap, then we'll run the Camel K Integrat
 Make sure that you're logged-in to OpenShift as `{user}` and in the correct `{user}-camel` project/namespace.
 ====
 
-[source,shell]
+[source,shell,role="copypaste",subs=attributes+]
 ----
 cd module02/order-connector
 oc create configmap order-connector-config --from-file=application.properties
