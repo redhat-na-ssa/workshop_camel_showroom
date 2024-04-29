@@ -1,6 +1,6 @@
 = Getting Started with the Workshop
 
-In this module you will get familirized with the resources available to you in this workshop. 
+In this module you will get familiarized with the resources available to you in this workshop. 
 
 
 == Accessing OpenShift
