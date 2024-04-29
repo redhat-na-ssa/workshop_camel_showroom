@@ -13,7 +13,7 @@ For browsers, we recommend the use of Google Chrome or Mozzilla Firefox.
 
 == Lab Modules
 
-This workshop contains 4 modules. For the complete experience, these modules were made to be executed from 1 to 4, but since we recognize that we have attendees interested in different aspects of an integration lifecycle, you can skip modules and use provided scripts to execute the previous steps for you. Independetly of how you decide to execute this workshop, we recommend that you, at least, go throught the first module to get familirized with the tools used in this workshop. 
+This workshop contains 4 modules. For the complete experience, these modules were made to be executed from 1 to 4, but since we recognize that we have attendees interested in different aspects of an integration lifecycle, you can skip modules and use provided scripts to execute the previous steps for you. Independetly of how you decide to execute this workshop, we recommend that you, at least, go through the first module to get familiarize with the tools used in this workshop. 
 
 === Getting Started with the Workshop
 
@@ -21,7 +21,7 @@ In this module you will get introduced to the environment and tools used in this
 
 === Developing Integrations with Camel
 
-For this module you'll actually implement and deploy integrations. You will have access to a mock system called Globex, an e-commerce solution for Red Hat's swags. This system has a CDC(Change Data Capture) implementation to capture order and calculate cashback. The module requires you to implement the missing pieces to make the cashback implementation to work and build a REST API interface to interact with the cashback system database.
+For this module you'll actually implement and deploy integrations. You will have access to a mock system called Globex, an e-commerce solution for Red Hat's swags. This system has a CDC(Change Data Capture) implementation to capture order and calculate cashback. The module requires you to implement the missing pieces to make the cashback implementation work and build a REST API interface to interact with the cashback system database.
 
 === Monitoring Integrations in OpenShift
 
