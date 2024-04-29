@@ -57,8 +57,8 @@ Before starting to interact with the environment, let's get to know the products
 
 === Red Hat build of Apache Camel
 
-Red Hat build of Apache Camel is based on the open-source project Apache Camel. Apache Camel is a Java integration framework that it's been around since 2004.
-It provides an easy way to integrate different applications through process of structured steps called https://camel.apache.org/manual/routes.html[Routes]. The framework also provides building blocks that facilitate the integration of well known systems and protocols called https://camel.apache.org/components/4.4.x/index.html[Components]. Camel provides more than 300 of those.
+Red Hat build of Apache Camel is based on the open-source project Apache Camel, a Java integration framework that it's been around since 2004.
+It provides an easy way to integrate different applications through a process of structured steps called https://camel.apache.org/manual/routes.html[Route]. The framework also provides building blocks that facilitate the integration of well known systems and protocols called https://camel.apache.org/components/4.4.x/index.html[Components]. Camel provides more than 300 of those.
 
 === Red Hat build of Quarkus
 
