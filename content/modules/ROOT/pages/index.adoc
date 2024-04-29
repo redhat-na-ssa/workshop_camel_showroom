@@ -76,9 +76,9 @@ https://access.redhat.com/products/red-hat-build-of-keycloak[Red Hat build of Ke
 
 Red Hat OpenShift, the industry’s leading hybrid-cloud application platform powered by Kubernetes, brings together tested and trusted services to reduce the friction of developing, modernizing, deploying, running, and managing applications. OpenShift delivers a consistent experience across public cloud, on-premise, hybrid cloud, or edge architecture.
 
-OpenShift Container Platform includes multiple advanced capabilities that are tested and integrated with the underlying certified Kubernetes environment. We are going to use many of those features today
+OpenShift Container Platform includes multiple advanced capabilities that are tested and integrated with the underlying certified Kubernetes environment. We are going to use many of those features today.
 
-The following diagram shows the OpenShift capabilities that is provided with the platform:
+The following diagram shows capabilities provided by the platform:
 
 image::index/openshift-diagram.png[OpenShift diagram]
 
