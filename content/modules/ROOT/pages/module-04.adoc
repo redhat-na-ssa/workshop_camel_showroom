@@ -85,11 +85,11 @@ You can use this same Pipeline to build and deploy all other integrations we cre
 ====
 
 == Exporting Camel-K integration to Java Maven Project
-Another option available in the Apache Camel *toolset* is the ability to **export** your Camel-K integration (defined as yaml file) to a traditional **Java Maven Project**. This can be achieved by using the https://camel.apache.org/manual/camel-jbang.html[Camel JBang app] which is already available in your DevWorkspace. 
+Another option available in the Apache Camel *toolset* is the ability to **export** your yaml Route to a traditional **Java Maven Project**. This can be achieved by using the https://camel.apache.org/manual/camel-jbang.html[Camel JBang app] which is already available in your DevWorkspace. 
 
 [NOTE]
 ====
-Having your Camel-K integration exported as a Maven project opens up room for all sorts of customization and integration with CI/CD tools available to the large Java ecosystem.
+Having your Camel-K integration exported as a Maven project opens up room for all sorts of customization and more fine-grained control on how to build images from your source code. Camel K makes it easy to deploy from YAML, but if your use case is more complex or requires more control over the release process, you may want to consider to maintain a Java Project. You will still be able to use Kaoto to work on your route design.
 ====
 
 To export the `customer-connector` integration developed in module-02 as a Java Maven Project to run on Quarkus Runtime, execute the following command in your DevWorkspace terminal.
@@ -140,18 +140,18 @@ Now you can build the app locally by executing the following command in a Termin
 mvn package
 ....
 
-After building the app locally, you can run it by
-
-[IMPORTANT]
-====
-The `customer-connector` integration depends on the `customer-service`, so before running the following command locally make sure the `customer-service` is deployed.
-====
+After building the app locally, you can run it locally by executing:
 
 [source, bash]
 [subs=normal]
 ....
 java -jar target/quarkus-app/quarkus-run.jar
 ....
+
+[IMPORTANT]
+====
+The `customer-connector` integration depends on the `customer-service`, so before running the following command locally make sure the `customer-service` is deployed.
+====
 
 You should see a lot of log entries as the Camel route start processing the Kafka record stream.
 
