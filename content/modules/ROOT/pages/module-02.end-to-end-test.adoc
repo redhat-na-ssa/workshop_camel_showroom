@@ -46,7 +46,7 @@ image::module02/end-to-end-test/globex-order-placed.png[]
 * At this point, an order has been added in the Globex application database. The records added to the *orders* and *line_item* tables have been detected by Debezium and produced as change events to Kafka topics. 
 We can easily check this with AMQ Streams Console.
 
-* Open https://console-ui-route-{user}-globex.{openshift_cluster_ingress_domain}/home[AMQ Console^] in a new tab.
+* Open https://console-ui-route-{user}-globex.{openshift_cluster_ingress_domain}/home[AMQ Streams Console^] in a new tab.
 
 image::module02/end-to-end-test/amq-streams-console.png[]
 
@@ -70,7 +70,7 @@ Click on the *POST* link, and then on the *Try it out* link on the right. From t
 image::module02/end-to-end-test/order-simulator-random-customer.png[]
 
 ** Click *Execute* to execute the REST call to the simulator.
-** Check in Kafdrop that new messages are produced to the *globex.updates.public.orders* and *globex.updates.public.line_item* topics.
+** Check in AMQ Streams Console that new messages are produced to the *globex.updates.public.orders* and *globex.updates.public.line_item* topics.
 
 
 [NOTE]

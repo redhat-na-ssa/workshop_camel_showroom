@@ -41,7 +41,7 @@ Create a new file in the `order-connector` directory. Name the file `order-conne
 
 [NOTE]
 ====
-If the Kaoto extention is installed, it will by default detect and open any files matching the `*.camel.yaml` naming pattern. If you want to open the file in any other editor (ie, the plain text editor), you can right-click on the file, select `"Open With..."`, and then choose your desired editor.
+If the Kaoto extension is installed, it will by default detect and open any files matching the `*.camel.yaml` naming pattern. If you want to open the file in any other editor (ie, the plain text editor), you can right-click on the file, select `"Open With..."`, and then choose your desired editor.
 ====
 
 image::module02/order-connector/create-file-camel.gif[]
@@ -54,7 +54,7 @@ Edit the name of the route and set it to `kafka-to-expense-api`.
 
 [TIP]
 ====
-It's always a good idea to give your Camel routes useful names. This helps you to identify them later when viewing them in the hawtio web console.
+It's always a good idea to give your Camel routes useful names. This helps you to identify them later when viewing them in the Hawtio web console.
 ====
 
 image::module02/order-connector/edit-route-name.gif[]
@@ -171,14 +171,14 @@ Make sure that you're logged-in to OpenShift as `{user}` and in the correct `{us
 
 [source,shell,role="copypaste",subs=attributes+]
 ----
-cd module02/order-connector
+cd module-02/order-connector
 oc create configmap order-connector-config --from-file=application.properties
 kamel run -d camel:http -p configmap:order-connector-config order-connector.camel.yaml
 ----
 
 image::module02/order-connector/run-route.gif[]
 
-And that's it! If all well, you should see your `order-connector-*` pod start within a few minutes. It'll take some time for it to build. So be patient.
+And that's it! If all went well, you should see your `order-connector-*` pod start within a few minutes. It'll take some time for it to build. So be patient.
 
 == Testing Application
 

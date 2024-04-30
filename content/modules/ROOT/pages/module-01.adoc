@@ -47,6 +47,13 @@ This is the project you'll use to deploy integrations. We already have some oper
 
 image::module01/camel-namespace.png[Globex Namespace]
 
+
+[NOTE]
+====
+Your Topology image topology/layout may look different or be organized differently, but all the same components will be present.
+====
+
+
 == Using Dev Spaces
 
 Let's get used to our IDE. Go back to the OpenShift {console_url}[console]. In the top right corner, click on the grid, then select `Red Hat OpenShift Dev Spaces`.
@@ -80,7 +87,7 @@ image::module01/workspace-warning.png[Pop Ups]
 
 Before we start to develop real integrations, let's get a feel for the tooling available by starting with a stock HelloWorld application. We can now use VS Code extensions to initialize a Camel Route for us. 
 
-* Use `CTRL + SHIFT + P` to open the command pallete 
+* Use `CTRL + SHIFT + P` to open the command palette. If your using MacOS, `CMD + SHIFT + P`. 
 * Type in `camel yaml dsl`
 * Select `camel:Create a Camel Route using YAML DSL`.
 * name the Route `sample-route`

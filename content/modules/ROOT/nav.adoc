@@ -1,3 +1,5 @@
+* xref:index.adoc[Welcome]
+
 * xref:module-01.adoc[1. Getting Started with the Workshop]
 
 * xref:module-02.adoc[2. Developing Integrations with Camel]
