@@ -64,7 +64,7 @@ It provides an easy way to integrate different applications through a process of
 
 === Red Hat build of Quarkus
 
-The https://access.redhat.com/products/quarkus[Red Hat build of Quarkus] is based on the popular https://quarkus.io/[Quarkus] community project. It's Kubernetes-native Java with low memory footprint and fast boot times for microservices and serverless applications. We used Quarkus to build all the microservices in the *Globex* application. Also, we are going to use `Quarkus + Camel` to build integrations.
+The https://access.redhat.com/products/quarkus[Red Hat build of Quarkus^] is based on the popular https://quarkus.io/[Quarkus] community project. It's Kubernetes-native Java with low memory footprint and fast boot times for microservices and serverless applications. We used Quarkus to build all the microservices in the *Globex* application. Also, we are going to use `Quarkus + Camel` to build integrations.
 
 === Red Hat AMQ Streams
 
