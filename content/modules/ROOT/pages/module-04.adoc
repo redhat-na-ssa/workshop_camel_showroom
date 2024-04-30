@@ -1,7 +1,7 @@
 = Automate your deployment with Tekton
 So far we exercised what we call the Inner-loop development workflow where you essentially iteratively do code, build, test, debug, deploy in a local environment (or a Dev Workspace in our case). But how about the build and deployment after we push our code to a Git repository?
 
-In this section you are going to learn how to automate the build and deployment of your Integrations using a Cloud Native https://www.redhat.com/en/topics/devops/what-is-ci-cd[CI/CD technology] called https://tekton.dev[Tekton]. Tekton is available on Openshift through the Openshift Pipelines Operator which is already present on our cluster.
+In this section you are going to learn how to automate the build and deployment of your Integrations using a Cloud Native https://www.redhat.com/en/topics/devops/what-is-ci-cd[CI/CD technology] called https://tekton.dev[Tekton^]. Tekton is available on Openshift through the Openshift Pipelines Operator which is already present on our cluster.
 
 == Automating the Camel K deployment 
 We learned that Camel K does a great job containerizing our Integrations and deploying on Openshift. Now we are going to learn how to integrate it with Openshift Pipelines so you can leverage CI/CD tools to delivery integrations following corporate standards.
@@ -72,7 +72,7 @@ image::module04/camel-k-pod-topology.gif[]
 
 [TIP]
 ====
-In this exercise we triggered the Pipeline manually, but in practice you would have a **Webhook** in place so the Pipeline can run **continuously** every time a new change gets pushed to the integration code Git repository. In case you are interested in the Pipeline Triggering capability check https://www.redhat.com/en/blog/guide-to-openshift-pipelines-part-6-triggering-pipeline-execution-from-github[this tutorial] out for reference.
+In this exercise we triggered the Pipeline manually, but in practice you would have a **Webhook** in place so the Pipeline can run **continuously** every time a new change gets pushed to the integration code Git repository. In case you are interested in the Pipeline Triggering capability check https://www.redhat.com/en/blog/guide-to-openshift-pipelines-part-6-triggering-pipeline-execution-from-github[this tutorial^] out for reference.
 ====
 
 [NOTE]
@@ -103,7 +103,7 @@ You can use this same Pipeline to build and deploy all other integrations we cre
 ====
 
 == Exporting Camel-K integration to Java Maven Project
-Another option available in the Apache Camel *toolset* is the ability to **export** your yaml Route to a traditional **Java Maven Project**. This can be achieved by using the https://camel.apache.org/manual/camel-jbang.html[Camel JBang app] which is already available in your DevWorkspace. 
+Another option available in the Apache Camel *toolset* is the ability to **export** your yaml Route to a traditional **Java Maven Project**. This can be achieved by using the https://camel.apache.org/manual/camel-jbang.html[Camel JBang app^] which is already available in your DevWorkspace. 
 
 [NOTE]
 ====
@@ -123,7 +123,7 @@ jbang run '-Dcamel.jbang.version=4.6.0-SNAPSHOT' camel@apache/camel export \
 
 [TIP]
 ====
-More details on the capabilities available in the Camel JBang please see the https://camel.apache.org/manual/camel-jbang.html[project docs].
+More details on the capabilities available in the Camel JBang please see the https://camel.apache.org/manual/camel-jbang.html[project docs^].
 ====
 
 The command may take a couple of minutes when you first run it as `jbang` needs to download dependencies from the Maven repository. Please, wait until the commands completes as follows.

@@ -11,12 +11,12 @@ Just checkout the `solution` branch and follow the README instructions in the fo
 
 == Camel K traits
 
-https://camel.apache.org/camel-k/2.2.x/traits/traits.html[Traits] are configurations you can pass to the Camel K API to modify/add capabilities to the Integration.
+https://camel.apache.org/camel-k/2.2.x/traits/traits.html[Traits^] are configurations you can pass to the Camel K API to modify/add capabilities to the Integration.
 In the previous module you used `--open-api` to create HTTP listeners based on the OpenAPI spec. Now you are going to do something similar to enable the integration to connect with
-two monitoring solutions: https://prometheus.io/[Prometheus] and https://hawt.io/[HawtIO]. 
+two monitoring solutions: https://prometheus.io/[Prometheus^] and https://hawt.io/[HawtIO^]. 
 
-To enable HawtIO we just need to add `-t jolokia.enabled=true` when deploying the integration using `kamel` CLI. https://jolokia.org/[Jolokia] is a JVM agent that provides an HTTP bridge
-to expose https://en.wikipedia.org/wiki/Java_Management_Extensions[JMX] remotely. HawtIO will use that bridge to connect with a running application and provide real-time information about it.
+To enable HawtIO we just need to add `-t jolokia.enabled=true` when deploying the integration using `kamel` CLI. https://jolokia.org/[Jolokia^] is a JVM agent that provides an HTTP bridge
+to expose https://en.wikipedia.org/wiki/Java_Management_Extensions[JMX^] remotely. HawtIO will use that bridge to connect with a running application and provide real-time information about it.
 
 To enable Prometheus we need `-t prometheus.enabled=true` and `-t prometheus.pod-monitor-labels='workshop=camel'`. This trait will enable a Prometheus Metric Exporter in the application but it will also create a PodMonitor object on OpenShift. We need the PodMonitor object so the Prometheus operator, pre-installed for you, is able to identify how to scrape metrics from the application. The Prometheus instance is configured to look up for PodMonitor instances that match the `workshop=camel` label.
 

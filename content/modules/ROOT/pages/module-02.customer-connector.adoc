@@ -31,7 +31,7 @@ image::module02/customer-connector/create-file-properties.gif[]
 
 == Camel Configuration
 
-Next, we'll create the Camel configuration file. This time, let's see if you can figure out the implementation with limited instructions. If you need, you can check the `solution` branch of your https://gitea.{openshift_cluster_ingress_domain}/{user}/workshop_camel_workspace/raw/branch/solution/module-02/customer-service/customer-service.camel.yaml[Git repo] for a working route.
+Next, we'll create the Camel configuration file. This time, let's see if you can figure out the implementation with limited instructions. If you need, you can check the `solution` branch of your https://gitea.{openshift_cluster_ingress_domain}/{user}/workshop_camel_workspace/raw/branch/solution/module-02/customer-service/customer-service.camel.yaml[Git repo^] for a working route.
 
 Create the Camel configuration file under the `customer-connector` directory. Name the file `customer-connector.camel.yaml`. Create and implement the following routes:
 

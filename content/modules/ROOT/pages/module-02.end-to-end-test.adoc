@@ -5,7 +5,7 @@ You already know about the `{user}-globex` namespace, now you will see how the s
 
 == Create an Order in the Globex Retail Application
 
-* Open Globex retail web application in a new tab using this https://globex-web-{user}-globex.{openshift_cluster_ingress_domain}[link].
+* Open Globex retail web application in a new tab using this https://globex-web-{user}-globex.{openshift_cluster_ingress_domain}[link^].
 
 * In order to place an order, you need to login into the Globex application. Click on the *Login* link on the right of the top menu.
 +
@@ -46,7 +46,7 @@ image::module02/end-to-end-test/globex-order-placed.png[]
 * At this point, an order has been added in the Globex application database. The records added to the *orders* and *line_item* tables have been detected by Debezium and produced as change events to Kafka topics. 
 We can easily check this with AMQ Streams Console.
 
-* Open https://console-ui-route-{user}-globex.{openshift_cluster_ingress_domain}/home[AMQ Console] in a new tab.
+* Open https://console-ui-route-{user}-globex.{openshift_cluster_ingress_domain}/home[AMQ Console^] in a new tab.
 
 image::module02/end-to-end-test/amq-streams-console.png[]
 
@@ -62,7 +62,7 @@ Go back to the `AMQ Streams Console - Topics` page, and this time open the *glob
 
 image::module02/end-to-end-test/amq-console-topic-orders.png[]
 
-* If you want to simulate a larger number of orders, you can use the _Order Simulator_ application deployed in the `{user}-globex` namespace on OpenShift, using this https://order-simulator-{user}-globex.{openshift_cluster_ingress_domain}[link].
+* If you want to simulate a larger number of orders, you can use the _Order Simulator_ application deployed in the `{user}-globex` namespace on OpenShift, using this https://order-simulator-{user}-globex.{openshift_cluster_ingress_domain}[link^].
 
 ** This opens a Swagger UI page showing the REST API of the simulator. +
 Click on the *POST* link, and then on the *Try it out* link on the right. From the *Examples* drop down, select *random customers* to create orders for random customers. Feel free to change the numbers of orders you want to simulate (the default is 50).

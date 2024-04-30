@@ -11,11 +11,11 @@ image::module02/customer-service/create-folder.gif[]
 
 == OpenAPI Spec
 
-Next, we'll create the OpenAPI spec defining our REST interface. For this, we'll be using the API Designer, a product based on https://www.apicur.io/apicurito/[Apicurito] editor.
+Next, we'll create the OpenAPI spec defining our REST interface. For this, we'll be using the API Designer, a product based on https://www.apicur.io/apicurito/[Apicurito^] editor.
 
 [TIP]
 ====
-If you'd like to skip this step, you can grab the https://gitea.{openshift_cluster_ingress_domain}/{user}/workshop_camel_workspace/raw/branch/solution/module-02/customer-service/customer-openapi-spec.json[completed OpenAPIv3 spec] from the solutions branch in your Git repo.
+If you'd like to skip this step, you can grab the https://gitea.{openshift_cluster_ingress_domain}/{user}/workshop_camel_workspace/raw/branch/solution/module-02/customer-service/customer-openapi-spec.json[completed OpenAPIv3 spec^] from the solutions branch in your Git repo.
 ====
 
 Open up https://apicurito-ui-shared-tools.{openshift_cluster_ingress_domain} in a different browser tab, and create a new `OpenAPI 3` spec.

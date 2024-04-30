@@ -113,7 +113,7 @@ As with many things in Camel, there is usually more than one way to accomplish t
 
 [NOTE]
 ====
-Notice that you can insert Camel Simple expressions into the log message. For more information about Camel Simple expression language, take a look at the https://camel.apache.org/components/latest/languages/simple-language.html[docs].
+Notice that you can insert Camel Simple expressions into the log message. For more information about Camel Simple expression language, take a look at the https://camel.apache.org/components/latest/languages/simple-language.html[docs^].
 ====
 
 image::module02/order-connector/edit-route-log.gif[]
