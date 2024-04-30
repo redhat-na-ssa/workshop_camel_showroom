@@ -97,11 +97,11 @@ image::module01/sample-route.png[Sample Route]
 A Route is a set of processing steps that are applied to a message as it travels from a source to a destination. A route typically consists of a series of processing steps that are connected in a linear sequence.A Camel route is where the integration flow is defined. For example, you can write a Camel route to specify how two systems can be integrated. You can also specify how the data can be manipulated, routed, or mediated between the systems. 
 ====
 
-In this example we have a simple route that start with a https://camel.apache.org/components/4.4.x/timer-component.html[Timer] event. So every second a new event will be generated and a message will be logged. Let's run this example locally first.
+In this example we have a simple route that starts with a https://camel.apache.org/components/4.4.x/timer-component.html[Timer] event. So every second a new event will be generated and a message will be logged. Let's run this example locally first.
 
 === Running Routes Locally
 
-To run this Route we are goin to use a tool called JBang. https://camel.apache.org/manual/camel-jbang.html[JBang] is a CLI that makes easy to run Java applications. You already have the VS Code extension configured for you and the JBang CLI available in your workspace. Let's run the route.
+To run this Route we are going to use a tool called JBang. https://camel.apache.org/manual/camel-jbang.html[JBang] is a CLI that makes easy to run Java applications. You already have the VS Code extension configured for you and the JBang CLI available in your workspace. Let's run the route.
 
 * If you have the editor open, you can run it by clicking on the `Run Camel Application with JBang` button on the top right corner:
 
