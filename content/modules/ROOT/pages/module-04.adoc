@@ -46,6 +46,7 @@ To remove deployed integrations
 ....
 #to remove specific integration
 kamel delete order-connector -n {user}-camel
+kamel delete customer-connector -n {user}-camel
 ....
 ====
 
@@ -114,6 +115,9 @@ To export the `customer-connector` integration developed in module-02 as a Java 
 
 [source,bash,role="copypaste",subs=attributes+]
 ....
+cd $PROJECT_SOURCE
+mkdir module-04 && cd module-04
+
 jbang run '-Dcamel.jbang.version=4.6.0-SNAPSHOT' camel@apache/camel export \
 --gav=com.redhat.lab:customer-connector:1.0.0-SNAPSHOT \
 --runtime=quarkus \
@@ -155,6 +159,7 @@ Now you can build the app locally by executing the following command in a Termin
 
 [source,bash,role="copypaste",subs=attributes+]
 ....
+cd $PROJECT_SOURCE/module-04/customer-connector
 mvn package
 ....
 
@@ -163,6 +168,7 @@ After building the app locally, you can run it locally by executing:
 [source,bash,role="copypaste",subs=attributes+]
 [subs=normal]
 ....
+cd $PROJECT_SOURCE/module-04/customer-connector
 java -jar target/quarkus-app/quarkus-run.jar
 ....
 
