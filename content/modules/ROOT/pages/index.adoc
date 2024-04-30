@@ -41,13 +41,13 @@ Throughout the workshop we will provide you links to the resources you need to a
 
 OpenShift Access:
 
-* Console URL: {console_url}
+* {console_url}[OpenShift Console Link^]
 * User: `{user}`
 * Password: `{password}`
 
 Gitea Access:
 
-* Console URL: {gitea_console_url}
+* {gitea_console_url}[Gitea Link^]
 * User: `{gitea_user}`
 * Password: `{gitea_password}`
 
