@@ -1,3 +1,5 @@
+:linkattrs:
+:window: _blank
 = {lab_name}
 
 Welcome to our workshop!
