@@ -70,10 +70,10 @@ Set the following endpoint properties on the Kafka Component node:
 |===
 |Name|Value
 
-|Topic|globex.order-aggregated
-|Brokers|{{kafka.brokers:localhost:9092}}
-|Auto Offset Reset|earliest
-|Group Id|order-cashback-connector
+.^|Topic|globex.order-aggregated
+.^|Brokers|{{kafka.brokers:localhost:9092}}
+.^|Auto Offset Reset|earliest
+.^|Group Id|order-cashback-connector
 |===
 
 image::module02/order-connector/edit-route-kafka-properties.gif[]
@@ -85,9 +85,9 @@ Set the following security properties on the Kafka Component node:
 |===
 |Name|Value
 
-|Sasl Jaas Config|{{?kafka.saslJaasConfig}}
-|Sasl Mechanism|{{?kafka.saslMechanism}}
-|Security Protocol|{{?kafka.securityProtocol}}
+.^|Sasl Jaas Config|{{?kafka.saslJaasConfig}}
+.^|Sasl Mechanism|{{?kafka.saslMechanism}}
+.^|Security Protocol|{{?kafka.securityProtocol}}
 |===
 
 [NOTE]
@@ -108,7 +108,7 @@ As with many things in Camel, there is usually more than one way to accomplish t
 |===
 |Name|Value
 
-|Message|Picked up customer aggregated order message: '${body}'
+.^|Message|Picked up customer aggregated order message: '${body}'
 |===
 
 [NOTE]
@@ -129,8 +129,8 @@ Set the following properties on the "when" condition:
 |===
 :Name:Value
 
-:Type:Simple
-:Expression:${body} == ${null} || ${body} regex "\s*"
+.^:Type:Simple
+.^:Expression:${body} == ${null} || ${body} regex "\s*"
 |===
 
 image::module02/order-connector/edit-route-choice-when.gif[]
@@ -150,10 +150,10 @@ Set the following endpoint properties on the Rest Component node:
 |===
 |Name|Value
 
-|Method|post
-|Path|/expense
-|Binding Mode|off
-|Host|{{cashback-service.url:localhost:8080}}
+.^|Method|post
+.^|Path|/expense
+.^|Binding Mode|off
+.^|Host|{{cashback-service.url:localhost:8080}}
 |===
 
 image::module02/order-connector/edit-route-choice-otherwise-rest-properties.gif[]

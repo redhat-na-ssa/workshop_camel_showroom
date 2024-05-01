@@ -94,8 +94,8 @@ Select the `Beans` tab in the Kaoto editor. Create a new bean with the following
 |===
 |Name|Value
 
-|Name|customerDb
-|Type|org.postgresql.ds.PGSimpleDataSource
+.^|Name|customerDb
+.^|Type|org.postgresql.ds.PGSimpleDataSource
 |===
 
 Expand the `Properties` section, and add the following:
@@ -105,11 +105,11 @@ Expand the `Properties` section, and add the following:
 |===
 |Name|Value
 
-|databaseName|{{db.databaseName:public}}
-|password|{{db.password:Abcd1234}}
-|portNumber|{{db.port:5432}}
-|serverName|{{db.serverName:localhost}}
-|user|{{db.user:user1}}
+.^|databaseName|{{db.databaseName:public}}
+.^|password|{{db.password:Abcd1234}}
+.^|portNumber|{{db.port:5432}}
+.^|serverName|{{db.serverName:localhost}}
+.^|user|{{db.user:user1}}
 |===
 
 image::module02/customer-service/create-bean.gif[]
@@ -129,7 +129,7 @@ Edit the route start node. Change it from the default Timer Component type to a 
 |===
 |Name|Value
 
-|Name|createCustomer
+.^|Name|createCustomer
 |===
 
 [NOTE]
@@ -148,8 +148,8 @@ Append an Unmarshal Processor step after the Direct Component step. Set the foll
 |===
 |Name|Value
 
-|Data Format|JSon
-|Unmarshal Type|java.util.Map
+.^|Data Format|JSon
+.^|Unmarshal Type|java.util.Map
 |===
 
 image::module02/customer-service/edit-route-create-customer-unmarshal.gif[]
@@ -161,7 +161,7 @@ Edit the Log Processor step. Set the following properties:
 |===
 |Name|Value
 
-|Message|Inserting customer: customer_id='${body["customerId"]}', name='${body["customerName"]}'
+.^|Message|Inserting customer: customer_id='${body["customerId"]}', name='${body["customerName"]}'
 |===
 
 image::module02/customer-service/edit-route-create-customer-log.gif[]
@@ -175,8 +175,8 @@ Append a new SQL Component step after the Log Processor step. Set the following 
 |===
 |Name|Value
 
-|Query|INSERT INTO customer (customer_id, name) VALUES (:#customerId, :#customerName);
-|Data Source|#customerDb
+.^|Query|INSERT INTO customer (customer_id, name) VALUES (:#customerId, :#customerName);
+.^|Data Source|#customerDb
 |===
 
 image::module02/customer-service/edit-route-create-customer-sql.gif[]
@@ -190,15 +190,20 @@ Append a Set Body Processor step after the SQL Component step. Set the following
 |===
 |Name|Value
 
-|Type|Simple
-|Expression|${null}
+.^|Type|Simple
+.^|Expression|${null}
 |===
 
 image::module02/customer-service/edit-route-create-customer-setBody.gif[]
 
 That's all for the `create-customer` route! Now let's see if you can create the remaining routes with a little less instruction and hand-holding. :)
 
-=== Camel Route - `get-customer`
+=== Optional: Camel Route - `get-customer`
+
+[NOTE]
+====
+This Camel route is not required for the end-to-end test to function, and is optional. If you are running short on time, you can skip it.
+====
 
 This route will get a single customer given a `customerId`, or return an HTTP `404` if the customer is not found.
 
@@ -209,7 +214,7 @@ image::module02/customer-service/route-get-customer.png[]
 |===
 |Name|Value
 
-|Name|getCustomer
+.^|Name|getCustomer
 |===
 
 .2 - Log Processor
@@ -217,7 +222,7 @@ image::module02/customer-service/route-get-customer.png[]
 |===
 |Name|Value
 
-|Message|Fetching customer details: customer_id=${header.customerId}
+.^|Message|Fetching customer details: customer_id=${header.customerId}
 |===
 
 .3 - SQL Component
@@ -225,9 +230,9 @@ image::module02/customer-service/route-get-customer.png[]
 |===
 |Name|Value
 
-|Query|SELECT customer_id AS "customerId", name AS "customerName" FROM customer WHERE customer_id=:#${header.customerId};
-|Data Source|#customerDb
-|Output Type|SelectOne
+.^|Query|SELECT customer_id AS "customerId", name AS "customerName" FROM customer WHERE customer_id=:#${header.customerId};
+.^|Data Source|#customerDb
+.^|Output Type|SelectOne
 |===
 
 .4 - Choice Processor -> When Expression
@@ -235,8 +240,8 @@ image::module02/customer-service/route-get-customer.png[]
 |===
 |Name|Value
 
-|Type|Simple
-|Expression|${body} == ${null}
+.^|Type|Simple
+.^|Expression|${body} == ${null}
 |===
 
 .5 - Log Processor
@@ -244,7 +249,7 @@ image::module02/customer-service/route-get-customer.png[]
 |===
 |Name|Value
 
-|Message|Customer not found: customer_id='${header.customerId}'
+.^|Message|Customer not found: customer_id='${header.customerId}'
 |===
 
 .6 - Set Header Processor
@@ -252,9 +257,9 @@ image::module02/customer-service/route-get-customer.png[]
 |===
 |Name|Value
 
-|Name|CamelHttpResponseCode
-|Type|Constant
-|Expression|404
+.^|Name|CamelHttpResponseCode
+.^|Type|Constant
+.^|Expression|404
 |===
 
 .7 - Marshal Processor
@@ -262,10 +267,15 @@ image::module02/customer-service/route-get-customer.png[]
 |===
 |Name|Value
 
-|Data Format|JSon
+.^|Data Format|JSon
 |===
 
-=== Camel Route - `get-customers`
+=== Optional: Camel Route - `get-customers`
+
+[NOTE]
+====
+This Camel route is not required for the end-to-end test to function, and is optional. If you are running short on time, you can skip it.
+====
 
 This route will get a list of all customers in the database.
 
@@ -276,7 +286,7 @@ image::module02/customer-service/route-get-customers.png[]
 |===
 |Name|Value
 
-|Name|getCustomers
+.^|Name|getCustomers
 |===
 
 .2 - Log Processor
@@ -284,7 +294,7 @@ image::module02/customer-service/route-get-customers.png[]
 |===
 |Name|Value
 
-|Message|Getting customers
+.^|Message|Getting customers
 |===
 
 .3 - SQL Component
@@ -292,8 +302,8 @@ image::module02/customer-service/route-get-customers.png[]
 |===
 |Name|Value
 
-|Query|SELECT customer_id AS "customerId", name AS "customerName" FROM customer;
-|Data Source|#customerDb
+.^|Query|SELECT customer_id AS "customerId", name AS "customerName" FROM customer;
+.^|Data Source|#customerDb
 |===
 
 .4 - Marshal Processor
@@ -301,10 +311,15 @@ image::module02/customer-service/route-get-customers.png[]
 |===
 |Name|Value
 
-|Data Format|JSon
+.^|Data Format|JSon
 |===
 
-=== Camel Route - `update-customer`
+=== Optional: Camel Route - `update-customer`
+
+[NOTE]
+====
+This Camel route is not required for the end-to-end test to function, and is optional. If you are running short on time, you can skip it.
+====
 
 This route will update a customer record for a given `customerId`.
 
@@ -315,7 +330,7 @@ image::module02/customer-service/route-update-customer.png[]
 |===
 |Name|Value
 
-|Name|updateCustomer
+.^|Name|updateCustomer
 |===
 
 .2 - Unmarshal Processor
@@ -323,8 +338,8 @@ image::module02/customer-service/route-update-customer.png[]
 |===
 |Name|Value
 
-|Data Format|JSon
-|Unmarshal Type|java.util.Map
+.^|Data Format|JSon
+.^|Unmarshal Type|java.util.Map
 |===
 
 .3 - Log Processor
@@ -332,7 +347,7 @@ image::module02/customer-service/route-update-customer.png[]
 |===
 |Name|Value
 
-|Message|Updating customer: customer_id='${header.customerId}', name='${body["customerName"]}'
+.^|Message|Updating customer: customer_id='${header.customerId}', name='${body["customerName"]}'
 |===
 
 .4 - SQL Component
@@ -340,8 +355,8 @@ image::module02/customer-service/route-update-customer.png[]
 |===
 |Name|Value
 
-|Query|UPDATE customer SET name=:#customerName WHERE customer_id=:#${header.customerId};
-|Data Source|#customerDb
+.^|Query|UPDATE customer SET name=:#customerName WHERE customer_id=:#${header.customerId};
+.^|Data Source|#customerDb
 |===
 
 .5 - Set Body Processor
@@ -349,11 +364,16 @@ image::module02/customer-service/route-update-customer.png[]
 |===
 |Name|Value
 
-|Type|Simple
-|Expression|${null}
+.^|Type|Simple
+.^|Expression|${null}
 |===
 
-=== Camel Route - `delete-customer`
+=== Optional: Camel Route - `delete-customer`
+
+[NOTE]
+====
+This Camel route is not required for the end-to-end test to function, and is optional. If you are running short on time, you can skip it.
+====
 
 This route will delete a customer record for a given `customerId`.
 
@@ -362,9 +382,9 @@ image::module02/customer-service/route-delete-customer.png[]
 .1 - Direct Component
 [%autowidth, cols="d,l"]
 |===
-|Name|Value
+.^|Name|Value
 
-|Name|deleteCustomer
+.^|Name|deleteCustomer
 |===
 
 .2 - Log Processor
@@ -372,7 +392,7 @@ image::module02/customer-service/route-delete-customer.png[]
 |===
 |Name|Value
 
-|Message|Deleting customer: customer_id='${header.customerId}'
+.^|Message|Deleting customer: customer_id='${header.customerId}'
 |===
 
 .3 - SQL Component
@@ -380,8 +400,8 @@ image::module02/customer-service/route-delete-customer.png[]
 |===
 |Name|Value
 
-|Query|DELETE FROM customer WHERE customer_id=:#${header.customerId};
-|Data Source|#customerDb
+.^|Query|DELETE FROM customer WHERE customer_id=:#${header.customerId};
+.^|Data Source|#customerDb
 |===
 
 .4 - Set Body Processor
@@ -389,8 +409,8 @@ image::module02/customer-service/route-delete-customer.png[]
 |===
 |Name|Value
 
-|Type|Simple
-|Expression|${null}
+.^|Type|Simple
+.^|Expression|${null}
 |===
 
 == Running Application
