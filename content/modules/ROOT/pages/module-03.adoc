@@ -25,6 +25,7 @@ If we take `customer-connector` as an example, the deployment command would look
 [source,shell,role="copypaste"]
 [subs=normal]
 ----
+cd $PROJECT_SOURCE/module-02/customer-connector
 kamel run -d camel:http -p configmap:customer-connector-config -t prometheus.enabled=true -t prometheus.pod-monitor-labels='workshop=camel' -t jolokia.enabled=true customer-connector.camel.yaml
 ----
 

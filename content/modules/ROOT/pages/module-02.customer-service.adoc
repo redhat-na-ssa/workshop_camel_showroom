@@ -406,7 +406,7 @@ Make sure that you're logged-in to OpenShift as `{user}` and in the correct `{us
 
 [source,shell,role="copypaste",subs=attributes+]
 ----
-cd module-02/customer-service
+cd $PROJECT_SOURCE/module-02/customer-service
 oc create configmap customer-service-config --from-file=application.properties
 oc create configmap customer-openapi-spec --from-file=customer-openapi-spec.json
 kamel run -d camel:platform-http -d mvn:org.postgresql:postgresql:42.7.3 -p configmap:customer-service-config --open-api configmap:customer-openapi-spec customer-service.camel.yaml

@@ -101,7 +101,7 @@ Set the following properties on the Log Processor node:
 
 [IMPORTANT]
 ====
-As with many things in Camel, there is usually more than one way to accomplish the same task. For instance, there is both a Log Component, and a Log Processor. Both serve the purpose of logging a message, just with slightly different configurations. In all of these labs, we will use the Log Processor for consistency.
+As with many things in Camel, there is usually more than one way to accomplish the same task. For instance, there is both a Log Component, and a Log Processor. Both serve the purpose of logging a message, just with slightly different configurations. ##In all of these labs, we will use the **Log Processor** for consistency##.
 ====
 
 [%autowidth]
@@ -171,7 +171,7 @@ Make sure that you're logged-in to OpenShift as `{user}` and in the correct `{us
 
 [source,shell,role="copypaste",subs=attributes+]
 ----
-cd module-02/order-connector
+cd $PROJECT_SOURCE/module-02/order-connector
 oc create configmap order-connector-config --from-file=application.properties
 kamel run -d camel:http -p configmap:order-connector-config order-connector.camel.yaml
 ----
