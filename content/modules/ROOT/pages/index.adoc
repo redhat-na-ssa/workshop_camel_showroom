@@ -84,7 +84,7 @@ image::index/openshift-diagram.png[OpenShift diagram]
 
 === Red Hat OpenShift Dev Spaces
 
-https://access.redhat.com/products/red-hat-openshift-dev-spaces[OpenShift Dev Spaces^]is a container-based service for creating consistent and secured developer environments on Red Hat OpenShift to increase developer productivity and optimize costs. We are going to use it to provide you a complete development envinronment using VS Code as IDE and an OpenShift project as a sandbox. 
+https://access.redhat.com/products/red-hat-openshift-dev-spaces[OpenShift Dev Spaces^]is a container-based service for creating consistent and secured developer environments on Red Hat OpenShift to increase developer productivity and optimize costs. We are going to use it to provide you a complete development environment using VS Code as IDE and an OpenShift project as a sandbox. 
 
 image::index/cloud-development-environments.gif[VS Code on Dev Spaces]
 

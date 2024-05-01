@@ -120,7 +120,7 @@ It takes a couple of seconds to run routes for the first time, as dependencies n
 
 image::module01/route-running.gif[Route Running]
 
-This route will run indefinetely, generating messages every second, so once you're done with the demonstration, `CTRL + C` on the terminal to stop the process.
+This route will run indefinitely, generating messages every second, so once you're done with the demonstration, `CTRL + C` on the terminal to stop the process.
 
 === Deploying the route using Camel K
 
@@ -141,7 +141,7 @@ To deploy the Route you can use the icon in the top right corner(next to the JBa
 * Select `Basic` deployment
 * Note the `APACHE CAMEL K INTEGRATIONS` tab on your left. 
 
-image::module01/vscode-camel-k-panel.png[Camel-k panel]
+image::module01/vscode-camel-k-panel.png[Camel-k Panel]
 
 Once the deployment starts, you will see a route name with a red dot in front of it. This means the build is happening but the Route is not running
 
@@ -149,11 +149,11 @@ Once the deployment starts, you will see a route name with a red dot in front of
 
 You can check the execution with the following gif:
 
-image::module01/deploy-route.gif[Deploy royte]
+image::module01/deploy-route.gif[Deploy Route]
 
 Since our work will be persisted using git, let's create a folder for this first module. Name it `module-01`. You can follow the steps with the gif below:
 
-image::module01/create-folder.gif[Create folder]
+image::module01/create-folder.gif[Create Folder]
 
 With the folder created, move the `sample-route.camel.yaml` file to the folder.
 

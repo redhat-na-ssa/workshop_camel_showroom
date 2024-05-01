@@ -1,7 +1,7 @@
 = Customer Connector
 :table-caption!:
 
-The Customer Connector application will receive customer CDC (change data capture) messages from a Kafka topic, and insert/update/delete them into the Customer DB.
+The Customer Connector application will receive customer CDC(change data capture) messages from a Kafka topic, and insert/update/delete them into the Customer DB.
 
 image::module02/customer-connector/architecture.png[]
 

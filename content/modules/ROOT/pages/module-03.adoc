@@ -33,16 +33,16 @@ Run this command in your terminal.
 
 [IMPORTANT]
 ====
-Be sure you are running this command from the right folder. It will take a few seconds for this new deployment, since by adding traitis, we are actually adding code to the application, so it needs to be build again.
+Be sure you are running this command from the right folder. It will take a few seconds for this new deployment, since by adding traits, we are actually adding code to the application, so it needs to be build again.
 ====
 
-Be sure the route is succesfully running after the new build by refreshing the `APACHE CAMEL K INTEGRATION` tab. 
+Be sure the route is successfully running after the new build by refreshing the `APACHE CAMEL K INTEGRATION` tab. 
 
 image::module03/routes-running.png[Routes Running]
 
-== Using HawtIO
+== Using Hawtio
 
-You have an instance of HawtIO installed for you in the `{user}-camel` namespace. Since we have at least one application ready, let's open your https://hawtio-online-{user}-camel.{openshift_cluster_ingress_domain}[HawtIO Console].
+You have an instance of Hawtio installed for you in the `{user}-camel` namespace. Since we have at least one application ready, let's open your https://hawtio-online-{user}-camel.{openshift_cluster_ingress_domain}[HawtIO Console^].
 
 [IMPORTANT]
 ====
@@ -54,9 +54,9 @@ You will be asked to authorize this new service. Just use your credentials:
 and click on the authorize button.
 ====
 
-image::module03/hawtio-discover.png[HawtIO Discover]
+image::module03/hawtio-discover.png[Hawtio Discover]
 
-This instance is configure to find pods in the namespace exposing ports named `jolokia`. Of couse to be able to connect, the application needs to have a Jolokia endpoint running.
+This instance is configure to find pods in the namespace exposing ports named `jolokia`. To be able to connect to that port, the application needs to have a Jolokia endpoint enabled on it.
 Click on the *Connect* button. 
 
 image::module03/hawtio-first-screen.png[First Screen]
@@ -82,7 +82,7 @@ We also provided a Prometheus instance to collect metrics from applications depl
 image::module03/prometheus-pod.png[Prometheus Pod]
 
 Even though Prometheus comes with a web console where you can query the metrics available, Prometheus alone does not offer a solution to create customizable dashboards that can display
-the metrics in a meaninful way, that is why we need https://grafana.com/[Grafana].
+the metrics in a meaningful way, that is why we need https://grafana.com/[Grafana].
 
 We already have an instance configure for you. We just needed you to enable the apps to export metrics.
 
@@ -106,13 +106,13 @@ Click on the `Camel - Quarkus` dashboard.
 
 image::module03/grafana-camel-dashboard.png[Camel Dashboard]
 
-This is a simplied version of the metrics available when using the exporter. You can notice on the top that you can change the parameters to visualize the metric of different applications that have the same metrics, in this case, JVM and Camel Metrics. For now you only deployed `customer-connector` with the monitoring traits, but if you want, you can also re-deploy the other routes using the traits and then visualize their metrics.
+This is a simplified version of the metrics available when using the exporter. You can notice on the top that you can change the parameters to visualize the metric of different applications that have the same metrics, in this case, JVM and Camel Metrics. For now you only deployed `customer-connector` with the monitoring traits, but if you want, you can also re-deploy the other routes using the traits and then visualize their metrics.
 
 This is a very simple using case, just to demonstrate the art of possible. In a real word situation you will probably create custom metrics and enable them in the Route itself, but when that time comes, you already know how the Prometheus and Grafana configuration should look like. 
 
 == What's next? 
 
-If you have the time, try to deploy the other Routes using the traits you learned in the module and visualize the other options in the HawtIO console and how the Routes compare in the Grafana Dashboard.
+If you have the time, try to deploy the other Routes using the traits you learned in the module and visualize the other options in the Hawtio console and how the Routes compare in the Grafana Dashboard.
 
 If you want to move on and work in the next lab, go on. Your work will continue to be available in the cluster, so you can come back if you want to try the monitoring tools even more.
 

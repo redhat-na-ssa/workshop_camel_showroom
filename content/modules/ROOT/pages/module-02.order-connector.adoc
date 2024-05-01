@@ -92,7 +92,7 @@ Set the following security properties on the Kafka Component node:
 
 [NOTE]
 ====
-You may have noticed the `{{property.name}}` syntax for some of the values. This allows us to reference the properties we defined in our `application.properties` file earlier. This syntax allows you to reference properties, define defaults should the properties not exist, and even selectively set an option based on whether or not a property is set. For more information on the syntax and capabilites, take a look at the https://camel.apache.org/manual/using-propertyplaceholder.html[docs].
+You may have noticed the `{{property.name}}` syntax for some of the values. This allows us to reference the properties we defined in our `application.properties` file earlier. This syntax allows you to reference properties, define defaults should the properties not exist, and even selectively set an option based on whether or not a property is set. For more information on the syntax and capabilities, take a look at the https://camel.apache.org/manual/using-propertyplaceholder.html[docs].
 ====
 
 image::module02/order-connector/edit-route-kafka-security.gif[]
