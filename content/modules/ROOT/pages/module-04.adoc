@@ -51,16 +51,16 @@ kamel delete customer-connector -n {user}-camel
 ====
 
 .Pipeline parameters
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 
-|repo-url| `leave as is`
-|repo-branch| `main` (if you didn't complete module-02, enter `solution`)
-|filename| `module-02/order-connector/order-connector.camel.yaml`
-|traits| `leave it as is`
-|dependencies| `-d camel:http -p configmap:order-connector-config`
-|Workspaces -> shared-data| `PersistentVolumeClaim` -> `PVC source-code` (select from the drop-down list)
+|repo-url|leave as is
+|repo-branch|main (if you didn't complete module-02, enter solution)
+|filename|module-02/order-connector/order-connector.camel.yaml
+|traits|leave it as is
+|dependencies|-d camel:http -p configmap:order-connector-config
+|Workspaces -> shared-data|PersistentVolumeClaim -> PVC source-code (select from the drop-down list)
 |===
 
 See these steps in action here.
@@ -83,23 +83,23 @@ You can use this same Pipeline to build and deploy all other integrations we cre
  * for the `customer-service` the parameters are:
 
 .Pipeline parameters
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 
-|filename| `module-02/customer-service/customer-service.camel.yaml`
-|dependencies| `-d camel:platform-http -d mvn:org.postgresql:postgresql:42.7.3 -p configmap:customer-service-config --open-api configmap:customer-openapi-spec`
+|filename|module-02/customer-service/customer-service.camel.yaml
+|dependencies|-d camel:platform-http -d mvn:org.postgresql:postgresql:42.7.3 -p configmap:customer-service-config --open-api configmap:customer-openapi-spec
 |===
 
  * for the `customer-connector` the parameters are:
 
 .Pipeline parameters
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 
-|filename| `module-02/customer-connector/customer-connector.camel.yaml`
-|dependencies| `-d camel:http -p configmap:customer-connector-config`
+|filename|module-02/customer-connector/customer-connector.camel.yaml
+|dependencies|-d camel:http -p configmap:customer-connector-config
 |===
 ====
 

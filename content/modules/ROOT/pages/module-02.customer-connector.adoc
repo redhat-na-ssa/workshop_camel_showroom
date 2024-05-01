@@ -47,75 +47,75 @@ You may notice that the Kafka `Seek To` parameter in this application is set to 
 image::module02/customer-connector/route-kafka-to-customer-api.png[]
 
 .1 - Kafka Component
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 
-|Topic|`globex.updates.public.customer`
-|Brokers|`{{kafka.brokers:localhost:9092}}`
-|Auto Offset Reset|`earliest`
-|Group Id|`customer-cashback-connector`
-|Seek To|`BEGINNING`
-|Sasl Jaas Config|`{{?kafka.saslJaasConfig}}`
-|Sasl Mechanism|`{{?kafka.saslMechanism}}`
-|Security Protocol|`{{?kafka.securityProtocol}}`
+|Topic|globex.updates.public.customer
+|Brokers|{{kafka.brokers:localhost:9092}}
+|Auto Offset Reset|earliest
+|Group Id|customer-cashback-connector
+|Seek To|BEGINNING
+|Sasl Jaas Config|{{?kafka.saslJaasConfig}}
+|Sasl Mechanism|{{?kafka.saslMechanism}}
+|Security Protocol|{{?kafka.securityProtocol}}
 |===
 
 .2 - Log Processor
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 
-|Message|`Picked up customer CDC message: '$\{body}'`
+|Message|Picked up customer CDC message: '${body}'
 |===
 
 .3 - Choice Processor -> When Expression
-[%autowidth]
+[%autowidth, cols="d,l"]
 [separator=:]
 |===
 :Name:Value
 
-:Type:`Simple`
-:Expression:`$\{body} == $\{null} || $\{body} regex "\s*"`
+:Type:Simple
+:Expression:${body} == ${null} || ${body} regex "\s*"
 |===
 
 .4 - Stop Processor
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 |===
 
 .5 - Unmarshal Processor
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 
-|Data Format|`JSon`
-|Unmarshal Type|`java.util.Map`
+|Data Format|JSon
+|Unmarshal Type|java.util.Map
 |===
 
 .6 - Choice Processor -> When Expression
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 
-|Type|`Simple`
-|Expression|`${body["op"]} regex "[^crud]"`
+|Type|Simple
+|Expression|${body["op"]} regex "[^crud]"
 |===
 
 .7 - Stop Processor
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 |===
 
 .8 - Routing Slip Processor
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 
-|Type|`Simple`
-|Expression|`direct:${body["op"]}`
+|Type|Simple
+|Expression|direct:${body["op"]}
 |===
 
 === Camel Route - `initial-create-customer`
@@ -125,19 +125,19 @@ This route will get called for `"op"="r"` CDC messages. These represent the init
 image::module02/customer-connector/route-initial-create-customer.png[]
 
 .1 - Direct Component
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 
-|Name|`r`
+|Name|r
 |===
 
 .2 - Direct Component
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 
-|Name|`c`
+|Name|c
 |===
 
 === Camel Route - `create-customer`
@@ -147,56 +147,56 @@ This route will get called for `"op"="c"` CDC messages. These represent create/i
 image::module02/customer-connector/route-create-customer.png[]
 
 .1 - Direct Component
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 
-|Name|`c`
+|Name|c
 |===
 
 .2 - Set Body Processor
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 
-|Type|`Simple`
-|Expression|`${body["after"]}`
+|Type|Simple
+|Expression|${body["after"]}
 |===
 
 .3 - Set Body Processor
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 
-|Type|`Groovy`
-|Expression|`[customerId: body['user_id'], customerName: body['first_name'] + ' ' + body['last_name']]`
+|Type|Groovy
+|Expression|[customerId: body['user_id'], customerName: body['first_name'] + ' ' + body['last_name']]
 |===
 
 .4 - Marshal Processor
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 
-|Data Format|`JSon`
+|Data Format|JSon
 |===
 
 .5 - Log Processor
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 
-|Message|`Creating customer: json='$\{body}'`
+|Message|Creating customer: json='${body}'
 |===
 
 .6 - REST Component
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 
-|Method|`post`
-|Path|`/customers`
-|Produces|`application/json`
-|Host|`{{customer-service.url:localhost:8080}}`
+|Method|post
+|Path|/customers
+|Produces|application/json
+|Host|{{customer-service.url:localhost:8080}}
 |===
 
 === Camel Route - `update-customer`
@@ -206,67 +206,67 @@ This route will get called for `"op"="u"` CDC messages. These represent update o
 image::module02/customer-connector/route-update-customer.png[]
 
 .1 - Direct Component
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 
-|Name|`u`
+|Name|u
 |===
 
 .2 - Set Body Processor
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 
-|Type|`Simple`
-|Expression|`${body["after"]}`
+|Type|Simple
+|Expression|${body["after"]}
 |===
 
 .3 - Set Header Processor
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 
-|Name|`customerId`
-|Type|`Simple`
-|Expression|`${body["user_id"]}`
+|Name|customerId
+|Type|Simple
+|Expression|${body["user_id"]}
 |===
 
 .4 - Set Body Processor
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 
-|Type|`Groovy`
-|Expression|`[customerName: body['first_name'] + ' ' + body['last_name']]`
+|Type|Groovy
+|Expression|[customerName: body['first_name'] + ' ' + body['last_name']]
 |===
 
 .5 - Marshal Processor
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 
-|Data Format|`JSon`
+|Data Format|JSon
 |===
 
 .6 - Log Processor
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 
-|Message|`Updating customer: customerId='${header.customerId}', json='$\{body}'`
+|Message|Updating customer: customerId='${header.customerId}', json='${body}'
 |===
 
 .7 - REST Component
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 
-|Method|`put`
-|Path|`/customers`
-|Uri Template|`/\{customerId}`
-|Produces|`application/json`
-|Host|`{{customer-service.url:localhost:8080}}`
+|Method|put
+|Path|/customers
+|Uri Template|/{customerId}
+|Produces|application/json
+|Host|{{customer-service.url:localhost:8080}}
 |===
 
 === Camel Route - `delete-customer`
@@ -276,58 +276,58 @@ This route will get called for `"op"="d"` CDC messages. These represent delete o
 image::module02/customer-connector/route-delete-customer.png[]
 
 .1 - Direct Component
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 
-|Name|`d`
+|Name|d
 |===
 
 .2 - Set Body Processor
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 
-|Type|`Simple`
-|Expression|`${body["before"]}`
+|Type|Simple
+|Expression|${body["before"]}
 |===
 
 .3 - Set Header Processor
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 
-|Name|`customerId`
-|Type|`Simple`
-|Expression|`${body["user_id"]}`
+|Name|customerId
+|Type|Simple
+|Expression|${body["user_id"]}
 |===
 
 .4 - Set Body Processor
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 
-|Type|`Simple`
-|Expression|`$\{null}`
+|Type|Simple
+|Expression|${null}
 |===
 
 .5 - Log Processor
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 
-|Message|`Deleting customer: customerId='${header.customerId}'`
+|Message|Deleting customer: customerId='${header.customerId}'
 |===
 
 .6 - REST Component
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 
-|Method|`delete`
-|Path|`/customers`
-|Uri Template|`/\{customerId}`
-|Host|`{{customer-service.url:localhost:8080}}`
+|Method|delete
+|Path|/customers
+|Uri Template|/{customerId}
+|Host|{{customer-service.url:localhost:8080}}
 |===
 
 == Running Application

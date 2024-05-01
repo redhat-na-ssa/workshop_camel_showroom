@@ -90,26 +90,26 @@ Since this application will be interacting with a database, we'll need to create
 Select the `Beans` tab in the Kaoto editor. Create a new bean with the following fields.
 
 .Details
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 
-|Name|`customerDb`
-|Type|`org.postgresql.ds.PGSimpleDataSource`
+|Name|customerDb
+|Type|org.postgresql.ds.PGSimpleDataSource
 |===
 
 Expand the `Properties` section, and add the following:
 
 .Properties
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 
-|databaseName|`{{db.databaseName:public}}`
-|password|`{{db.password:Abcd1234}}`
-|portNumber|`{{db.port:5432}}`
-|serverName|`{{db.serverName:localhost}}`
-|user|`{{db.user:user1}}`
+|databaseName|{{db.databaseName:public}}
+|password|{{db.password:Abcd1234}}
+|portNumber|{{db.port:5432}}
+|serverName|{{db.serverName:localhost}}
+|user|{{db.user:user1}}
 |===
 
 image::module02/customer-service/create-bean.gif[]
@@ -125,11 +125,11 @@ image::module02/customer-service/new-route-create-customer.gif[]
 Edit the route start node. Change it from the default Timer Component type to a Direct Component type. Set the following Endpoint properties:
 
 .Endpoint properties
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 
-|Name|`createCustomer`
+|Name|createCustomer
 |===
 
 [NOTE]
@@ -144,12 +144,12 @@ Next, we'll need to unmarshal the JSON data into a Java Object so that we can in
 Append an Unmarshal Processor step after the Direct Component step. Set the following properties:
 
 .Properties
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 
-|Data Format|`JSon`
-|Unmarshal Type|`java.util.Map`
+|Data Format|JSon
+|Unmarshal Type|java.util.Map
 |===
 
 image::module02/customer-service/edit-route-create-customer-unmarshal.gif[]
@@ -157,11 +157,11 @@ image::module02/customer-service/edit-route-create-customer-unmarshal.gif[]
 Edit the Log Processor step. Set the following properties:
 
 .Properties
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 
-|Message|`Inserting customer: customer_id='${body["customerId"]}', name='${body["customerName"]}'`
+|Message|Inserting customer: customer_id='${body["customerId"]}', name='${body["customerName"]}'
 |===
 
 image::module02/customer-service/edit-route-create-customer-log.gif[]
@@ -171,12 +171,12 @@ Now we'll insert the record into the database using the bean reference we create
 Append a new SQL Component step after the Log Processor step. Set the following Endpoint properties:
 
 .Endpoint properties
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 
-|Query|`INSERT INTO customer (customer_id, name) VALUES (:#customerId, :#customerName);`
-|Data Source|`#customerDb`
+|Query|INSERT INTO customer (customer_id, name) VALUES (:#customerId, :#customerName);
+|Data Source|#customerDb
 |===
 
 image::module02/customer-service/edit-route-create-customer-sql.gif[]
@@ -186,12 +186,12 @@ Finally, we'll want to return nothing since that is the desired result of a succ
 Append a Set Body Processor step after the SQL Component step. Set the following Expression properties:
 
 .Expression properties
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 
-|Type|`Simple`
-|Expression|`$\{null}`
+|Type|Simple
+|Expression|${null}
 |===
 
 image::module02/customer-service/edit-route-create-customer-setBody.gif[]
@@ -205,64 +205,64 @@ This route will get a single customer given a `customerId`, or return an HTTP `4
 image::module02/customer-service/route-get-customer.png[]
 
 .1 - Direct Component
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 
-|Name|`getCustomer`
+|Name|getCustomer
 |===
 
 .2 - Log Processor
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 
-|Message|`Fetching customer details: customer_id=${header.customerId}`
+|Message|Fetching customer details: customer_id=${header.customerId}
 |===
 
 .3 - SQL Component
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 
-|Query|`SELECT customer_id AS "customerId", name AS "customerName" FROM customer WHERE customer_id=:#${header.customerId};`
-|Data Source|`#customerDb`
-|Output Type|`SelectOne`
+|Query|SELECT customer_id AS "customerId", name AS "customerName" FROM customer WHERE customer_id=:#${header.customerId};
+|Data Source|#customerDb
+|Output Type|SelectOne
 |===
 
 .4 - Choice Processor -> When Expression
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 
-|Type|`Simple`
-|Expression|`$\{body} == $\{null}`
+|Type|Simple
+|Expression|${body} == ${null}
 |===
 
 .5 - Log Processor
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 
-|Message|`Customer not found: customer_id='${header.customerId}'`
+|Message|Customer not found: customer_id='${header.customerId}'
 |===
 
 .6 - Set Header Processor
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 
-|Name|`CamelHttpResponseCode`
-|Type|`Constant`
-|Expression|`404`
+|Name|CamelHttpResponseCode
+|Type|Constant
+|Expression|404
 |===
 
 .7 - Marshal Processor
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 
-|Data Format|`JSon`
+|Data Format|JSon
 |===
 
 === Camel Route - `get-customers`
@@ -272,36 +272,36 @@ This route will get a list of all customers in the database.
 image::module02/customer-service/route-get-customers.png[]
 
 .1 - Direct Component
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 
-|Name|`getCustomers`
+|Name|getCustomers
 |===
 
 .2 - Log Processor
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 
-|Message|`Getting customers`
+|Message|Getting customers
 |===
 
 .3 - SQL Component
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 
-|Query|`SELECT customer_id AS "customerId", name AS "customerName" FROM customer;`
-|Data Source|`#customerDb`
+|Query|SELECT customer_id AS "customerId", name AS "customerName" FROM customer;
+|Data Source|#customerDb
 |===
 
 .4 - Marshal Processor
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 
-|Data Format|`JSon`
+|Data Format|JSon
 |===
 
 === Camel Route - `update-customer`
@@ -311,46 +311,46 @@ This route will update a customer record for a given `customerId`.
 image::module02/customer-service/route-update-customer.png[]
 
 .1 - Direct Component
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 
-|Name|`updateCustomer`
+|Name|updateCustomer
 |===
 
 .2 - Unmarshal Processor
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 
-|Data Format|`JSon`
-|Unmarshal Type|`java.util.Map`
+|Data Format|JSon
+|Unmarshal Type|java.util.Map
 |===
 
 .3 - Log Processor
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 
-|Message|`Updating customer: customer_id='${header.customerId}', name='${body["customerName"]}'`
+|Message|Updating customer: customer_id='${header.customerId}', name='${body["customerName"]}'
 |===
 
 .4 - SQL Component
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 
-|Query|`UPDATE customer SET name=:#customerName WHERE customer_id=:#${header.customerId};`
-|Data Source|`#customerDb`
+|Query|UPDATE customer SET name=:#customerName WHERE customer_id=:#${header.customerId};
+|Data Source|#customerDb
 |===
 
 .5 - Set Body Processor
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 
-|Type|`Simple`
-|Expression|`$\{null}`
+|Type|Simple
+|Expression|${null}
 |===
 
 === Camel Route - `delete-customer`
@@ -360,37 +360,37 @@ This route will delete a customer record for a given `customerId`.
 image::module02/customer-service/route-delete-customer.png[]
 
 .1 - Direct Component
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 
-|Name|`deleteCustomer`
+|Name|deleteCustomer
 |===
 
 .2 - Log Processor
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 
-|Message|`Deleting customer: customer_id='${header.customerId}'`
+|Message|Deleting customer: customer_id='${header.customerId}'
 |===
 
 .3 - SQL Component
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 
-|Query|`DELETE FROM customer WHERE customer_id=:#${header.customerId};`
-|Data Source|`#customerDb`
+|Query|DELETE FROM customer WHERE customer_id=:#${header.customerId};
+|Data Source|#customerDb
 |===
 
 .4 - Set Body Processor
-[%autowidth]
+[%autowidth, cols="d,l"]
 |===
 |Name|Value
 
-|Type|`Simple`
-|Expression|`$\{null}`
+|Type|Simple
+|Expression|${null}
 |===
 
 == Running Application
