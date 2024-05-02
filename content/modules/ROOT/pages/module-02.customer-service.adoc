@@ -18,7 +18,7 @@ Next, we'll create the OpenAPI spec defining our REST interface. For this, we'll
 If you'd like to skip this step, you can grab the https://gitea.{openshift_cluster_ingress_domain}/{user}/workshop_camel_workspace/raw/branch/solution/module-02/customer-service/customer-openapi-spec.json[completed OpenAPIv3 spec^] from the solutions branch in your Git repo.
 ====
 
-Open up https://apicurito-ui-shared-tools.{openshift_cluster_ingress_domain} in a different browser tab, and create a new `OpenAPI 3` spec.
+Open up https://apicurito-ui-shared-tools.{openshift_cluster_ingress_domain}[Apicurito^] in a different browser tab, and create a new `OpenAPI 3` spec.
 
 image::module02/customer-service/create-openapi-spec.gif[]
 
@@ -26,7 +26,7 @@ Name the API `Customers API`.
 
 image::module02/customer-service/create-openapi-spec-name.gif[]
 
-Create a new Data Type named `Customer`, and add the following JSON Example:
+Create a new `Data Type` named `Customer`, and add the following JSON Example:
 
 .JSON Example
 [source,json,role="copypaste"]
@@ -139,9 +139,9 @@ As previously mentioned, the `Name` property of this Direct Component correlates
 
 image::module02/customer-service/edit-route-create-customer-direct.gif[]
 
-Next, we'll need to unmarshal the JSON data into a Java Object so that we can interact with it more easily. We can unmarshal the data into any structure, most commonly a POJO, but for simplicity we'll just use a hashmap.
+Next, we'll need to *unmarshal* the JSON data into a Java Object so that we can interact with it more easily. We can unmarshal the data into any structure, most commonly a POJO, but for simplicity we'll just use a hashmap.
 
-Append an Unmarshal Processor step after the Direct Component step. Set the following properties:
+Append an `Unmarshal Processor` step after the `Direct Component` step. Set the following properties:
 
 .Properties
 [%autowidth, cols="d,l"]
@@ -154,7 +154,7 @@ Append an Unmarshal Processor step after the Direct Component step. Set the foll
 
 image::module02/customer-service/edit-route-create-customer-unmarshal.gif[]
 
-Edit the Log Processor step. Set the following properties:
+Edit the `Log Processor` step. Set the following properties:
 
 .Properties
 [%autowidth, cols="d,l"]
@@ -168,7 +168,7 @@ image::module02/customer-service/edit-route-create-customer-log.gif[]
 
 Now we'll insert the record into the database using the bean reference we created before. There are several ways to interact with a database (ie, JPA, JDBC, SQL, ... etc). Each of which have different syntax, but can accomplish the same task. We'll be using the SQL Component in the lab.
 
-Append a new SQL Component step after the Log Processor step. Set the following Endpoint properties:
+Append a new `SQL Component` step after the `Log Processor` step. Set the following Endpoint properties:
 
 .Endpoint properties
 [%autowidth, cols="d,l"]
@@ -183,7 +183,7 @@ image::module02/customer-service/edit-route-create-customer-sql.gif[]
 
 Finally, we'll want to return nothing since that is the desired result of a successful `post` operation according to our OpenAPI spec.
 
-Append a Set Body Processor step after the SQL Component step. Set the following Expression properties:
+Append a `Set Body Processor` step after the `SQL Component` step. Set the following Expression properties:
 
 .Expression properties
 [%autowidth, cols="d,l"]

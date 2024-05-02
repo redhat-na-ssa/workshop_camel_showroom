@@ -5,7 +5,7 @@ The Customer Connector application will receive customer CDC(change data capture
 
 image::module02/customer-connector/architecture.png[]
 
-As before, let's start by creating the `customer-connector` folder under the `module02` directory.
+As before, let's start by creating the `customer-connector` folder under the `module-02` directory.
 
 image::module02/customer-connector/create-folder.gif[]
 
@@ -353,7 +353,7 @@ Make sure that you're logged-in to OpenShift as `{user}` and in the correct `{us
 
 [source,shell,role="copypaste"]
 ----
-cd module02/customer-connector
+cd module-02/customer-connector
 oc create configmap customer-connector-config --from-file=application.properties
 kamel run -d camel:http -p configmap:customer-connector-config customer-connector.camel.yaml
 ----
@@ -364,7 +364,7 @@ Congratulations! You've finished the last Camel application and are now a pro-Ca
 
 == Testing Application
 
-This application will automatically pick up the existing CDC messages from the Kafka topic. So as soon as you start it, you should see the log messages showing as such. If everything went well, you should be able to see information populated in the http://cashback-service-{user}-globex.{openshift_cluster_ingress_domain}[Cashback page].
+This application will automatically pick up the existing CDC messages from the Kafka topic. So as soon as you start it, you should see the log messages showing as such. If everything went well, you should be able to see information populated in the http://cashback-service-{user}-globex.{openshift_cluster_ingress_domain}[Cashback page^].
 
 [IMPORTANT]
 ====
