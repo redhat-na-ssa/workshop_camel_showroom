@@ -83,6 +83,8 @@ image::module02/customer-connector/route-kafka-to-customer-api.png[]
 [%autowidth, cols="d,l"]
 |===
 |Name|Value
+
+2+.^|There are no options to set for this processor
 |===
 
 .5 - Unmarshal Processor
@@ -107,6 +109,8 @@ image::module02/customer-connector/route-kafka-to-customer-api.png[]
 [%autowidth, cols="d,l"]
 |===
 |Name|Value
+
+2+.^|There are no options to set for this processor
 |===
 
 .8 - Routing Slip Processor
