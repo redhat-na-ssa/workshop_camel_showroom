@@ -63,7 +63,7 @@ image::module03/hawtio-first-screen.png[First Screen]
 
 From the start you have the Camel menu open. You can see a breakdown of your Camel application. Routes, endpoints, components and data formats are all important elements that compose a Camel project. You can also see JVM information on the JMX and Runtime menus. We are going to focus on the Camel menu.
 
-Click on the "create-customer" route. 
+Click on the `create-customer` route. 
 
 image::module03/hawtio-statistics.png[Routes Attributes]
 
@@ -82,13 +82,13 @@ We also provided a Prometheus instance to collect metrics from applications depl
 image::module03/prometheus-pod.png[Prometheus Pod]
 
 Even though Prometheus comes with a web console where you can query the metrics available, Prometheus alone does not offer a solution to create customizable dashboards that can display
-the metrics in a meaningful way, that is why we need https://grafana.com/[Grafana].
+the metrics in a meaningful way, that is why we need https://grafana.com/[Grafana^].
 
 We already have an instance configure for you. We just needed you to enable the apps to export metrics.
 
 image::module03/grafana-instance.png[Grafana Instance]
 
-Open your Grafana instance in a new tab using this https://grafana-route-{user}-camel.{openshift_cluster_ingress_domain}/dashboards[URL].
+Open your Grafana instance in a new tab using this https://grafana-route-{user}-camel.{openshift_cluster_ingress_domain}/dashboards[URL^].
 
 [IMPORTANT]
 ====

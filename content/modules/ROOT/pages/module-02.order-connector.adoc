@@ -5,7 +5,7 @@ The Order Connector application will pull JSON order messages from a Kafka topic
 
 image::module02/order-connector/architecture.png[]
 
-Let's start by creating an `order-connector` directory under the `module02` directory.
+Let's start by creating an `order-connector` directory under the `module-02` directory.
 
 image::module02/order-connector/create-folder.gif[]
 
@@ -92,7 +92,7 @@ Set the following security properties on the Kafka Component node:
 
 [NOTE]
 ====
-You may have noticed the `{{property.name}}` syntax for some of the values. This allows us to reference the properties we defined in our `application.properties` file earlier. This syntax allows you to reference properties, define defaults should the properties not exist, and even selectively set an option based on whether or not a property is set. For more information on the syntax and capabilities, take a look at the https://camel.apache.org/manual/using-propertyplaceholder.html[docs].
+You may have noticed the `{{property.name}}` syntax for some of the values. This allows us to reference the properties we defined in our `application.properties` file earlier. This syntax allows you to reference properties, define defaults should the properties not exist, and even selectively set an option based on whether or not a property is set. For more information on the syntax and capabilities, take a look at the https://camel.apache.org/manual/using-propertyplaceholder.html[docs^].
 ====
 
 image::module02/order-connector/edit-route-kafka-security.gif[]
@@ -118,7 +118,7 @@ Notice that you can insert Camel Simple expressions into the log message. For mo
 
 image::module02/order-connector/edit-route-log.gif[]
 
-Append a Choice Processor node after the Log Processor node.
+Append a `Choice Processor` node after the `Log Processor` node.
 
 image::module02/order-connector/edit-route-choice.gif[]
 
@@ -135,15 +135,15 @@ Set the following properties on the "when" condition:
 
 image::module02/order-connector/edit-route-choice-when.gif[]
 
-Insert a Stop Processor step under the "when" branch.
+Insert a `Stop Processor` step under the "when" branch.
 
 image::module02/order-connector/edit-route-choice-when-stop.gif[]
 
-Insert a Rest Component step under the "otherwise" branch.
+Insert a `Rest Component` step under the "otherwise" branch.
 
 image::module02/order-connector/edit-route-choice-otherwise-rest.gif[]
 
-Set the following endpoint properties on the Rest Component node:
+Set the following endpoint properties on the `Rest Component` node:
 
 .Endpoint properties
 [%autowidth, cols="d,l"]
@@ -184,7 +184,7 @@ And that's it! If all went well, you should see your `order-connector-*` pod sta
 
 Open the logs for the `order-connector-*` pod. You should see that the application and all Camel routes have started.
 
-In a new browser tab, open the Order Simulator app at http://order-simulator-{user}-globex.{openshift_cluster_ingress_domain}/. Simulate a few orders using the default JSON request. If everything is working properly, you should see the log messages from your Camel route showing that messages are being picked up and processed without error.
+In a new browser tab, open the http://order-simulator-{user}-globex.{openshift_cluster_ingress_domain}/[Order Simulator^] app. Simulate a few orders using the default JSON request. If everything is working properly, you should see the log messages from your Camel route showing that messages are being picked up and processed without error.
 
 [NOTE]
 ====

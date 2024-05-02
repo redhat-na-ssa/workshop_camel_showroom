@@ -55,7 +55,7 @@ We did not enable authentication for this workshop, so you will use it as an ano
 
 image::module02/end-to-end-test/amq-streams-console.png[]
 
-* Click on the Topics menu, then use the filter to find *globex.updates.public.orders* 
+* Click on the `Topics` menu, then use the filter to find *globex.updates.public.orders* 
 
 image::module02/end-to-end-test/amq-console-filter.gif[]
 

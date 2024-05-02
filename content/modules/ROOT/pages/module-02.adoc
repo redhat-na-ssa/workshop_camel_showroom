@@ -17,7 +17,7 @@ image::module02/architecture.png[]
 
 == Before Starting
 
-First, let's start by creating the `module02` folder where we'll be working for this module.
+First, let's start by creating the `module-02` folder where we'll be working for this module.
 
 image::module02/create-folder-module-02.gif[]
 
