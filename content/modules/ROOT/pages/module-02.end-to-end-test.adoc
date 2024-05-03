@@ -59,7 +59,12 @@ image::module02/end-to-end-test/amq-streams-console.png[]
 
 image::module02/end-to-end-test/amq-console-filter.gif[]
 
-* Verify that the topic contains 1 message.
+* Verify that the topic contains 1 new message.
+
+[NOTE]
+====
+Since you might have already done orders using the simulator, you probably will have more messages in the topic.
+====
 
 You should see a change event structure very similar to the ones for customers. Notice however that the operation is '*c*', for _create_. This is expected as the change event corresponds to a new record in the *order* table.
 
