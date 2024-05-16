@@ -81,12 +81,3 @@ image::module02/end-to-end-test/order-simulator-random-customer.png[]
 
 ** Click *Execute* to execute the REST call to the simulator.
 ** Check in AMQ Streams Console that new messages are produced to the *globex.updates.public.orders* and *globex.updates.public.line_item* topics.
-
-
-[NOTE]
-====
-Some products used in this workshop are still in Tech-Preview, like the AMQ Streams Console. We would greatly appreciate if you could spend some minutes to provide us feedback using this QR Code: 
-
-image::module02/end-to-end-test/amq-survey-qr.png[]
-
-====
