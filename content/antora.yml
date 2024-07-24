@@ -13,8 +13,6 @@ asciidoc:
     page-links:
     - url: https://redhat.com
       text: Red Hat
-    - url: https://www.redhat.com/en/summit
-      text: Summit
     console_url: https://test.dev
     user: tester
     password: test123
