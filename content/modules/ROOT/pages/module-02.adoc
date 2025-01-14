@@ -11,7 +11,7 @@ Now is the time to actually implement integrations. For this module you will hav
 
 image::module02/globex.png[]
 
-Take a look at the system architecture. You are going to implement the components in red.
+Take a look at the system architecture. You are going to implement the component in red.
 
 image::module02/architecture.png[]
 
