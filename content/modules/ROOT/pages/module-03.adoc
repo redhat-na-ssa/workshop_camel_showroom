@@ -1,44 +1,12 @@
 = Monitoring Integrations in OpenShift
 
-In the previous module you learned how to build Camel Routes using Kaoto and deployed them on OpenShift using Camel K.
-In this module you will learn how to leverage Camel K configurations to monitor your Routes. 
+There are different mechanisms to visualize real time/near real time information about a running Camel application. Let's learn two ways to monitor our Routes.
 
 [IMPORTANT]
 ====
 For this module you need the code generated on module 02. If you skipped that module, don't worry. 
 Just checkout the `solution` branch and follow the README instructions in the folders.
 ====
-
-== Camel K traits
-
-https://camel.apache.org/camel-k/2.2.x/traits/traits.html[Traits^] are configurations you can pass to the Camel K API to modify/add capabilities to the Integration.
-In the previous module you used `--open-api` to create HTTP listeners based on the OpenAPI spec. Now you are going to do something similar to enable the integration to connect with
-two monitoring solutions: https://prometheus.io/[Prometheus^] and https://hawt.io/[HawtIO^]. 
-
-To enable HawtIO we just need to add `-t jolokia.enabled=true` when deploying the integration using `kamel` CLI. https://jolokia.org/[Jolokia^] is a JVM agent that provides an HTTP bridge
-to expose https://en.wikipedia.org/wiki/Java_Management_Extensions[JMX^] remotely. HawtIO will use that bridge to connect with a running application and provide real-time information about it.
-
-To enable Prometheus we need `-t prometheus.enabled=true` and `-t prometheus.pod-monitor-labels='workshop=camel'`. This trait will enable a Prometheus Metric Exporter in the application but it will also create a PodMonitor object on OpenShift. We need the PodMonitor object so the Prometheus operator, pre-installed for you, is able to identify how to scrape metrics from the application. The Prometheus instance is configured to look up for PodMonitor instances that match the `workshop=camel` label.
-
-If we take `customer-connector` as an example, the deployment command would look like this:
-
-[source,shell,role="copypaste"]
-[subs=normal]
-----
-cd $PROJECT_SOURCE/module-02/customer-connector
-kamel run -d camel:http -p configmap:customer-connector-config -t prometheus.enabled=true -t prometheus.pod-monitor-labels='workshop=camel' -t jolokia.enabled=true customer-connector.camel.yaml
-----
-
-Run this command in your terminal.
-
-[IMPORTANT]
-====
-Be sure you are running this command from the right folder. It will take a few seconds for this new deployment, since by adding traits, we are actually adding code to the application, so it needs to be build again.
-====
-
-Be sure the route is successfully running after the new build by refreshing the `APACHE CAMEL K INTEGRATION` tab. 
-
-image::module03/routes-running.png[Routes Running]
 
 == Using Hawtio
 
@@ -63,7 +31,7 @@ image::module03/hawtio-first-screen.png[First Screen]
 
 From the start you have the Camel menu open. You can see a breakdown of your Camel application. Routes, endpoints, components and data formats are all important elements that compose a Camel project. You can also see JVM information on the JMX and Runtime menus. We are going to focus on the Camel menu.
 
-Click on the `create-customer` route. 
+Click on the `kafka-to-expense-api` route. 
 
 image::module03/hawtio-statistics.png[Routes Attributes]
 
@@ -108,12 +76,4 @@ image::module03/grafana-camel-dashboard.png[Camel Dashboard]
 
 This is a simplified version of the metrics available when using the exporter. You can notice on the top that you can change the parameters to visualize the metric of different applications that have the same metrics, in this case, JVM and Camel Metrics. For now you only deployed `customer-connector` with the monitoring traits, but if you want, you can also re-deploy the other routes using the traits and then visualize their metrics.
 
-This is a very simple using case, just to demonstrate the art of possible. In a real word situation you will probably create custom metrics and enable them in the Route itself, but when that time comes, you already know how the Prometheus and Grafana configuration should look like. 
-
-== What's next? 
-
-If you have the time, try to deploy the other Routes using the traits you learned in the module and visualize the other options in the Hawtio console and how the Routes compare in the Grafana Dashboard.
-
-If you want to move on and work in the next lab, go on. Your work will continue to be available in the cluster, so you can come back if you want to try the monitoring tools even more.
-
-Also, if you are not familiar with OpenShift, there is a bunch of metrics/dashboard that are available to you in the platform out-of-the-box. Unfortunately, we don't have enough time to cover this here, but feel free to ask questions to your instructors.
+This is a very simple use case, just to demonstrate the art of possible. In a real word situation you will probably create custom metrics and enable them in the Route itself, but when that time comes, you already know how the Prometheus and Grafana configuration should look like. 
