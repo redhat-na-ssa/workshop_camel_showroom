@@ -5,20 +5,15 @@ The Order Connector application will pull JSON order messages from a Kafka topic
 
 image::module02/order-connector/architecture.png[]
 
-Let's start by creating an `order-connector` directory under the `module-02` directory.
+== Application Configuration Properties
 
-image::module02/order-connector/create-folder.gif[]
+The application.properties file can be used to externalize variable values in our application. Things like credentials, URLs and runtime configuration. You can have as many files as you need, and they can be applied as files, ConfigMaps, or Secrets, as appropriate. 
 
-== Application Properties
+A application.properties file is already available for you and it contains some basic configuration we need to run and deploy this application. We will still need to provide use case specific properties.
 
-The application.properties file can be used to variable values in our application. Things like credentials, URLs, ... etc. You can have as many files as you need, and they can be applied as files, ConfigMaps, or Secrets, as appropriate. For simplicity, we're just going to define one properties file that we'll later install as a ConfigMap.
+image::module02/order-connector/application-properties.png[Application Properties]
 
-Create a new file in the `order-connector` directory. Name the file `application.properties`. Insert the following contents:
-
-[IMPORTANT]
-====
-Make sure when copy/pasting, you only grab the actual text and not any erroneous tabs, spaces, or new lines.
-====
+Copy the following entries to your properties file:
 
 .application.properties
 [source,properties,role="copypaste",subs=attributes+]
@@ -31,35 +26,32 @@ kafka.saslJaasConfig=org.apache.kafka.common.security.scram.ScramLoginModule req
 cashback-service.url=cashback-service.{user}-globex.svc.cluster.local:8080
 ....
 
-image::module02/order-connector/create-file-properties.gif[]
+[IMPORTANT]
+====
+Make sure when copy/pasting, you only grab the actual text and not any erroneous tabs, spaces, or new lines.
+====
 
 == Camel Configurations
 
 The Camel configuration file will hold our Camel route definitions. If you're familiar with Camel, you know that there are many ways to define your Camel routes (ie, Java, XML, YAML, ... etc). These are known as DSLs(Domain Specific Languages). In general, you can use whichever one you're most familiar with. However, since we plan to develop these apps using Kaoto graphical editor, we'll be using the YAML DSL.
 
-Create a new file in the `order-connector` directory. Name the file `order-connector.camel.yaml`. Open the file in the Kaoto editor.
+We are going to edit the `route.camel.yaml` file. Open the file with the Kaoto editor by clicking on it.
 
 [NOTE]
 ====
 If the Kaoto extension is installed, it will by default detect and open any files matching the `*.camel.yaml` naming pattern. If you want to open the file in any other editor (ie, the plain text editor), you can right-click on the file, select `"Open With..."`, and then choose your desired editor.
 ====
 
-image::module02/order-connector/create-file-camel.gif[]
-
-Create a new Camel route. This will create a new skeleton Camel route configuration with a Timer Component start node, and a Log Processor.
-
-image::module02/order-connector/new-route.gif[]
-
 Edit the name of the route and set it to `kafka-to-expense-api`.
+
+image::module02/order-connector/edit-route-name.gif[]
 
 [TIP]
 ====
 It's always a good idea to give your Camel routes useful names. This helps you to identify them later when viewing them in the Hawtio web console.
 ====
 
-image::module02/order-connector/edit-route-name.gif[]
-
-Edit the route start node. Change it from the default Timer Component type to a Kafka Component type.
+Edit the route first node. Change it from the default `Timer Component` to a `Kafka Component`.
 
 image::module02/order-connector/edit-route-kafka.gif[]
 
@@ -71,7 +63,7 @@ Set the following endpoint properties on the Kafka Component node:
 |Name|Value
 
 .^|Topic|globex.order-aggregated
-.^|Brokers|{{kafka.brokers:localhost:9092}}
+.^|Brokers|{{kafka.brokers}}
 .^|Auto Offset Reset|earliest
 .^|Group Id|order-cashback-connector
 |===
@@ -101,7 +93,7 @@ Set the following properties on the Log Processor node:
 
 [IMPORTANT]
 ====
-As with many things in Camel, there is usually more than one way to accomplish the same task. For instance, there is both a Log Component, and a Log Processor. Both serve the purpose of logging a message, just with slightly different configurations. ##In all of these labs, we will use the **Log Processor** for consistency##.
+As with many things in Camel, there is usually more than one way to accomplish the same task. For instance, there is both a `Log Component`, and a `Log Processor`. Both serve the purpose of logging a message, just with slightly different configurations. ##In all of these labs, we will use the **Log Processor** for consistency##.
 ====
 
 [%autowidth, cols="d,l"]
@@ -153,38 +145,38 @@ Set the following endpoint properties on the `Rest Component` node:
 .^|Method|post
 .^|Path|/expense
 .^|Binding Mode|off
-.^|Host|{{cashback-service.url:localhost:8080}}
+.^|Host|{{cashback-service.url}}
 |===
 
 image::module02/order-connector/edit-route-choice-otherwise-rest-properties.gif[]
 
 == Running Application
 
-There are several ways to run and deploy a Camel application. You can test things locally with JBang, build/deploy a Camel on Spring Boot or Camel on Quarkus app, or use Camel K. For this lab, we'll be using Camel K.
-
-First, we'll create the OpenShift ConfigMap, then we'll run the Camel K Integration. To do so, open a terminal and run the following commands:
-
-[IMPORTANT]
-====
-Make sure that you're logged-in to OpenShift as `{user}` and in the correct `{user}-camel` project/namespace.
-====
+We are going to run the application in the same way we run the initial example. Open a new terminal and run:
 
 [source,shell,role="copypaste",subs=attributes+]
 ----
-cd $PROJECT_SOURCE/module-02/order-connector
-oc create configmap order-connector-config --from-file=application.properties
-kamel run -d camel:http -p configmap:order-connector-config order-connector.camel.yaml
+cd $PROJECT_SOURCE/order-connector
+mvn package quarkus:run
 ----
 
-image::module02/order-connector/run-route.gif[]
+And that's it! If all went well, you should logs like in the image:
 
-And that's it! If all went well, you should see your `order-connector-*` pod start within a few minutes. It'll take some time for it to build. So be patient.
+image::module02/order-connector/app-running.png[]
+
+Let the application running. We will test it next.
 
 == Testing Application
 
-Open the logs for the `order-connector-*` pod. You should see that the application and all Camel routes have started.
+* If you want to simulate a larger number of orders, you can use the _Order Simulator_ application deployed in the `{user}-globex` namespace on OpenShift, using this https://order-simulator-{user}-globex.{openshift_cluster_ingress_domain}[link^].
 
-In a new browser tab, open the http://order-simulator-{user}-globex.{openshift_cluster_ingress_domain}/[Order Simulator^] app. Simulate a few orders using the default JSON request. If everything is working properly, you should see the log messages from your Camel route showing that messages are being picked up and processed without error.
+** This opens a Swagger UI page showing the REST API of the simulator. +
+Click on the *POST* link, and then on the *Try it out* link on the right. From the *Examples* drop down, select *random customers* to create orders for random customers. Feel free to change the numbers of orders you want to simulate (the default is 50).
++
+image::module02/end-to-end-test/order-simulator-random-customer.png[]
+
+** Click *Execute* to execute the REST call to the simulator.
+** Check in AMQ Streams Console that new messages are produced to the *globex.updates.public.orders* and *globex.updates.public.line_item* topics.
 
 [NOTE]
 ====
@@ -193,5 +185,18 @@ The input messages are "windowed" by a Kafka Streams pre-processor application. 
 
 [IMPORTANT]
 ====
-Don't forget to commit and push your code. You will need it later.
+Before moving to the next module, don't forget to commit and push your code. You will need it later.
 ====
+
+== Deployng the application using Quarkus OpenShift plugin
+
+If you have the application running on VS Code stop it. Let's deploy it on OpenShift.
+
+In the terminal, run the following commands:
+
+----
+oc project {user}-camel
+mvn clean package -Dquarkus.kubernetes.deploy=true
+----
+
+If everything occurred as expected, you should see a `build success` message in the terminal.

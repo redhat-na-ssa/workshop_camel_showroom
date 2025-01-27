@@ -70,13 +70,11 @@ Click on `Allow selected permissions`. That will take you to the Dev Spaces dash
 
 image::module01/devspaces-dashboard.png[Dashboard]
 
-To start using the workspace, click on the open button.
+To start using the workspace, click on `yes, I trust the authors` button.
 
 image::module01/workspace-first-login.png[Workspace]
 
-Since this is your first time opening the IDE, you will be required to perform some basic configuration, like trusting the workspace authors. You may also set the theme for the IDE.
-
-Some popups will show up about permissions to share data. You may deny all of them. 
+Since this is the first time you open this IDE, you will be required to perform basic configuration, like trusting the workspace authors, set the theme and permission to share usage data. You may deny all of them. 
 
 image::module01/workspace-warning.png[Pop Ups]
 
@@ -85,15 +83,9 @@ image::module01/workspace-warning.png[Pop Ups]
 
 === Creating the Route
 
-Before we start to develop real integrations, let's get a feel for the tooling available by starting with a stock HelloWorld application. We can now use VS Code extensions to initialize a Camel Route for us. 
+Before we start the development of the `order-connector`, let's get started by running the hello-world example available in our template project.
 
-* Use `CTRL + SHIFT + P` to open the command palette. If your using MacOS, `CMD + SHIFT + P`. 
-* Type in `camel yaml dsl`
-* Select `camel:Create a Camel Route using YAML DSL`.
-* name the Route `sample-route`
-* A terminal will open. Type `3` and hit enter to enable JBang to download content.
-
-Once the downloading is done, you should have a file named `sample-route.camel.yaml` in the project root.
+On your left it's the workspace explorer, let's open the the Camel Route. Click on the file `order-connector/src/main/resources/camel/route.camel.yaml`.
 
 The file will be open using one of the VS Code extensions pre-configured for you, Kaoto. https://kaoto.io/[Kaoto^] is a graphical editor for Camel Routes. We will use it to build integrations using no-code/low-code.
 
@@ -108,54 +100,25 @@ In this example we have a simple route that starts with a https://camel.apache.o
 
 === Running Routes Locally
 
-To run this Route we are going to use a tool called JBang. https://camel.apache.org/manual/camel-jbang.html[JBang^] is a CLI that makes easy to run Java applications. You already have the VS Code extension configured for you and the JBang CLI available in your workspace. Let's run the route.
+Since this template is a Quarkus project, we are going to use Maven to run this application locally.
+The first step is to open a terminal. You can open on by following the example in the gif:
 
-* If you have the editor open, you can run it by clicking on the `Run Camel Application with JBang` button on the top right corner:
+image::module01/open-terminal.gif[Opening Terminal]
 
-image::module01/run-jbang-01.png[JBang button]
+In the open terminal, run the following commands to run the route locally:
 
-* You can also right click on the file name and select `Run Camel Application with JBang`.
+----
+cd order-connector
+mvn package quarkus:run
+----
 
-It takes a couple of seconds to run routes for the first time, as dependencies need to be downloaded and stored locally. Once the route starts to run, you will see logs in your terminal:
+Dependencies will be downloaded to build the application. This will take 2 minutes or so. Once that is done, you will see `Hello World` messages logged in the terminal. Like in the gif:
 
-image::module01/route-running.gif[Route Running]
+image::module01/quarkus-running.gif[Quarkus Running]
 
-This route will run indefinitely, generating messages every second, so once you're done with the demonstration, `CTRL + C` on the terminal to stop the process.
+You can stop the route execution by pressing `CTRL+C` in the terminal.
 
-=== Deploying the route using Camel K
-
-We also have a tool to make this deployment as easy as it was to run it locally. The tool is Camel K.
-Camel K is built from Apache Camel, allowing it to run natively on Kubernetes and is specifically designed for serverless and microservice architectures.
-
-The VS Code extension and the CLI are already configured in the environment, but before we deploy, let's make sure you are connected to the OpenShift cluster and using the right project.
-
-* Open a new terminal window
-* To make sure you're logged with the right user, run `oc whoami`. Expected to see `{user}`. If you are not logged, you can follow the steps in the xref:troubleshooting-guide.adoc[troubleshooting guide].
-* Now let's configure the right project. In the terminal run `oc project {user}-camel`
-
-image::module01/setting-project.gif[Setting Project]
-
-To deploy the Route you can use the icon in the top right corner(next to the JBang icon we used previously).
-
-* Click on the rocket icon to launch the deployment
-* Select `Basic` deployment
-* Note the `APACHE CAMEL K INTEGRATIONS` tab on your left. 
-
-image::module01/vscode-camel-k-panel.png[Camel-k Panel]
-
-Once the deployment starts, you will see a route name with a red dot in front of it. This means the build is happening but the Route is not running
-
-* When the Route dot turns green, it means it's running. Now you can check the logs by right clicking on the route name and selecting `follow logs for Apache Camel K Integration`.
-
-You can check the execution with the following gif:
-
-image::module01/deploy-route.gif[Deploy Route]
-
-Since our work will be persisted using git, let's create a folder for this first module. Name it `module-01`. You can follow the steps with the gif below:
-
-image::module01/create-folder.gif[Create Folder]
-
-With the folder created, move the `sample-route.camel.yaml` file to the folder.
+In the next module we will make changes to the route to satify our use case.
 
 == Accessing Gitea
 
@@ -173,11 +136,4 @@ Use the link and credentials below to access Gitea:
 
 image::module01/gitea.png[Gitea]
 
-Once you were able to check your access to Gitea, let's go back to your workspace and use git there.
-
-=== Pushing code 
-
-Before finishing this module you need to push your changes to the git repo assigned to your user. The configuration is already done for you, so you just need to add your `username` and `password` when asked. You can follow the steps on the gift: 
-
-image::module01/pushing-code.gif[Pushing Code]
-
+Once you were able to check your access to Gitea, let's proceed to the next module.
