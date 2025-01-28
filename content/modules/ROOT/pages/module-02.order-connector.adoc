@@ -68,8 +68,6 @@ Set the following endpoint properties on the Kafka Component node:
 .^|Group Id|order-cashback-connector
 |===
 
-image::module02/order-connector/edit-route-kafka-properties.gif[]
-
 Set the following security properties on the Kafka Component node:
 
 .Security properties
@@ -87,14 +85,7 @@ Set the following security properties on the Kafka Component node:
 You may have noticed the `{{property.name}}` syntax for some of the values. This allows us to reference the properties we defined in our `application.properties` file earlier. This syntax allows you to reference properties, define defaults should the properties not exist, and even selectively set an option based on whether or not a property is set. For more information on the syntax and capabilities, take a look at the https://camel.apache.org/manual/using-propertyplaceholder.html[docs^].
 ====
 
-image::module02/order-connector/edit-route-kafka-security.gif[]
-
 Set the following properties on the Log Processor node:
-
-[IMPORTANT]
-====
-As with many things in Camel, there is usually more than one way to accomplish the same task. For instance, there is both a `Log Component`, and a `Log Processor`. Both serve the purpose of logging a message, just with slightly different configurations. ##In all of these labs, we will use the **Log Processor** for consistency##.
-====
 
 [%autowidth, cols="d,l"]
 |===
@@ -103,14 +94,28 @@ As with many things in Camel, there is usually more than one way to accomplish t
 .^|Message|Picked up customer aggregated order message: '${body}'
 |===
 
+image::module02/order-connector/edit-route-log.gif[]
+
+[IMPORTANT]
+====
+As with many things in Camel, there is usually more than one way to accomplish the same task. For instance, there is both a `Log Component`, and a `Log Processor`. Both serve the purpose of logging a message, just with slightly different configurations. ##In all of these labs, we will use the **Log Processor** for consistency##.
+====
+
 [NOTE]
 ====
 Notice that you can insert Camel Simple expressions into the log message. For more information about Camel Simple expression language, take a look at the https://camel.apache.org/components/latest/languages/simple-language.html[docs^].
 ====
 
-image::module02/order-connector/edit-route-log.gif[]
+Append a `Remove Headers` node after the `Log Processor` node
 
-Append a `Choice Processor` node after the `Log Processor` node.
+image::module02/order-connector/remove-headers.gif[]
+
+[NOTE]
+====
+Certain endpoints will return data in the body and hearders of messages. If you don't what headers to be propagated to another endpoint, you need to remove them or set specific configuration in the next endpoint.
+====
+
+Append a `Choice Processor` node after the `Remove Headers` node.
 
 image::module02/order-connector/edit-route-choice.gif[]
 
@@ -132,9 +137,6 @@ Insert a `Stop Processor` step under the "when" branch.
 image::module02/order-connector/edit-route-choice-when-stop.gif[]
 
 Insert a `Rest Component` step under the "otherwise" branch.
-
-image::module02/order-connector/edit-route-choice-otherwise-rest.gif[]
-
 Set the following endpoint properties on the `Rest Component` node:
 
 .Endpoint properties
@@ -148,7 +150,7 @@ Set the following endpoint properties on the `Rest Component` node:
 .^|Host|{{cashback-service.url}}
 |===
 
-image::module02/order-connector/edit-route-choice-otherwise-rest-properties.gif[]
+image::module02/order-connector/edit-route-choice-otherwise-rest.gif[]
 
 == Running Application
 
@@ -183,12 +185,11 @@ image::module02/end-to-end-test/order-simulator-random-customer.png[]
 The input messages are "windowed" by a Kafka Streams pre-processor application. So it might take about 10-15 seconds for them to come through.
 ====
 
-[IMPORTANT]
-====
-Before moving to the next module, don't forget to commit and push your code. You will need it later.
-====
+Once the messages are aggregated and set to Kafka you should see log entries like these:
 
-== Deployng the application using Quarkus OpenShift plugin
+image::module02/order-connector/kafka-messages.png[]
+
+== Deploying the application using Quarkus OpenShift plugin
 
 If you have the application running on VS Code stop it. Let's deploy it on OpenShift.
 
@@ -200,3 +201,5 @@ mvn clean package -Dquarkus.kubernetes.deploy=true
 ----
 
 If everything occurred as expected, you should see a `build success` message in the terminal.
+
+image::module02/order-connector/deployment-success.png[]

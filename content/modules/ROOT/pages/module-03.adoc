@@ -54,9 +54,34 @@ the metrics in a meaningful way, that is why we need https://grafana.com/[Grafan
 
 We already have an instance configure for you. We just needed you to enable the apps to export metrics.
 
-image::module03/grafana-instance.png[Grafana Instance]
+Let's export these metrics using a PodMonitor. Apply the following configuration on the OpenShift cluster: 
+
+----
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: order-connector
+  namespace: {{user}}-camel
+spec:
+  podMetricsEndpoints:
+    - bearerTokenSecret:
+        key: ''
+      path: /q/metrics
+      port: http
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: order-connector  
+----
+
+[TIP]
+====
+You may use the command line to create this file using `oc apply -f filename` or you can use the OpenShift console + button.
+====
+
 
 Open your Grafana instance in a new tab using this https://grafana-route-{user}-camel.{openshift_cluster_ingress_domain}/dashboards[URL^].
+
+image::module03/grafana-instance.png[Grafana Instance]
 
 [IMPORTANT]
 ====
@@ -74,6 +99,6 @@ Click on the `Camel - Quarkus` dashboard.
 
 image::module03/grafana-camel-dashboard.png[Camel Dashboard]
 
-This is a simplified version of the metrics available when using the exporter. You can notice on the top that you can change the parameters to visualize the metric of different applications that have the same metrics, in this case, JVM and Camel Metrics. For now you only deployed `customer-connector` with the monitoring traits, but if you want, you can also re-deploy the other routes using the traits and then visualize their metrics.
+This is a simplified version of the metrics available when using the exporter. You can notice on the top that you can change the parameters to visualize the metric of different applications that have the same metrics, in this case, JVM and Camel Metrics. For now you only deployed `order-connector` but you could deploy other apps and use the same dashboard.
 
 This is a very simple use case, just to demonstrate the art of possible. In a real word situation you will probably create custom metrics and enable them in the Route itself, but when that time comes, you already know how the Prometheus and Grafana configuration should look like. 
