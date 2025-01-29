@@ -13,7 +13,7 @@ For browsers, we recommend the use of Google Chrome or Mozilla Firefox.
 
 == Lab Modules
 
-This workshop contains 4 modules. For the complete experience, these modules were made to be executed from 1 to 4, but since we recognize that we have attendees interested in different aspects of an integration lifecycle, you can skip modules and use provided scripts to execute the previous steps for you. Independently of how you decide to execute this workshop, we recommend that you, at least, go through the first module to get familiarized with the tools used in this workshop. 
+This workshop contains 4 modules. For the complete experience, these modules were made to be executed from 1 to 3, but since we recognize that we have attendees interested in different aspects of an integration lifecycle, you can skip modules and use provided scripts to execute the previous steps for you. Independently of how you decide to execute this workshop, we recommend that you, at least, go through the first module to get familiarized with the tools used in this workshop. 
 
 === Getting Started with the Workshop
 
@@ -26,10 +26,6 @@ For this module you'll actually implement and deploy integrations. You will have
 === Monitoring Integrations in OpenShift
 
 This module is focused on how you can monitor your integrations using Hawtio and Prometheus. Instead of creating new Routes, you will redeploy the ones created on module 2, but this time you will add *traits* to enable Hawtio and Prometheus.
-
-=== Automate your deployment with Tekton
-
-In the previous module you used developer tools to deploy Integrations. Although it was really easy and fast to deploy that way, that approach only works for development. In a real life scenario we need to integrate the development with source code management and automate the deployment process. In this module you will learn how to use Tekton pipelines to deploy different styles of Camel projects.
 
 === Troubleshooting Guide
 
@@ -87,7 +83,3 @@ image::index/openshift-diagram.png[OpenShift diagram]
 https://access.redhat.com/products/red-hat-openshift-dev-spaces[OpenShift Dev Spaces^] is a container-based service for creating consistent and secured developer environments on Red Hat OpenShift to increase developer productivity and optimize costs. We are going to use it to provide you a complete development environment using VS Code as IDE and an OpenShift project as a sandbox. 
 
 image::index/cloud-development-environments.gif[VS Code on Dev Spaces]
-
-=== Red Hat OpenShift Pipelines
-
-https://docs.openshift.com/pipelines/1.14/about/understanding-openshift-pipelines.html[Red Hat OpenShift Pipelines^] is a cloud-native, continuous integration and continuous delivery (CI/CD) solution based on Kubernetes resources. It uses https://tekton.dev/[Tekton^] building blocks to automate deployments across multiple platforms by abstracting away the underlying implementation details. Tekton introduces a number of standard custom resource definitions (CRDs) for defining CI/CD pipelines that are portable across Kubernetes distributions.

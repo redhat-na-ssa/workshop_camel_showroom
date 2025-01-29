@@ -1,15 +1,15 @@
 = Order Connector
 :table-caption!:
 
-The Order Connector application will pull JSON order messages from a Kafka topic, and post them to the existing Expense REST API.
+The Order Connector application will pull JSON order messages from a Kafka topic and post them to the existing Expense REST API.
 
 image::module02/order-connector/architecture.png[]
 
 == Application Configuration Properties
 
-The application.properties file can be used to externalize variable values in our application. Things like credentials, URLs and runtime configuration. You can have as many files as you need, and they can be applied as files, ConfigMaps, or Secrets, as appropriate. 
+The `application.properties` file can be used to externalize variable values in our application. Things like credentials, URLs and runtime configuration. You can have as many files as you need, and they can be applied as files, ConfigMaps, or Secrets, as appropriate. 
 
-A application.properties file is already available for you and it contains some basic configuration we need to run and deploy this application. We will still need to provide use case specific properties.
+A application.properties file is already available for you and it contains basic configuration we need to run and deploy this application. We will still need to provide use case specific properties.
 
 image::module02/order-connector/application-properties.png[Application Properties]
 
@@ -22,7 +22,6 @@ kafka.brokers=kafka-kafka-bootstrap.{user}-globex.svc.cluster.local:9092
 kafka.securityProtocol=SASL_PLAINTEXT
 kafka.saslMechanism=SCRAM-SHA-512
 kafka.saslJaasConfig=org.apache.kafka.common.security.scram.ScramLoginModule required username='globex' password='globex';
-
 cashback-service.url=cashback-service.{user}-globex.svc.cluster.local:8080
 ....
 
@@ -68,8 +67,6 @@ Set the following endpoint properties on the Kafka Component node:
 .^|Group Id|order-cashback-connector
 |===
 
-Set the following security properties on the Kafka Component node:
-
 .Security properties
 [%autowidth, cols="d,l"]
 |===
@@ -112,7 +109,7 @@ image::module02/order-connector/remove-headers.gif[]
 
 [NOTE]
 ====
-Certain endpoints will return data in the body and hearders of messages. If you don't what headers to be propagated to another endpoint, you need to remove them or set specific configuration in the next endpoint.
+Certain endpoints will return data in the body and hearders of messages. If you don't want headers to be propagated to another endpoint, you need to remove them or set specific configuration in the next endpoint.
 ====
 
 Append a `Choice Processor` node after the `Remove Headers` node.
@@ -195,11 +192,12 @@ If you have the application running on VS Code stop it. Let's deploy it on OpenS
 
 In the terminal, run the following commands:
 
+[source,shell,role="copypaste",subs=attributes+]
 ----
 oc project {user}-camel
 mvn clean package -Dquarkus.kubernetes.deploy=true
 ----
 
-If everything occurred as expected, you should see a `build success` message in the terminal.
+If everything occurred as expected, you should see a `BUILD SUCCESS` message in the terminal.
 
 image::module02/order-connector/deployment-success.png[]

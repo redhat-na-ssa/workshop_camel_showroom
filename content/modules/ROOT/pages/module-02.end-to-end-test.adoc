@@ -1,4 +1,4 @@
-= Ent-To-End Test
+= End-To-End Test
 
 In the previous module you saw how test the application, but how does it look like to use Globex and how can you check the system?
 
@@ -72,3 +72,15 @@ You should see a change event structure very similar to the ones for customers. 
 Go back to the `AMQ Streams Console - Topics` page, and this time open the *globex.updates.public.line_item* topic. You should see one message per item in the order you created previously.
 
 image::module02/end-to-end-test/amq-console-topic-orders.png[]
+
+== Checking the Cashback
+
+If everything performed as intended, you should be able to see the cashback generated for the users you used when you submitted orders. 
+
+image::module02/end-to-end-test/cashback-page.png[]
+
+You can check your cashback system https://cashback-service-{user}-globex.{openshift_cluster_ingress_domain}[here^].
+
+== Next Steps
+
+This concludes the development part of the workshop. Move to the next module to learn about monitoring Camel apps.

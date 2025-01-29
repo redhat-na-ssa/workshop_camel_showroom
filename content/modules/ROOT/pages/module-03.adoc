@@ -56,12 +56,14 @@ We already have an instance configure for you. We just needed you to enable the 
 
 Let's export these metrics using a PodMonitor. Apply the following configuration on the OpenShift cluster: 
 
-----
+.pod-monitor.yml
+[source,properties,role="copypaste",subs=attributes+]
+....
 apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
 metadata:
   name: order-connector
-  namespace: {{user}}-camel
+  namespace: {user}-camel
 spec:
   podMetricsEndpoints:
     - bearerTokenSecret:
@@ -71,7 +73,7 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: order-connector  
-----
+....
 
 [TIP]
 ====

@@ -136,4 +136,4 @@ Use the link and credentials below to access Gitea:
 
 image::module01/gitea.png[Gitea]
 
-Once you were able to check your access to Gitea, let's proceed to the next module.
+Once you were able to check your access to Gitea, proceed to the next module.
